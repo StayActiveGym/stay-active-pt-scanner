@@ -14,10 +14,6 @@
 
 <style>
 
-/* =========================================================
-   GENERAL
-========================================================= */
-
 * {
     box-sizing: border-box;
 }
@@ -37,35 +33,26 @@ body {
     min-height: 100vh;
 }
 
-
-/* =========================================================
-   APP CONTAINER
-========================================================= */
-
 .app {
     width: 100%;
     max-width: 520px;
     min-height: 100vh;
     margin: 0 auto;
-    padding: 24px 18px 30px;
+    padding: 22px 16px 30px;
     background: #080808;
 }
 
-
-/* =========================================================
-   HEADER
-========================================================= */
+/* HEADER */
 
 .header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 24px;
 }
 
 .logo-text {
     font-size: 30px;
     font-weight: 900;
     letter-spacing: 1px;
-    text-transform: uppercase;
 }
 
 .logo-text span {
@@ -73,54 +60,40 @@ body {
 }
 
 .subtitle {
-    margin-top: 6px;
-    color: #999;
-    font-size: 12px;
+    margin-top: 5px;
+    color: #888;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
 }
 
-
-/* =========================================================
-   SECTION TITLE
-========================================================= */
+/* TRAINER */
 
 .section-title {
-    font-size: 13px;
+    color: #999;
+    font-size: 12px;
     font-weight: 800;
-    color: #aaa;
     letter-spacing: 1px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     text-transform: uppercase;
 }
-
-
-/* =========================================================
-   TRAINER SELECTION
-========================================================= */
 
 .trainer-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin-bottom: 25px;
+    gap: 7px;
 }
 
 .trainer-btn {
     border: 1px solid #333;
     background: #151515;
     color: #aaa;
-    padding: 14px 5px;
     border-radius: 8px;
+    padding: 15px 4px;
     font-size: 14px;
     font-weight: 900;
     cursor: pointer;
-    transition: 0.2s;
-}
-
-.trainer-btn:hover {
-    border-color: #777;
 }
 
 .trainer-btn.active {
@@ -129,23 +102,37 @@ body {
     border-color: #f5c400;
 }
 
+/* ACTIVE TRAINER */
 
-/* =========================================================
-   MAIN CARD
-========================================================= */
+.active-trainer {
+    margin-top: 12px;
+    padding: 12px;
+    background: #111;
+    border: 1px solid #292929;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.active-trainer strong {
+    color: #f5c400;
+    font-size: 15px;
+}
+
+/* CARD */
 
 .card {
     background: #111;
     border: 1px solid #292929;
     border-radius: 14px;
-    padding: 22px;
-    margin-bottom: 16px;
+    padding: 21px;
+    margin-top: 18px;
 }
 
-
-/* =========================================================
-   SCAN AREA
-========================================================= */
+/* SCANNER */
 
 .scan-title {
     text-align: center;
@@ -162,31 +149,20 @@ body {
     margin-bottom: 20px;
 }
 
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
 .primary-btn {
     width: 100%;
     border: none;
     border-radius: 9px;
-    padding: 17px 15px;
+    padding: 17px 14px;
     background: #f5c400;
     color: #000;
     font-size: 16px;
     font-weight: 900;
-    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: 0.2s;
-}
-
-.primary-btn:hover {
-    background: #ffd51a;
 }
 
 .primary-btn:active {
-    transform: scale(0.98);
+    transform: scale(.98);
 }
 
 .secondary-btn {
@@ -194,22 +170,15 @@ body {
     border: 1px solid #444;
     border-radius: 9px;
     padding: 15px;
+    margin-top: 10px;
     background: #181818;
     color: #fff;
     font-size: 14px;
     font-weight: 800;
     cursor: pointer;
-    margin-top: 10px;
 }
 
-.secondary-btn:hover {
-    background: #222;
-}
-
-
-/* =========================================================
-   SCANNER
-========================================================= */
+/* READER */
 
 #reader {
     width: 100%;
@@ -227,38 +196,33 @@ body {
     text-align: center;
     color: #777;
     font-size: 11px;
-    margin-top: 12px;
+    margin-top: 10px;
 }
 
-
-/* =========================================================
-   STATUS
-========================================================= */
+/* STATUS */
 
 .status {
     text-align: center;
-    margin-bottom: 18px;
 }
 
 .status-icon {
     width: 65px;
     height: 65px;
     border-radius: 50%;
-    background: #1b1b1b;
-    border: 2px solid #f5c400;
     margin: 0 auto 15px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #181818;
+    border: 2px solid #f5c400;
     color: #f5c400;
     font-size: 30px;
     font-weight: 900;
 }
 
 .status-title {
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 900;
-    text-transform: uppercase;
 }
 
 .status-message {
@@ -268,10 +232,16 @@ body {
     line-height: 1.5;
 }
 
+.error .status-icon {
+    border-color: #ff3030;
+    color: #ff3030;
+}
 
-/* =========================================================
-   MEMBER INFORMATION
-========================================================= */
+.error .status-title {
+    color: #ff3030;
+}
+
+/* INFO */
 
 .info-box {
     background: #0b0b0b;
@@ -286,7 +256,7 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 15px;
-    padding: 13px 14px;
+    padding: 13px;
     border-bottom: 1px solid #222;
 }
 
@@ -296,10 +266,9 @@ body {
 
 .info-label {
     color: #777;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .info-value {
@@ -314,19 +283,14 @@ body {
     color: #f5c400;
 }
 
-
-/* =========================================================
-   CREDIT
-========================================================= */
-
 .credit-value {
-    font-size: 20px;
     color: #f5c400;
+    font-size: 20px;
 }
 
 .zero-credit {
     color: #ff3030 !important;
-    animation: blinkZero 0.8s infinite;
+    animation: blinkZero .8s infinite;
 }
 
 @keyframes blinkZero {
@@ -338,54 +302,20 @@ body {
 
     50%,
     100% {
-        opacity: 0.15;
+        opacity: .15;
     }
 }
-
-
-/* =========================================================
-   ERROR
-========================================================= */
-
-.error .status-icon {
-    border-color: #ff3030;
-    color: #ff3030;
-}
-
-.error .status-title {
-    color: #ff3030;
-}
-
-
-/* =========================================================
-   HIDDEN
-========================================================= */
-
-.hidden {
-    display: none !important;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
 
 .footer {
     text-align: center;
     color: #555;
     font-size: 10px;
-    margin-top: 25px;
-    letter-spacing: 0.5px;
+    margin-top: 24px;
 }
 
-.footer strong {
-    color: #777;
+.hidden {
+    display: none !important;
 }
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
 
 @media (max-width: 380px) {
 
@@ -393,21 +323,9 @@ body {
         padding: 18px 12px 25px;
     }
 
-    .trainer-grid {
-        gap: 5px;
-    }
-
     .trainer-btn {
         font-size: 12px;
-        padding: 12px 3px;
-    }
-
-    .card {
-        padding: 17px;
-    }
-
-    .logo-text {
-        font-size: 26px;
+        padding: 13px 3px;
     }
 
 }
@@ -423,9 +341,7 @@ body {
 <div class="app">
 
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+    <!-- HEADER -->
 
     <div class="header">
 
@@ -440,9 +356,7 @@ body {
     </div>
 
 
-    <!-- =====================================================
-         TRAINER SELECTION
-    ====================================================== -->
+    <!-- TRAINER SELECTION -->
 
     <div id="trainerSection">
 
@@ -453,6 +367,7 @@ body {
         <div class="trainer-grid">
 
             <button
+                type="button"
                 class="trainer-btn"
                 data-code="PT01"
                 onclick="selectTrainer('PT01')">
@@ -460,6 +375,7 @@ body {
             </button>
 
             <button
+                type="button"
                 class="trainer-btn"
                 data-code="PT02"
                 onclick="selectTrainer('PT02')">
@@ -467,6 +383,7 @@ body {
             </button>
 
             <button
+                type="button"
                 class="trainer-btn"
                 data-code="PT03"
                 onclick="selectTrainer('PT03')">
@@ -474,6 +391,7 @@ body {
             </button>
 
             <button
+                type="button"
                 class="trainer-btn"
                 data-code="PT04"
                 onclick="selectTrainer('PT04')">
@@ -481,6 +399,7 @@ body {
             </button>
 
             <button
+                type="button"
                 class="trainer-btn"
                 data-code="PT05"
                 onclick="selectTrainer('PT05')">
@@ -489,32 +408,37 @@ body {
 
         </div>
 
+
+        <div class="active-trainer">
+
+            ACTIVE TRAINER:
+            <strong id="activeTrainer">
+                NONE
+            </strong>
+
+        </div>
+
     </div>
 
 
-    <!-- =====================================================
-         SCANNER CARD
-    ====================================================== -->
+    <!-- SCANNER CARD -->
 
     <div id="scannerCard" class="card">
-
 
         <div class="scan-title">
             SCAN MEMBER QR CODE
         </div>
 
-
         <div class="scan-description">
 
-            Select a PT trainer above, then scan the
-            member's QR code to process one
-            Professional Training session.
+            Select the PT trainer first.
+            Then scan the member QR code.
 
         </div>
 
-
         <button
             id="startScanBtn"
+            type="button"
             class="primary-btn"
             onclick="startScanner()">
 
@@ -522,30 +446,27 @@ body {
 
         </button>
 
-
         <div id="reader"></div>
-
 
         <div
             id="scannerNote"
             class="scanner-note hidden">
 
-            Position the member QR code inside the scanner.
+            Position the QR code inside the scanner.
 
         </div>
-
 
     </div>
 
 
-    <!-- =====================================================
-         RESULT CARD
-    ====================================================== -->
+    <!-- RESULT -->
 
     <div
         id="resultCard"
         class="card hidden">
 
+
+        <!-- SUCCESS -->
 
         <div
             id="successStatus"
@@ -567,6 +488,8 @@ body {
         </div>
 
 
+        <!-- ERROR -->
+
         <div
             id="errorStatus"
             class="status error hidden">
@@ -582,13 +505,12 @@ body {
             <div
                 id="errorMessage"
                 class="status-message">
-
             </div>
 
         </div>
 
 
-        <!-- MEMBER INFO -->
+        <!-- MEMBER INFORMATION -->
 
         <div
             id="memberInfo"
@@ -604,7 +526,6 @@ body {
                 <div
                     id="memberName"
                     class="info-value">
-
                 </div>
 
             </div>
@@ -619,7 +540,6 @@ body {
                 <div
                     id="memberId"
                     class="info-value">
-
                 </div>
 
             </div>
@@ -634,7 +554,6 @@ body {
                 <div
                     id="ptTrainer"
                     class="info-value highlight">
-
                 </div>
 
             </div>
@@ -649,7 +568,6 @@ body {
                 <div
                     id="creditUsed"
                     class="info-value">
-
                 </div>
 
             </div>
@@ -664,7 +582,6 @@ body {
                 <div
                     id="remainingCredit"
                     class="info-value credit-value">
-
                 </div>
 
             </div>
@@ -679,17 +596,16 @@ body {
                 <div
                     id="transactionTime"
                     class="info-value">
-
                 </div>
 
             </div>
-
 
         </div>
 
 
         <button
             id="scanAnotherBtn"
+            type="button"
             class="primary-btn hidden"
             onclick="scanAnotherMember()">
 
@@ -700,6 +616,7 @@ body {
 
         <button
             id="changeTrainerBtn"
+            type="button"
             class="secondary-btn hidden"
             onclick="changeTrainer()">
 
@@ -710,10 +627,6 @@ body {
 
     </div>
 
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
 
     <div class="footer">
 
@@ -730,18 +643,31 @@ body {
 <script>
 
 /* =========================================================
-   CONFIGURATION
+   APPS SCRIPT URL
 ========================================================= */
 
 const API_URL =
-    "https://script.google.com/macros/s/AKfycbxq67fyAWDen-vCnW9Qsc8qTM27EN4ZkQof7VzSHVh9g19tzUqH5pdDehQZAxFGJ052jw/exec";
+"https://script.google.com/macros/s/AKfycbxq67fyAWDen-vCnW9Qsc8qTM27EN4ZkQof7VzSHVh9g19tzUqH5pdDehQZAxFGJ052jw/exec";
 
 
 /* =========================================================
-   GLOBAL VARIABLES
+   TRAINER CODES
 ========================================================= */
 
-let selectedPT = "";
+const VALID_PT_CODES = [
+    "PT01",
+    "PT02",
+    "PT03",
+    "PT04",
+    "PT05"
+];
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let selectedPT = null;
 
 let html5QrCode = null;
 
@@ -756,8 +682,30 @@ let processingScan = false;
 
 function selectTrainer(code) {
 
+    code = String(code)
+        .trim()
+        .toUpperCase();
+
+
+    /* Validate trainer */
+
+    if (
+        !VALID_PT_CODES.includes(code)
+    ) {
+
+        alert("Invalid PT trainer.");
+
+        return;
+
+    }
+
+
+    /* Store exact trainer code */
+
     selectedPT = code;
 
+
+    /* Update buttons */
 
     document
         .querySelectorAll(".trainer-btn")
@@ -783,7 +731,22 @@ function selectTrainer(code) {
     }
 
 
+    /* Display active trainer */
+
+    document
+        .getElementById("activeTrainer")
+        .textContent = selectedPT;
+
+
+    /* Reset scanner/result */
+
     resetToScanner();
+
+
+    console.log(
+        "ACTIVE PT TRAINER:",
+        selectedPT
+    );
 
 }
 
@@ -794,13 +757,29 @@ function selectTrainer(code) {
 
 async function startScanner() {
 
-    if (!selectedPT) {
 
-        alert("Please select a PT trainer first.");
+    /* IMPORTANT:
+       Verify trainer BEFORE opening camera.
+    */
+
+    if (
+        !selectedPT ||
+        !VALID_PT_CODES.includes(selectedPT)
+    ) {
+
+        alert(
+            "Please select PT01, PT02, PT03, PT04, or PT05 first."
+        );
 
         return;
 
     }
+
+
+    console.log(
+        "Starting scanner with trainer:",
+        selectedPT
+    );
 
 
     if (scannerRunning) {
@@ -847,26 +826,19 @@ async function startScanner() {
                 fps: 10,
 
                 qrbox: function(
-                    viewfinderWidth,
-                    viewfinderHeight
+                    width,
+                    height
                 ) {
 
-                    const minSize =
+                    const size =
                         Math.min(
-                            viewfinderWidth,
-                            viewfinderHeight
-                        );
+                            width,
+                            height
+                        ) * 0.72;
 
                     return {
-                        width:
-                            Math.floor(
-                                minSize * 0.72
-                            ),
-
-                        height:
-                            Math.floor(
-                                minSize * 0.72
-                            )
+                        width: Math.floor(size),
+                        height: Math.floor(size)
                     };
 
                 }
@@ -881,7 +853,16 @@ async function startScanner() {
 
     } catch (error) {
 
+        console.error(
+            "Camera error:",
+            error
+        );
+
+
         scannerRunning = false;
+
+        html5QrCode = null;
+
 
         document
             .getElementById("reader")
@@ -899,7 +880,7 @@ async function startScanner() {
 
 
         alert(
-            "Unable to start the camera. Please allow camera access and try again."
+            "Unable to start the camera. Please allow camera access."
         );
 
     }
@@ -908,10 +889,11 @@ async function startScanner() {
 
 
 /* =========================================================
-   QR SCAN SUCCESS
+   QR SUCCESS
 ========================================================= */
 
 async function onScanSuccess(decodedText) {
+
 
     if (processingScan) {
 
@@ -923,11 +905,51 @@ async function onScanSuccess(decodedText) {
     processingScan = true;
 
 
-    stopScanner();
+    console.log(
+        "QR VALUE:",
+        decodedText
+    );
+
+
+    /* Verify trainer AGAIN */
+
+    if (
+        !selectedPT ||
+        !VALID_PT_CODES.includes(selectedPT)
+    ) {
+
+        await stopScanner();
+
+        showError(
+            "No valid PT trainer is selected."
+        );
+
+        return;
+
+    }
+
+
+    const trainerForThisScan =
+        selectedPT;
+
+
+    console.log(
+        "TRAINER FOR THIS SCAN:",
+        trainerForThisScan
+    );
+
+
+    await stopScanner();
 
 
     const memberId =
         extractMemberId(decodedText);
+
+
+    console.log(
+        "MEMBER ID:",
+        memberId
+    );
 
 
     if (!memberId) {
@@ -941,19 +963,21 @@ async function onScanSuccess(decodedText) {
     }
 
 
-    await processPT(memberId);
+    await processPT(
+        memberId,
+        trainerForThisScan
+    );
 
 }
 
 
 /* =========================================================
-   QR SCAN FAILURE
+   QR FAILURE
 ========================================================= */
 
 function onScanFailure(errorMessage) {
 
-    // Normal while searching for a QR code.
-    // No action needed.
+    /* Normal while scanner is searching. */
 
 }
 
@@ -963,6 +987,7 @@ function onScanFailure(errorMessage) {
 ========================================================= */
 
 async function stopScanner() {
+
 
     if (
         html5QrCode &&
@@ -975,9 +1000,13 @@ async function stopScanner() {
 
         } catch (error) {
 
-            console.log(error);
+            console.log(
+                "Scanner stop:",
+                error
+            );
 
         }
+
 
         try {
 
@@ -985,7 +1014,10 @@ async function stopScanner() {
 
         } catch (error) {
 
-            console.log(error);
+            console.log(
+                "Scanner clear:",
+                error
+            );
 
         }
 
@@ -1015,10 +1047,11 @@ async function stopScanner() {
 
 
 /* =========================================================
-   EXTRACT MEMBER ID FROM QR
+   EXTRACT MEMBER ID
 ========================================================= */
 
 function extractMemberId(value) {
+
 
     if (!value) {
 
@@ -1031,10 +1064,7 @@ function extractMemberId(value) {
         String(value).trim();
 
 
-    /* -----------------------------------------------
-       FORMAT 1
-       URL containing memberId
-    ------------------------------------------------ */
+    /* URL */
 
     try {
 
@@ -1047,15 +1077,15 @@ function extractMemberId(value) {
                 new URL(value);
 
 
-            const memberId =
+            const id =
                 url.searchParams.get(
                     "memberId"
                 );
 
 
-            if (memberId) {
+            if (id) {
 
-                return memberId.trim();
+                return id.trim();
 
             }
 
@@ -1063,15 +1093,15 @@ function extractMemberId(value) {
 
     } catch (error) {
 
-        // Continue to next format.
+        console.log(
+            "URL parsing:",
+            error
+        );
 
     }
 
 
-    /* -----------------------------------------------
-       FORMAT 2
-       JSON
-    ------------------------------------------------ */
+    /* JSON */
 
     try {
 
@@ -1092,15 +1122,12 @@ function extractMemberId(value) {
 
     } catch (error) {
 
-        // Not JSON.
+        /* Not JSON */
 
     }
 
 
-    /* -----------------------------------------------
-       FORMAT 3
-       RAW MEMBER ID
-    ------------------------------------------------ */
+    /* RAW */
 
     return value;
 
@@ -1111,9 +1138,47 @@ function extractMemberId(value) {
    PROCESS PT
 ========================================================= */
 
-function processPT(memberId) {
+function processPT(
+    memberId,
+    trainerCode
+) {
 
     return new Promise(function(resolve) {
+
+
+        /* Final trainer validation */
+
+        trainerCode =
+            String(trainerCode)
+                .trim()
+                .toUpperCase();
+
+
+        if (
+            !VALID_PT_CODES.includes(
+                trainerCode
+            )
+        ) {
+
+            showError(
+                "Invalid PT trainer code."
+            );
+
+            resolve();
+
+            return;
+
+        }
+
+
+        console.log(
+            "SENDING TO SERVER:",
+            {
+                memberId: memberId,
+                ptCode: trainerCode
+            }
+        );
+
 
         const callbackName =
             "ptCallback_" +
@@ -1124,14 +1189,26 @@ function processPT(memberId) {
             document.createElement("script");
 
 
+        let finished = false;
+
+
         const timeout =
             setTimeout(function() {
 
+                if (finished) {
+                    return;
+                }
+
+
+                finished = true;
+
                 cleanup();
+
 
                 showError(
                     "The server did not respond. Please try again."
                 );
+
 
                 resolve();
 
@@ -1142,11 +1219,15 @@ function processPT(memberId) {
 
             clearTimeout(timeout);
 
+
             try {
 
-                delete window[callbackName];
+                delete window[
+                    callbackName
+                ];
 
             } catch (error) {}
+
 
             if (
                 script.parentNode
@@ -1164,12 +1245,29 @@ function processPT(memberId) {
         window[callbackName] =
             function(response) {
 
+
+                if (finished) {
+
+                    return;
+
+                }
+
+
+                finished = true;
+
+
                 cleanup();
+
+
+                console.log(
+                    "SERVER RESPONSE:",
+                    response
+                );
 
 
                 if (
                     response &&
-                    response.success
+                    response.success === true
                 ) {
 
                     showSuccess(
@@ -1178,18 +1276,11 @@ function processPT(memberId) {
 
                 } else {
 
-                    let message =
-                        "The PT session could not be processed.";
-
-                    if (
+                    const message =
                         response &&
                         response.message
-                    ) {
-
-                        message =
-                            response.message;
-
-                    }
+                            ? response.message
+                            : "The PT session could not be processed.";
 
 
                     showError(
@@ -1205,27 +1296,57 @@ function processPT(memberId) {
             };
 
 
+        /* =================================================
+           IMPORTANT:
+           EXACT PT CODE IS SENT HERE
+        ================================================= */
+
         const url =
             API_URL +
             "?action=pt" +
             "&memberId=" +
-            encodeURIComponent(memberId) +
+            encodeURIComponent(
+                memberId
+            ) +
             "&ptCode=" +
-            encodeURIComponent(selectedPT) +
+            encodeURIComponent(
+                trainerCode
+            ) +
             "&callback=" +
-            encodeURIComponent(callbackName);
+            encodeURIComponent(
+                callbackName
+            );
+
+
+        console.log(
+            "REQUEST URL:",
+            url
+        );
 
 
         script.src = url;
 
+
         script.onerror =
             function() {
 
+
+                if (finished) {
+
+                    return;
+
+                }
+
+
+                finished = true;
+
                 cleanup();
+
 
                 showError(
                     "Unable to connect to the PT server."
                 );
+
 
                 resolve();
 
@@ -1242,10 +1363,11 @@ function processPT(memberId) {
 
 
 /* =========================================================
-   SHOW SUCCESS
+   SUCCESS SCREEN
 ========================================================= */
 
 function showSuccess(response) {
+
 
     document
         .getElementById("scannerCard")
@@ -1319,27 +1441,33 @@ function showSuccess(response) {
         );
 
 
-    remainingElement.textContent =
-        isNaN(remaining)
-            ? "-"
-            : remaining;
-
-
-    remainingElement
-        .classList.remove(
-            "zero-credit"
-        );
+    remainingElement.classList.remove(
+        "zero-credit"
+    );
 
 
     if (
-        !isNaN(remaining) &&
-        remaining <= 0
+        !isNaN(remaining)
     ) {
 
-        remainingElement
-            .classList.add(
+        remainingElement.textContent =
+            remaining;
+
+
+        if (
+            remaining <= 0
+        ) {
+
+            remainingElement.classList.add(
                 "zero-credit"
             );
+
+        }
+
+    } else {
+
+        remainingElement.textContent =
+            "-";
 
     }
 
@@ -1355,13 +1483,14 @@ function showSuccess(response) {
 
 
 /* =========================================================
-   SHOW ERROR
+   ERROR SCREEN
 ========================================================= */
 
 function showError(
     message,
     response
 ) {
+
 
     document
         .getElementById("scannerCard")
@@ -1412,6 +1541,7 @@ function showError(
 
 function scanAnotherMember() {
 
+
     processingScan = false;
 
 
@@ -1459,12 +1589,14 @@ function scanAnotherMember() {
 
 function changeTrainer() {
 
+
     stopScanner();
 
 
     processingScan = false;
 
-    selectedPT = "";
+
+    selectedPT = null;
 
 
     document
@@ -1476,6 +1608,12 @@ function changeTrainer() {
             );
 
         });
+
+
+    document
+        .getElementById("activeTrainer")
+        .textContent =
+        "NONE";
 
 
     resetToScanner();
@@ -1490,12 +1628,10 @@ function changeTrainer() {
 
 
 /* =========================================================
-   RESET TO SCANNER
+   RESET
 ========================================================= */
 
 function resetToScanner() {
-
-    stopScanner();
 
 
     document
@@ -1541,10 +1677,11 @@ function resetToScanner() {
 
 
 /* =========================================================
-   FORMAT DATE/TIME
+   DATE / TIME
 ========================================================= */
 
 function formatDateTime(value) {
+
 
     if (!value) {
 
@@ -1584,12 +1721,18 @@ function formatDateTime(value) {
 
 
 /* =========================================================
-   INITIAL STATE
+   INITIAL
 ========================================================= */
 
 window.addEventListener(
     "load",
     function() {
+
+        selectedPT = null;
+
+        document
+            .getElementById("activeTrainer")
+            .textContent = "NONE";
 
         resetToScanner();
 
