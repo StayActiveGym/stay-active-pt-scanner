@@ -14,41 +14,29 @@
 
 <style>
 
+/* =========================================================
+   GENERAL
+========================================================= */
+
 * {
   box-sizing: border-box;
 }
 
-html,
 body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  min-height: 100%;
   background: #000;
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
 }
 
-
-/* =========================================================
-   MAIN CONTAINER
-========================================================= */
-
-.app {
+.container {
   width: 100%;
   max-width: 520px;
-  min-height: 100vh;
-  background: #000;
-  padding: 22px 18px 30px;
+  margin: auto;
+  padding: 20px;
 }
-
 
 /* =========================================================
    HEADER
@@ -56,14 +44,13 @@ body {
 
 .header {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 25px;
 }
 
 .logo-text {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 900;
   letter-spacing: 1px;
-  color: #fff;
 }
 
 .logo-text span {
@@ -72,77 +59,55 @@ body {
 
 .subtitle {
   margin-top: 6px;
-  color: #aaa;
   font-size: 13px;
-  letter-spacing: 1.5px;
-  font-weight: 700;
+  color: #aaa;
+  letter-spacing: 1px;
 }
-
 
 /* =========================================================
-   SCREEN
+   CARDS
 ========================================================= */
 
-.screen {
-  display: none;
+.card {
+  background: #111;
+  border: 1px solid #292929;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 18px;
 }
 
-.screen.active {
-  display: block;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.page-title {
-  text-align: center;
-  font-size: 26px;
-  line-height: 1.15;
-  font-weight: 900;
-  letter-spacing: .5px;
-  margin: 10px 0 8px;
-}
-
-.page-description {
-  text-align: center;
-  color: #999;
+.card-title {
   font-size: 14px;
-  line-height: 1.5;
-  margin-bottom: 28px;
+  font-weight: bold;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
 }
 
-
 /* =========================================================
-   PT SELECTION
+   PT TRAINER BUTTONS
 ========================================================= */
 
-.pt-grid {
+.pt-buttons {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
 }
 
 .pt-button {
-  border: 2px solid #333;
-  background: #111;
+  border: 1px solid #444;
+  background: #181818;
   color: #fff;
-  min-height: 78px;
-  border-radius: 12px;
-  font-size: 23px;
-  font-weight: 900;
+  padding: 13px 5px;
+  border-radius: 9px;
+  font-weight: bold;
   cursor: pointer;
-  transition: .15s ease;
+  transition: 0.2s;
 }
 
 .pt-button:hover {
   border-color: #ffd400;
-}
-
-.pt-button:active {
-  transform: scale(.97);
 }
 
 .pt-button.selected {
@@ -151,116 +116,1433 @@ body {
   border-color: #ffd400;
 }
 
-
 /* =========================================================
-   SELECTED PT
+   SELECTED TRAINER
 ========================================================= */
 
-.selected-pt {
-  display: none;
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 14px;
+.selected-trainer {
   text-align: center;
-  margin-bottom: 18px;
-}
-
-.selected-pt.visible {
-  display: block;
-}
-
-.selected-label {
-  color: #888;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  margin-bottom: 4px;
-}
-
-.selected-code {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #181818;
   color: #ffd400;
-  font-size: 25px;
-  font-weight: 900;
+  font-weight: bold;
 }
-
 
 /* =========================================================
-   BUTTONS
+   SCAN BUTTON
 ========================================================= */
 
-.main-button {
+.scan-button {
   width: 100%;
-  min-height: 62px;
   border: none;
-  border-radius: 10px;
   background: #ffd400;
   color: #000;
+  padding: 18px;
+  border-radius: 12px;
   font-size: 17px;
   font-weight: 900;
-  letter-spacing: .5px;
   cursor: pointer;
-  transition: .15s ease;
+  margin-top: 5px;
 }
 
-.main-button:hover {
+.scan-button:hover {
   background: #ffe45c;
 }
 
-.main-button:active {
-  transform: scale(.98);
-}
-
-.main-button:disabled {
-  opacity: .45;
+.scan-button:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
-
-.secondary-button {
-  width: 100%;
-  min-height: 56px;
-  margin-top: 12px;
-  border: 2px solid #333;
-  border-radius: 10px;
-  background: #111;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.secondary-button:hover {
-  border-color: #ffd400;
-}
-
 
 /* =========================================================
    SCANNER
 ========================================================= */
 
-.scanner-wrapper {
-  width: 100%;
-  background: #080808;
-  border: 1px solid #292929;
-  border-radius: 14px;
-  padding: 10px;
-  margin-bottom: 18px;
-}
-
 #reader {
   width: 100%;
+  margin-top: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
 }
 
 #reader video {
   width: 100% !important;
-  border-radius: 9px;
+  border-radius: 12px;
 }
 
 #reader__dashboard_section_csr button {
   background: #ffd400 !important;
   color: #000 !important;
   border: none !important;
-  border-radius: 8px !important;
+  border-radius: 7px !important;
   padding: 10px 14px !important;
-  font-weig
+  font-weight: bold !important;
+}
 
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+  color: #999;
+}
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.result {
+  display: none;
+  text-align: center;
+}
+
+.result-icon {
+  font-size: 55px;
+  margin-bottom: 8px;
+}
+
+.result-title {
+  font-size: 23px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.result-success {
+  color: #ffd400;
+}
+
+.result-error {
+  color: #ff3333;
+}
+
+.member-name {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 10px 0 5px;
+}
+
+.member-id {
+  color: #888;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   CREDIT DISPLAY
+========================================================= */
+
+.credit-box {
+  background: #181818;
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 15px;
+}
+
+.credit-label {
+  font-size: 12px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.credit-value {
+  font-size: 38px;
+  font-weight: 900;
+  color: #ffd400;
+  margin-top: 5px;
+}
+
+.credit-zero {
+  color: #ff2222;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+
+  50%, 100% {
+    opacity: 0.15;
+  }
+}
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.details {
+  margin-top: 18px;
+  text-align: left;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid #252525;
+  font-size: 14px;
+}
+
+.detail-label {
+  color: #888;
+}
+
+.detail-value {
+  color: #fff;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 900;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.scan-another {
+  background: #ffd400;
+  color: #000;
+}
+
+.change-trainer {
+  background: #222;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+.error-message {
+  margin-top: 15px;
+  background: #220909;
+  border: 1px solid #661111;
+  color: #ff5555;
+  padding: 14px;
+  border-radius: 9px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+  text-align: center;
+  color: #555;
+  font-size: 11px;
+  margin-top: 25px;
+  padding-bottom: 15px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .container {
+    padding: 15px;
+  }
+
+  .pt-buttons {
+    gap: 5px;
+  }
+
+  .pt-button {
+    font-size: 12px;
+    padding: 12px 3px;
+  }
+
+  .logo-text {
+    font-size: 25px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="header">
+
+    <div class="logo-text">
+      STAY <span>ACTIVE</span>
+    </div>
+
+    <div class="subtitle">
+      PROFESSIONAL TRAINING SCANNER
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TRAINER SELECTION
+  ====================================================== -->
+
+  <div class="card" id="trainerCard">
+
+    <div class="card-title">
+      Select PT Trainer
+    </div>
+
+    <div class="pt-buttons">
+
+      <button class="pt-button"
+              onclick="selectTrainer('PT01')">
+        PT01
+      </button>
+
+      <button class="pt-button"
+              onclick="selectTrainer('PT02')">
+        PT02
+      </button>
+
+      <button class="pt-button"
+              onclick="selectTrainer('PT03')">
+        PT03
+      </button>
+
+      <button class="pt-button"
+              onclick="selectTrainer('PT04')">
+        PT04
+      </button>
+
+      <button class="pt-button"
+              onclick="selectTrainer('PT05')">
+        PT05
+      </button>
+
+    </div>
+
+
+    <div class="selected-trainer"
+         id="selectedTrainer">
+
+      Please select PT trainer
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SCANNER CARD
+  ====================================================== -->
+
+  <div class="card" id="scannerCard">
+
+    <div class="card-title">
+      Member QR Code
+    </div>
+
+    <button class="scan-button"
+            id="startScanButton"
+            onclick="startScanner()"
+            disabled>
+
+      SELECT PT TRAINER FIRST
+
+    </button>
+
+
+    <div id="reader"></div>
+
+
+    <div class="status"
+         id="status">
+
+      Select the assigned PT trainer to begin.
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       RESULT CARD
+  ====================================================== -->
+
+  <div class="card result"
+       id="resultCard">
+
+    <div class="result-icon"
+         id="resultIcon">
+    </div>
+
+
+    <div class="result-title"
+         id="resultTitle">
+    </div>
+
+
+    <div class="member-name"
+         id="memberName">
+    </div>
+
+
+    <div class="member-id"
+         id="memberId">
+    </div>
+
+
+    <div class="credit-box">
+
+      <div class="credit-label">
+        Remaining Professional Training Credit
+      </div>
+
+      <div class="credit-value"
+           id="remainingCredit">
+        -
+      </div>
+
+    </div>
+
+
+    <div class="details">
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          PT Trainer
+        </div>
+
+        <div class="detail-value"
+             id="trainerResult">
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Credit Used
+        </div>
+
+        <div class="detail-value">
+          1
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Transaction Time
+        </div>
+
+        <div class="detail-value"
+             id="transactionTime">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="errorBox"
+         class="error-message"
+         style="display:none;">
+    </div>
+
+
+    <button class="action-button scan-another"
+            onclick="scanAnother()">
+
+      SCAN ANOTHER MEMBER
+
+    </button>
+
+
+    <button class="action-button change-trainer"
+            onclick="changeTrainer()">
+
+      CHANGE PT TRAINER
+
+    </button>
+
+  </div>
+
+
+  <div class="footer">
+    Always Stay Active... Tara, Gym Na! 💪
+  </div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbzn0SB8oopfwe62VqboqTaF3PY9VFivuTiA-HDeZWO-bXl6Rp_jl7yfNWVAHEy4f1ZOiw/exec";
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let selectedPT = "";
+
+let html5QrCode = null;
+
+let scannerRunning = false;
+
+let processingScan = false;
+
+
+/* =========================================================
+   SELECT TRAINER
+========================================================= */
+
+function selectTrainer(ptCode) {
+
+  selectedPT = ptCode;
+
+
+  // Remove selected state
+  document
+    .querySelectorAll(".pt-button")
+    .forEach(button => {
+
+      button.classList.remove("selected");
+
+    });
+
+
+  // Find selected button
+  document
+    .querySelectorAll(".pt-button")
+    .forEach(button => {
+
+      if (button.textContent.trim() === ptCode) {
+
+        button.classList.add("selected");
+
+      }
+
+    });
+
+
+  document
+    .getElementById("selectedTrainer")
+    .textContent =
+      "Selected Trainer: " + ptCode;
+
+
+  const scanButton =
+    document.getElementById("startScanButton");
+
+
+  scanButton.disabled = false;
+
+  scanButton.textContent =
+    "SCAN MEMBER QR CODE";
+
+
+  document
+    .getElementById("status")
+    .textContent =
+      "Ready to scan a member QR code.";
+
+}
+
+
+/* =========================================================
+   START SCANNER
+========================================================= */
+
+function startScanner() {
+
+  if (!selectedPT) {
+
+    alert("Please select a PT trainer first.");
+
+    return;
+
+  }
+
+
+  if (scannerRunning) {
+
+    return;
+
+  }
+
+
+  processingScan = false;
+
+
+  document
+    .getElementById("reader")
+    .style.display = "block";
+
+
+  document
+    .getElementById("startScanButton")
+    .style.display = "none";
+
+
+  document
+    .getElementById("status")
+    .textContent =
+      "Point the camera at the member QR code.";
+
+
+  html5QrCode =
+    new Html5Qrcode("reader");
+
+
+  scannerRunning = true;
+
+
+  html5QrCode
+    .start(
+
+      {
+        facingMode: "environment"
+      },
+
+      {
+        fps: 10,
+
+        qrbox: {
+          width: 250,
+          height: 250
+        }
+
+      },
+
+      onScanSuccess,
+
+      onScanFailure
+
+    )
+    .catch(error => {
+
+      scannerRunning = false;
+
+      document
+        .getElementById("reader")
+        .style.display = "none";
+
+
+      document
+        .getElementById("startScanButton")
+        .style.display = "block";
+
+
+      document
+        .getElementById("startScanButton")
+        .textContent =
+          "SCAN MEMBER QR CODE";
+
+
+      document
+        .getElementById("status")
+        .textContent =
+          "Unable to access camera.";
+
+
+      console.error(error);
+
+      alert(
+        "Unable to access the camera. Please allow camera permission and try again."
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   QR SCAN SUCCESS
+========================================================= */
+
+function onScanSuccess(decodedText) {
+
+  if (processingScan) {
+
+    return;
+
+  }
+
+
+  processingScan = true;
+
+
+  stopScanner();
+
+
+  const memberId =
+    extractMemberId(decodedText);
+
+
+  if (!memberId) {
+
+    showError(
+      "Unable to read the Member ID from this QR code."
+    );
+
+    return;
+
+  }
+
+
+  processPT(memberId);
+
+}
+
+
+/* =========================================================
+   QR SCAN FAILURE
+========================================================= */
+
+function onScanFailure(error) {
+
+  // Ignore normal scanning failures.
+  // The camera continuously scans until a valid QR is found.
+
+}
+
+
+/* =========================================================
+   STOP SCANNER
+========================================================= */
+
+function stopScanner() {
+
+  if (
+    html5QrCode &&
+    scannerRunning
+  ) {
+
+    html5QrCode
+      .stop()
+      .then(() => {
+
+        scannerRunning = false;
+
+        document
+          .getElementById("reader")
+          .style.display = "none";
+
+      })
+      .catch(error => {
+
+        console.error(error);
+
+        scannerRunning = false;
+
+        document
+          .getElementById("reader")
+          .style.display = "none";
+
+      });
+
+  } else {
+
+    scannerRunning = false;
+
+    document
+      .getElementById("reader")
+      .style.display = "none";
+
+  }
+
+}
+
+
+/* =========================================================
+   EXTRACT MEMBER ID
+========================================================= */
+
+function extractMemberId(value) {
+
+  value =
+    String(value || "").trim();
+
+
+  if (!value) {
+
+    return "";
+
+  }
+
+
+  /*
+    CASE 1
+    QR contains URL such as:
+
+    https://example.com/?memberId=SA001
+  */
+
+  try {
+
+    const url =
+      new URL(value);
+
+
+    const memberId =
+      url.searchParams.get("memberId");
+
+
+    if (memberId) {
+
+      return memberId.trim();
+
+    }
+
+  } catch (error) {
+
+    // Not a URL. Continue checking other formats.
+
+  }
+
+
+  /*
+    CASE 2
+    QR contains JSON:
+
+    {"memberId":"SA001"}
+  */
+
+  try {
+
+    const json =
+      JSON.parse(value);
+
+
+    if (
+      json &&
+      json.memberId
+    ) {
+
+      return String(
+        json.memberId
+      ).trim();
+
+    }
+
+  } catch (error) {
+
+    // Not JSON.
+
+  }
+
+
+  /*
+    CASE 3
+    QR contains plain Member ID.
+  */
+
+  return value;
+
+}
+
+
+/* =========================================================
+   PROCESS PROFESSIONAL TRAINING
+========================================================= */
+
+function processPT(memberId) {
+
+  document
+    .getElementById("status")
+    .textContent =
+      "Checking Professional Training Credit...";
+
+
+  const callbackName =
+    "ptCallback_" +
+    Date.now();
+
+
+  window[callbackName] =
+    function(response) {
+
+      try {
+
+        handlePTResponse(
+          response,
+          memberId
+        );
+
+      } finally {
+
+        delete window[callbackName];
+
+      }
+
+    };
+
+
+  const url =
+    API_URL +
+    "?action=pt" +
+    "&memberId=" +
+    encodeURIComponent(memberId) +
+    "&ptCode=" +
+    encodeURIComponent(selectedPT) +
+    "&callback=" +
+    callbackName;
+
+
+  const script =
+    document.createElement("script");
+
+
+  script.src = url;
+
+
+  script.onerror =
+    function() {
+
+      delete window[callbackName];
+
+      showError(
+        "Unable to connect to the server. Please try again."
+      );
+
+    };
+
+
+  document
+    .body
+    .appendChild(script);
+
+}
+
+
+/* =========================================================
+   HANDLE PT RESPONSE
+========================================================= */
+
+function handlePTResponse(
+  response,
+  memberId
+) {
+
+  if (!response) {
+
+    showError(
+      "No response received from the server."
+    );
+
+    return;
+
+  }
+
+
+  if (!response.success) {
+
+    if (
+      response.code ===
+      "NO_PT_CREDIT"
+    ) {
+
+      showNoCredit(
+        memberId,
+        response
+      );
+
+      return;
+
+    }
+
+
+    showError(
+      response.message ||
+      "PT transaction could not be processed."
+    );
+
+    return;
+
+  }
+
+
+  showSuccess(
+    response
+  );
+
+}
+
+
+/* =========================================================
+   SHOW SUCCESS
+========================================================= */
+
+function showSuccess(response) {
+
+  document
+    .getElementById("scannerCard")
+    .style.display = "none";
+
+
+  document
+    .getElementById("trainerCard")
+    .style.display = "none";
+
+
+  document
+    .getElementById("resultCard")
+    .style.display = "block";
+
+
+  document
+    .getElementById("resultIcon")
+    .textContent = "✓";
+
+
+  document
+    .getElementById("resultTitle")
+    .textContent =
+      "PT SESSION SUCCESSFUL";
+
+
+  document
+    .getElementById("resultTitle")
+    .className =
+      "result-title result-success";
+
+
+  document
+    .getElementById("memberName")
+    .textContent =
+      response.name || "";
+
+
+  document
+    .getElementById("memberId")
+    .textContent =
+      "Member ID: " +
+      (response.memberId || "");
+
+
+  const remaining =
+    Number(
+      response.remainingCredit
+    );
+
+
+  const creditElement =
+    document.getElementById(
+      "remainingCredit"
+    );
+
+
+  creditElement.textContent =
+    isNaN(remaining)
+      ? "-"
+      : remaining;
+
+
+  creditElement.classList.remove(
+    "credit-zero"
+  );
+
+
+  if (
+    !isNaN(remaining) &&
+    remaining <= 0
+  ) {
+
+    creditElement.classList.add(
+      "credit-zero"
+    );
+
+  }
+
+
+  document
+    .getElementById("trainerResult")
+    .textContent =
+      response.ptCode ||
+      selectedPT;
+
+
+  document
+    .getElementById("transactionTime")
+    .textContent =
+      response.timestamp ||
+      "";
+
+
+  document
+    .getElementById("errorBox")
+    .style.display =
+      "none";
+
+}
+
+
+/* =========================================================
+   SHOW NO CREDIT
+========================================================= */
+
+function showNoCredit(
+  memberId,
+  response
+) {
+
+  document
+    .getElementById("scannerCard")
+    .style.display = "none";
+
+
+  document
+    .getElementById("trainerCard")
+    .style.display = "none";
+
+
+  document
+    .getElementById("resultCard")
+    .style.display = "block";
+
+
+  document
+    .getElementById("resultIcon")
+    .textContent = "!";
+
+
+  document
+    .getElementById("resultTitle")
+    .textContent =
+      "PT SESSION NOT PROCESSED";
+
+
+  document
+    .getElementById("resultTitle")
+    .className =
+      "result-title result-error";
+
+
+  document
+    .getElementById("memberName")
+    .textContent =
+      response.name || "";
+
+
+  document
+    .getElementById("memberId")
+    .textContent =
+      "Member ID: " +
+      (response.memberId || memberId);
+
+
+  const creditElement =
+    document.getElementById(
+      "remainingCredit"
+    );
+
+
+  creditElement.textContent = "0";
+
+
+  creditElement.classList.add(
+    "credit-zero"
+  );
+
+
+  document
+    .getElementById("trainerResult")
+    .textContent =
+      response.ptCode ||
+      selectedPT;
+
+
+  document
+    .getElementById("transactionTime")
+    .textContent =
+      response.timestamp ||
+      new Date().toLocaleString();
+
+
+  const errorBox =
+    document.getElementById(
+      "errorBox"
+    );
+
+
+  errorBox.style.display =
+    "block";
+
+
+  errorBox.textContent =
+    "NO PROFESSIONAL TRAINING CREDIT REMAINING. " +
+    "No credit was deducted.";
+
+}
+
+
+/* =========================================================
+   SHOW GENERAL ERROR
+========================================================= */
+
+function showError(message) {
+
+  stopScanner();
+
+
+  document
+    .getElementById("scannerCard")
+    .style.display = "none";
+
+
+  document
+    .getElementById("trainerCard")
+    .style.display = "none";
+
+
+  document
+    .getElementById("resultCard")
+    .style.display = "block";
+
+
+  document
+    .getElementById("resultIcon")
+    .textContent = "!";
+
+
+  document
+    .getElementById("resultTitle")
+    .textContent =
+      "PT SESSION NOT PROCESSED";
+
+
+  document
+    .getElementById("resultTitle")
+    .className =
+      "result-title result-error";
+
+
+  document
+    .getElementById("memberName")
+    .textContent = "";
+
+
+  document
+    .getElementById("memberId")
+    .textContent = "";
+
+
+  document
+    .getElementById("remainingCredit")
+    .textContent = "-";
+
+
+  document
+    .getElementById("trainerResult")
+    .textContent =
+      selectedPT || "-";
+
+
+  document
+    .getElementById("transactionTime")
+    .textContent =
+      new Date().toLocaleString();
+
+
+  const errorBox =
+    document.getElementById(
+      "errorBox"
+    );
+
+
+  errorBox.style.display =
+    "block";
+
+
+  errorBox.textContent =
+    message;
+
+}
+
+
+/* =========================================================
+   SCAN ANOTHER MEMBER
+========================================================= */
+
+function scanAnother() {
+
+  document
+    .getElementById("resultCard")
+    .style.display = "none";
+
+
+  document
+    .getElementById("trainerCard")
+    .style.display = "block";
+
+
+  document
+    .getElementById("scannerCard")
+    .style.display = "block";
+
+
+  document
+    .getElementById("reader")
+    .style.display = "none";
+
+
+  const scanButton =
+    document.getElementById(
+      "startScanButton"
+    );
+
+
+  scanButton.style.display =
+    "block";
+
+
+  scanButton.disabled =
+    !selectedPT;
+
+
+  scanButton.textContent =
+    selectedPT
+      ? "SCAN MEMBER QR CODE"
+      : "SELECT PT TRAINER FIRST";
+
+
+  document
+    .getElementById("status")
+    .textContent =
+      selectedPT
+        ? "Ready to scan another member."
+        : "Select the assigned PT trainer to begin.";
+
+
+  processingScan = false;
+
+}
+
+
+/* =========================================================
+   CHANGE TRAINER
+========================================================= */
+
+function changeTrainer() {
+
+  stopScanner();
+
+
+  selectedPT = "";
+
+
+  document
+    .querySelectorAll(".pt-button")
+    .forEach(button => {
+
+      button.classList.remove(
+        "selected"
+      );
+
+    });
+
+
+  document
+    .getElementById("selectedTrainer")
+    .textContent =
+      "Please select PT trainer";
+
+
+  document
+    .getElementById("resultCard")
+    .style.display = "none";
+
+
+  document
+    .getElementById("trainerCard")
+    .style.display = "block";
+
+
+  document
+    .getElementById("scannerCard")
+    .style.display = "block";
+
+
+  const scanButton =
+    document.getElementById(
+      "startScanButton"
+    );
+
+
+  scanButton.disabled = true;
+
+  scanButton.style.display =
+    "block";
+
+  scanButton.textContent =
+    "SELECT PT TRAINER FIRST";
+
+
+  document
+    .getElementById("status")
+    .textContent =
+      "Select the assigned PT trainer to begin.";
+
+}
+
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+window.addEventListener(
+  "load",
+  function() {
+
+    document
+      .getElementById("resultCard")
+      .style.display = "none";
+
+
+    document
+      .getElementById("reader")
+      .style.display = "none";
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>
