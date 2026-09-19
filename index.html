@@ -1075,21 +1075,13 @@ const errorMessage =
 function selectTrainer(code) {
 
   code =
-    String(
-      code || ""
-    )
-    .trim()
-    .toUpperCase();
+    String(code || "")
+      .trim()
+      .toUpperCase();
 
-
-  /* ----------------------------------------------
-     VALIDATE TRAINER
-  ---------------------------------------------- */
 
   if (
-    VALID_PT_CODES.indexOf(
-      code
-    ) === -1
+    VALID_PT_CODES.indexOf(code) === -1
   ) {
 
     return;
@@ -1100,40 +1092,22 @@ function selectTrainer(code) {
   selectedPT = code;
 
 
-  /* ----------------------------------------------
-     UPDATE TRAINER BUTTON
-  ---------------------------------------------- */
-
   document
-    .querySelectorAll(
-      ".trainer-btn"
-    )
-    .forEach(
-      function(button) {
+    .querySelectorAll(".trainer-btn")
+    .forEach(function(button) {
 
-        button.classList.remove(
-          "active"
-        );
+      button.classList.remove("active");
 
+      if (
+        button.dataset.code === selectedPT
+      ) {
 
-        if (
-          button.dataset.code ===
-          selectedPT
-        ) {
-
-          button.classList.add(
-            "active"
-          );
-
-        }
+        button.classList.add("active");
 
       }
-    );
 
+    });
 
-  /* ----------------------------------------------
-     DISPLAY ACTIVE TRAINER
-  ---------------------------------------------- */
 
   activeTrainer.innerHTML =
     "Selected Trainer: <strong>" +
@@ -1141,12 +1115,10 @@ function selectTrainer(code) {
     "</strong>";
 
 
-  /* ----------------------------------------------
-     ENABLE SCANNER
-  ---------------------------------------------- */
+  startButton.disabled = false;
 
-  startButton.disabled =
-    false;
+
+  hideError();
 
 
   status.textContent =
@@ -1161,14 +1133,8 @@ function selectTrainer(code) {
 
 async function startScanner() {
 
-  /* ----------------------------------------------
-     REQUIRE TRAINER
-  ---------------------------------------------- */
-
   if (
-    VALID_PT_CODES.indexOf(
-      selectedPT
-    ) === -1
+    VALID_PT_CODES.indexOf(selectedPT) === -1
   ) {
 
     status.textContent =
@@ -1179,13 +1145,7 @@ async function startScanner() {
   }
 
 
-  /* ----------------------------------------------
-     PREVENT DOUBLE START
-  ---------------------------------------------- */
-
-  if (
-    scannerRunning
-  ) {
+  if (scannerRunning) {
 
     return;
 
@@ -1195,39 +1155,27 @@ async function startScanner() {
   hideError();
 
 
-  result.style.display =
-    "none";
+  result.style.display = "none";
 
+  scanAnotherButton.style.display = "none";
 
-  scanAnotherButton.style.display =
-    "none";
+  scannerWrapper.style.display = "block";
 
+  startButton.disabled = true;
 
-  scannerWrapper.style.display =
-    "block";
-
-
-  startButton.disabled =
-    true;
-
-
-  status.textContent =
-    "Starting camera...";
-
-
-  html5QrCode =
-    new Html5Qrcode(
-      "reader"
-    );
+  status.textContent = "Starting camera...";
 
 
   try {
 
+    html5QrCode =
+      new Html5Qrcode("reader");
+
+
     await html5QrCode.start(
 
       {
-        facingMode:
-          "environment"
+        facingMode: "environment"
       },
 
       {
@@ -1249,8 +1197,7 @@ async function startScanner() {
     );
 
 
-    scannerRunning =
-      true;
+    scannerRunning = true;
 
 
     status.textContent =
@@ -1258,25 +1205,21 @@ async function startScanner() {
 
   } catch (error) {
 
-    scannerRunning =
-      false;
+    scannerRunning = false;
 
+    html5QrCode = null;
 
-    scannerWrapper.style.display =
-      "none";
+    scannerWrapper.style.display = "none";
 
-
-    startButton.disabled =
-      false;
-
+    startButton.disabled = false;
 
     status.textContent =
       "Unable to start camera.";
 
-
     showError(
-      error.message ||
-      "Camera could not be started."
+      error && error.message
+        ? error.message
+        : "Camera could not be started."
     );
 
   }
@@ -1288,26 +1231,17 @@ async function startScanner() {
    QR SCAN SUCCESS
 ================================================== */
 
-async function onScanSuccess(
-  decodedText
-) {
+async function onScanSuccess(decodedText) {
 
-  if (
-    processingScan
-  ) {
+  if (processingScan) {
 
     return;
 
   }
 
 
-  processingScan =
-    true;
+  processingScan = true;
 
-
-  /* ----------------------------------------------
-     SAVE TRAINER FOR THIS TRANSACTION
-  ---------------------------------------------- */
 
   const trainerForThisScan =
     selectedPT;
@@ -1319,51 +1253,33 @@ async function onScanSuccess(
     ) === -1
   ) {
 
-    processingScan =
-      false;
-
+    processingScan = false;
 
     showError(
       "Please select a valid PT trainer."
     );
-
 
     return;
 
   }
 
 
-  /* ----------------------------------------------
-     STOP CAMERA
-  ---------------------------------------------- */
-
   await stopScanner();
 
 
-  /* ----------------------------------------------
-     GET MEMBER ID
-  ---------------------------------------------- */
-
   const memberId =
-    extractMemberId(
-      decodedText
-    );
+    extractMemberId(decodedText);
 
 
   if (!memberId) {
 
-    processingScan =
-      false;
-
+    processingScan = false;
 
     showError(
       "Invalid QR code. Member ID was not found."
     );
 
-
-    startButton.disabled =
-      false;
-
+    startButton.disabled = false;
 
     return;
 
@@ -1374,18 +1290,13 @@ async function onScanSuccess(
     "Processing PT session...";
 
 
-  /* ----------------------------------------------
-     PROCESS PT TRANSACTION
-  ---------------------------------------------- */
-
   await processPT(
     memberId,
     trainerForThisScan
   );
 
 
-  processingScan =
-    false;
+  processingScan = false;
 
 }
 
@@ -1394,15 +1305,12 @@ async function onScanSuccess(
    QR SCAN FAILURE
 ================================================== */
 
-function onScanFailure(
-  error
-) {
+function onScanFailure(error) {
 
   /*
-     Scanner continuously calls this while
-     looking for a QR code.
-
-     No message is required.
+     Intentionally blank.
+     The scanner continuously calls this
+     while searching for a QR code.
   */
 
 }
@@ -1415,9 +1323,12 @@ function onScanFailure(
 async function stopScanner() {
 
   if (
-    !html5QrCode ||
-    !scannerRunning
+    !html5QrCode
   ) {
+
+    scannerWrapper.style.display = "none";
+
+    scannerRunning = false;
 
     return;
 
@@ -1426,7 +1337,11 @@ async function stopScanner() {
 
   try {
 
-    await html5QrCode.stop();
+    if (scannerRunning) {
+
+      await html5QrCode.stop();
+
+    }
 
   } catch (error) {
 
@@ -1452,16 +1367,11 @@ async function stopScanner() {
   }
 
 
-  scannerRunning =
-    false;
+  scannerRunning = false;
 
+  html5QrCode = null;
 
-  html5QrCode =
-    null;
-
-
-  scannerWrapper.style.display =
-    "none";
+  scannerWrapper.style.display = "none";
 
 }
 
@@ -1470,9 +1380,7 @@ async function stopScanner() {
    EXTRACT MEMBER ID
 ================================================== */
 
-function extractMemberId(
-  decodedText
-) {
+function extractMemberId(decodedText) {
 
   let value =
     String(
@@ -1488,37 +1396,50 @@ function extractMemberId(
 
 
   /*
-     If QR contains:
+     QR may contain:
+
+     SALFG0001
+
+     OR
 
      memberId=SALFG0001
 
-     extract only the member ID.
+     OR
+
+     https://...?...memberId=SALFG0001
   */
+
 
   try {
 
+    const lowerValue =
+      value.toLowerCase();
+
+
+    const marker =
+      "memberid=";
+
+
+    const markerPosition =
+      lowerValue.indexOf(marker);
+
+
     if (
-      value.indexOf(
-        "memberId="
-      ) !== -1
+      markerPosition !== -1
     ) {
 
-      const parts =
-        value.split(
-          "memberId="
+      value =
+        value.substring(
+          markerPosition + marker.length
         );
 
 
-      if (
-        parts.length > 1
-      ) {
-
-        value =
-          parts[1]
-            .split("&")[0]
-            .split("#")[0];
-
-      }
+      value =
+        value
+          .split("&")[0]
+          .split("#")[0]
+          .split("?")[0]
+          .trim();
 
     }
 
@@ -1546,194 +1467,288 @@ function processPT(
   trainerCode
 ) {
 
-  return new Promise(
-    function(resolve) {
+  return new Promise(function(resolve) {
 
-      memberId =
-        String(
-          memberId || ""
-        ).trim();
-
-
-      trainerCode =
-        String(
-          trainerCode || ""
-        )
-        .trim()
-        .toUpperCase();
+    memberId =
+      String(
+        memberId || ""
+      ).trim();
 
 
-      /* ------------------------------------------
-         VALIDATE MEMBER
-      ------------------------------------------ */
-
-      if (!memberId) {
-
-        showError(
-          "Member ID is empty."
-        );
+    trainerCode =
+      String(
+        trainerCode || ""
+      )
+      .trim()
+      .toUpperCase();
 
 
-        resolve();
+    /* ----------------------------------------------
+       VALIDATE MEMBER
+    ---------------------------------------------- */
 
-        return;
+    if (!memberId) {
 
-      }
+      showError(
+        "Member ID is empty."
+      );
 
+      resolve();
 
-      /* ------------------------------------------
-         VALIDATE TRAINER
-      ------------------------------------------ */
+      return;
 
-      if (
-        VALID_PT_CODES.indexOf(
-          trainerCode
-        ) === -1
-      ) {
-
-        showError(
-          "Invalid PT trainer."
-        );
+    }
 
 
-        resolve();
+    /* ----------------------------------------------
+       VALIDATE TRAINER
+    ---------------------------------------------- */
 
-        return;
+    if (
+      VALID_PT_CODES.indexOf(
+        trainerCode
+      ) === -1
+    ) {
 
-      }
+      showError(
+        "Invalid PT trainer."
+      );
 
+      resolve();
 
-      /* ------------------------------------------
-         UNIQUE CALLBACK
-      ------------------------------------------ */
+      return;
 
-      const callbackName =
-        "ptCallback_" +
-        Date.now();
-
-
-      /* ------------------------------------------
-         JSONP CALLBACK
-      ------------------------------------------ */
-
-      window[callbackName] =
-        function(response) {
-
-          try {
-
-            if (
-              response &&
-              response.success
-            ) {
-
-              showSuccess(
-                response
-              );
-
-            } else {
-
-              showError(
-
-                response &&
-                response.message
-
-                  ? response.message
-
-                  : "PT transaction failed."
-
-              );
-
-            }
-
-          } catch (error) {
-
-            showError(
-              error.message
-            );
-
-          } finally {
-
-            cleanup();
-
-            resolve();
-
-          }
-
-        };
+    }
 
 
-      /* ------------------------------------------
-         SCRIPT REQUEST
-      ------------------------------------------ */
+    /* ----------------------------------------------
+       UNIQUE JSONP CALLBACK
+    ---------------------------------------------- */
 
-      const script =
-        document.createElement(
-          "script"
-        );
-
-
-      script.src =
-        API_URL +
-        "?action=pt" +
-        "&memberId=" +
-        encodeURIComponent(
-          memberId
-        ) +
-        "&ptCode=" +
-        encodeURIComponent(
-          trainerCode
-        ) +
-        "&callback=" +
-        encodeURIComponent(
-          callbackName
-        );
-
-
-      script.onerror =
-        function() {
-
-          showError(
-            "Unable to connect to PT server."
-          );
-
-
-          cleanup();
-
-          resolve();
-
-        };
-
-
-      document.body.appendChild(
-        script
+    const callbackName =
+      "stayActivePTCallback_" +
+      Date.now() +
+      "_" +
+      Math.floor(
+        Math.random() * 100000
       );
 
 
-      /* ------------------------------------------
-         CLEANUP
-      ------------------------------------------ */
+    let finished = false;
 
-      function cleanup() {
-
-        try {
-
-          script.remove();
-
-        } catch (error) {}
+    let timeoutId = null;
 
 
-        try {
+    /* ----------------------------------------------
+       CLEANUP
+    ---------------------------------------------- */
 
-          delete window[
-            callbackName
-          ];
+    function cleanup() {
 
-        } catch (error) {}
+      if (timeoutId) {
+
+        clearTimeout(timeoutId);
+
+        timeoutId = null;
 
       }
 
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      } catch (error) {}
+
+
+      try {
+
+        if (script) {
+
+          script.remove();
+
+        }
+
+      } catch (error) {}
+
     }
-  );
+
+
+    /* ----------------------------------------------
+       FINISH REQUEST
+    ---------------------------------------------- */
+
+    function finish() {
+
+      if (finished) {
+
+        return;
+
+      }
+
+      finished = true;
+
+      cleanup();
+
+      resolve();
+
+    }
+
+
+    /* ----------------------------------------------
+       JSONP CALLBACK
+    ---------------------------------------------- */
+
+    window[callbackName] =
+      function(response) {
+
+        try {
+
+          if (
+            response &&
+            response.success === true
+          ) {
+
+            showSuccess(
+              response
+            );
+
+          } else {
+
+            showError(
+
+              response &&
+              response.message
+
+                ? response.message
+
+                : "PT transaction failed."
+
+            );
+
+          }
+
+        } catch (error) {
+
+          showError(
+            error &&
+            error.message
+              ? error.message
+              : "Unable to process PT response."
+          );
+
+        }
+
+
+        finish();
+
+      };
+
+
+    /* ----------------------------------------------
+       CREATE SCRIPT REQUEST
+    ---------------------------------------------- */
+
+    const script =
+      document.createElement(
+        "script"
+      );
+
+
+    const separator =
+      API_URL.indexOf("?") === -1
+        ? "?"
+        : "&";
+
+
+    const requestUrl =
+      API_URL +
+      separator +
+      "action=pt" +
+      "&memberId=" +
+      encodeURIComponent(
+        memberId
+      ) +
+      "&ptCode=" +
+      encodeURIComponent(
+        trainerCode
+      ) +
+      "&callback=" +
+      encodeURIComponent(
+        callbackName
+      ) +
+      "&_=" +
+      Date.now();
+
+
+    console.log(
+      "PT Request:",
+      requestUrl
+    );
+
+
+    script.src =
+      requestUrl;
+
+
+    script.async = true;
+
+
+    /* ----------------------------------------------
+       CONNECTION ERROR
+    ---------------------------------------------- */
+
+    script.onerror =
+      function() {
+
+        showError(
+          "Unable to connect to PT server. Please check the internet connection and try again."
+        );
+
+
+        finish();
+
+      };
+
+
+    /* ----------------------------------------------
+       TIMEOUT
+    ---------------------------------------------- */
+
+    timeoutId =
+      setTimeout(
+        function() {
+
+          if (finished) {
+
+            return;
+
+          }
+
+
+          showError(
+            "PT server did not respond. Please try again."
+          );
+
+
+          finish();
+
+        },
+        15000
+      );
+
+
+    /* ----------------------------------------------
+       SEND REQUEST
+    ---------------------------------------------- */
+
+    document.head.appendChild(
+      script
+    );
+
+  });
 
 }
 
@@ -1742,9 +1757,7 @@ function processPT(
    SHOW SUCCESS
 ================================================== */
 
-function showSuccess(
-  response
-) {
+function showSuccess(response) {
 
   /* ----------------------------------------------
      HIDE TRAINER SELECTION
@@ -1787,13 +1800,6 @@ function showSuccess(
 
   /* ----------------------------------------------
      PT TRAINER
-     
-     This displays ONLY:
-     PT01
-     PT02
-     PT03
-     PT04
-     PT05
   ---------------------------------------------- */
 
   resultTrainer.textContent =
@@ -1827,7 +1833,7 @@ function showSuccess(
 
 
   /* ----------------------------------------------
-     ZERO CREDIT = RED + BLINKING
+     ZERO CREDIT
   ---------------------------------------------- */
 
   if (
@@ -1858,7 +1864,7 @@ function showSuccess(
 
 
   /* ----------------------------------------------
-     SUCCESS MESSAGE
+     SUCCESS STATUS
   ---------------------------------------------- */
 
   status.textContent =
@@ -1868,7 +1874,7 @@ function showSuccess(
 
 
   /* ----------------------------------------------
-     SCAN ANOTHER MEMBER
+     SCAN ANOTHER
   ---------------------------------------------- */
 
   scanAnotherButton.style.display =
@@ -1877,6 +1883,9 @@ function showSuccess(
 
   startButton.style.display =
     "none";
+
+
+  hideError();
 
 }
 
@@ -1892,9 +1901,9 @@ function scanAnotherMember() {
 
      Trainer selection remains hidden.
 
-     To choose another trainer, refresh
-     the page.
+     Refresh the page to select another trainer.
   */
+
 
   result.style.display =
     "none";
@@ -1929,12 +1938,10 @@ function scanAnotherMember() {
     "Ready to scan another member.";
 
 
-  window.scrollTo(
-    {
-      top: 0,
-      behavior: "smooth"
-    }
-  );
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 
 }
 
@@ -1943,9 +1950,7 @@ function scanAnotherMember() {
    SHOW ERROR
 ================================================== */
 
-function showError(
-  message
-) {
+function showError(message) {
 
   errorBox.style.display =
     "block";
@@ -1986,9 +1991,7 @@ function hideError() {
    FORMAT DATE / TIME
 ================================================== */
 
-function formatDateTime(
-  value
-) {
+function formatDateTime(value) {
 
   if (!value) {
 
