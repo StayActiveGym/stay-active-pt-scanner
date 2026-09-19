@@ -100,6 +100,11 @@ body {
     font-size: 14px;
     font-weight: 900;
     cursor: pointer;
+    transition: .15s ease;
+}
+
+.trainer-btn:active {
+    transform: scale(.96);
 }
 
 .trainer-btn.active {
@@ -174,10 +179,16 @@ body {
     font-size: 16px;
     font-weight: 900;
     cursor: pointer;
+    transition: .15s ease;
 }
 
 .primary-btn:active {
     transform: scale(.98);
+}
+
+.primary-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
 }
 
 
@@ -191,6 +202,7 @@ body {
     border-radius: 10px;
     overflow: hidden;
     display: none;
+    background: #000;
 }
 
 #reader video {
@@ -380,7 +392,6 @@ body {
 
 <body>
 
-
 <div class="app">
 
 
@@ -403,9 +414,6 @@ body {
 
     <!-- =================================================
          TRAINER SELECTION
-         
-         This entire section disappears after a
-         successful PT transaction.
     ================================================== -->
 
     <div id="trainerSection">
@@ -458,7 +466,6 @@ body {
 
         </div>
 
-
         <div class="active-trainer">
 
             ACTIVE TRAINER:
@@ -482,10 +489,8 @@ body {
         </div>
 
         <div class="scan-description">
-
             Select the PT trainer first.
             Then scan the member QR code.
-
         </div>
 
         <button
@@ -537,13 +542,13 @@ body {
             </div>
 
             <div class="success-message">
-                1 PT Session is credited today.
+                1 PT Credit Deducted
             </div>
 
             <div
                 id="remainingMessage"
                 class="remaining-message">
-                You still have X remaining PT Credit.
+                You still have X remaining PT Credits.
             </div>
 
         </div>
@@ -580,7 +585,6 @@ body {
         <div
             id="memberInfo"
             class="info-box hidden">
-
 
             <div class="info-row">
 
@@ -670,8 +674,6 @@ body {
 
         <!-- =================================================
              SCAN ANOTHER MEMBER
-             
-             Same trainer remains active.
         ================================================== -->
 
         <button
@@ -683,7 +685,6 @@ body {
             SCAN ANOTHER MEMBER
 
         </button>
-
 
     </div>
 
@@ -766,10 +767,6 @@ function selectTrainer(code) {
     }
 
 
-    /*
-     * Store selected trainer.
-     */
-
     selectedPT = code;
 
 
@@ -818,16 +815,11 @@ function selectTrainer(code) {
 
 
     /*
-     * Reset scanner/result.
+     * Reset screen.
      */
 
     resetToScanner();
 
-
-    console.log(
-        "ACTIVE PT TRAINER:",
-        selectedPT
-    );
 
 }
 
@@ -837,7 +829,6 @@ function selectTrainer(code) {
 ========================================================= */
 
 async function startScanner() {
-
 
     /*
      * Trainer must be selected.
@@ -851,7 +842,7 @@ async function startScanner() {
     ) {
 
         alert(
-            "Please select PT01, PT02, PT03, PT04, or PT05 first."
+            "Please select a PT trainer first."
         );
 
         return;
@@ -869,13 +860,15 @@ async function startScanner() {
     processingScan = false;
 
 
-    document
-        .getElementById(
+    const startButton =
+        document.getElementById(
             "startScanBtn"
-        )
-        .classList.add(
-            "hidden"
         );
+
+
+    startButton.classList.add(
+        "hidden"
+    );
 
 
     document
@@ -982,13 +975,9 @@ async function startScanner() {
             );
 
 
-        document
-            .getElementById(
-                "startScanBtn"
-            )
-            .classList.remove(
-                "hidden"
-            );
+        startButton.classList.remove(
+            "hidden"
+        );
 
 
         alert(
@@ -1008,7 +997,6 @@ async function onScanSuccess(
     decodedText
 ) {
 
-
     if (processingScan) {
 
         return;
@@ -1019,20 +1007,18 @@ async function onScanSuccess(
     processingScan = true;
 
 
-    console.log(
-        "QR VALUE:",
-        decodedText
-    );
-
-
     /*
-     * Verify trainer again.
+     * Capture trainer immediately.
      */
 
+    const trainerForThisScan =
+        selectedPT;
+
+
     if (
-        !selectedPT ||
+        !trainerForThisScan ||
         !VALID_PT_CODES.includes(
-            selectedPT
+            trainerForThisScan
         )
     ) {
 
@@ -1047,12 +1033,10 @@ async function onScanSuccess(
     }
 
 
-    /*
-     * Capture trainer for this scan.
-     */
-
-    const trainerForThisScan =
-        selectedPT;
+    console.log(
+        "QR VALUE:",
+        decodedText
+    );
 
 
     await stopScanner();
@@ -1117,7 +1101,6 @@ function onScanFailure(
 ========================================================= */
 
 async function stopScanner() {
-
 
     if (
         html5QrCode &&
@@ -1194,7 +1177,6 @@ async function stopScanner() {
 function extractMemberId(
     value
 ) {
-
 
     if (!value) {
 
@@ -1301,18 +1283,13 @@ function processPT(
     return new Promise(
         function(resolve) {
 
-
             trainerCode =
                 String(
-                    trainerCode
+                    trainerCode || ""
                 )
                 .trim()
                 .toUpperCase();
 
-
-            /*
-             * Final trainer validation.
-             */
 
             if (
                 !VALID_PT_CODES.includes(
@@ -1331,25 +1308,17 @@ function processPT(
             }
 
 
-            console.log(
-                "SENDING TO SERVER:",
-                {
-                    memberId:
-                        memberId,
-
-                    ptCode:
-                        trainerCode
-                }
-            );
-
-
             /*
-             * Create JSONP callback.
+             * JSONP callback name.
              */
 
             const callbackName =
                 "ptCallback_" +
-                Date.now();
+                Date.now() +
+                "_" +
+                Math.floor(
+                    Math.random() * 100000
+                );
 
 
             const script =
@@ -1359,38 +1328,6 @@ function processPT(
 
 
             let finished = false;
-
-
-            /*
-             * Timeout.
-             */
-
-            const timeout =
-                setTimeout(
-                    function() {
-
-                        if (finished) {
-
-                            return;
-
-                        }
-
-
-                        finished = true;
-
-                        cleanup();
-
-
-                        showError(
-                            "The server did not respond. Please try again."
-                        );
-
-
-                        resolve();
-
-                    },
-                    15000
-                );
 
 
             /*
@@ -1428,6 +1365,38 @@ function processPT(
 
 
             /*
+             * Timeout.
+             */
+
+            const timeout =
+                setTimeout(
+                    function() {
+
+                        if (finished) {
+
+                            return;
+
+                        }
+
+
+                        finished = true;
+
+                        cleanup();
+
+
+                        showError(
+                            "The server did not respond. Please try again."
+                        );
+
+
+                        resolve();
+
+                    },
+                    15000
+                );
+
+
+            /*
              * JSONP callback.
              */
 
@@ -1435,7 +1404,6 @@ function processPT(
                 callbackName
             ] =
                 function(response) {
-
 
                     if (finished) {
 
@@ -1467,11 +1435,28 @@ function processPT(
 
                     } else {
 
-                        const message =
+                        let message =
+                            "The PT session could not be processed.";
+
+
+                        if (
+                            response &&
+                            response.code ===
+                            "NO_PT_CREDIT"
+                        ) {
+
+                            message =
+                                "NO PROFESSIONAL TRAINING CREDIT REMAINING.";
+
+                        } else if (
                             response &&
                             response.message
-                                ? response.message
-                                : "The PT session could not be processed.";
+                        ) {
+
+                            message =
+                                response.message;
+
+                        }
 
 
                         showError(
@@ -1525,7 +1510,6 @@ function processPT(
             script.onerror =
                 function() {
 
-
                     if (finished) {
 
                         return;
@@ -1568,9 +1552,7 @@ function showSuccess(
     response
 ) {
 
-
     /*
-     * IMPORTANT:
      * Hide trainer selection after
      * successful transaction.
      */
@@ -1598,7 +1580,7 @@ function showSuccess(
 
 
     /*
-     * Show result.
+     * Show result card.
      */
 
     document
@@ -1609,6 +1591,10 @@ function showSuccess(
             "hidden"
         );
 
+
+    /*
+     * Success status.
+     */
 
     document
         .getElementById(
@@ -1628,6 +1614,10 @@ function showSuccess(
         );
 
 
+    /*
+     * Member information.
+     */
+
     document
         .getElementById(
             "memberInfo"
@@ -1636,6 +1626,10 @@ function showSuccess(
             "hidden"
         );
 
+
+    /*
+     * Scan another button.
+     */
 
     document
         .getElementById(
@@ -1673,7 +1667,7 @@ function showSuccess(
 
 
     /*
-     * PT Trainer.
+     * Trainer.
      */
 
     document
@@ -1682,7 +1676,8 @@ function showSuccess(
         )
         .textContent =
         response.ptCode ||
-        selectedPT;
+        selectedPT ||
+        "-";
 
 
     /*
@@ -1694,8 +1689,10 @@ function showSuccess(
             "creditUsed"
         )
         .textContent =
-        response.creditUsed ||
-        1;
+        response.creditUsed !==
+        undefined
+            ? response.creditUsed
+            : 1;
 
 
     /*
@@ -1714,6 +1711,12 @@ function showSuccess(
         );
 
 
+    const remainingMessage =
+        document.getElementById(
+            "remainingMessage"
+        );
+
+
     remainingElement
         .classList.remove(
             "zero-credit"
@@ -1729,14 +1732,23 @@ function showSuccess(
             remaining;
 
 
-        document
-            .getElementById(
-                "remainingMessage"
-            )
-            .textContent =
-            "You still have " +
-            remaining +
-            " remaining PT Credit.";
+        if (
+            remaining === 1
+        ) {
+
+            remainingMessage
+                .textContent =
+                "You still have 1 remaining PT Credit.";
+
+        } else {
+
+            remainingMessage
+                .textContent =
+                "You still have " +
+                remaining +
+                " remaining PT Credits.";
+
+        }
 
 
         /*
@@ -1752,6 +1764,17 @@ function showSuccess(
                     "zero-credit"
                 );
 
+
+            remainingMessage
+                .style.color =
+                "#ff3030";
+
+        } else {
+
+            remainingMessage
+                .style.color =
+                "#fff";
+
         }
 
     } else {
@@ -1761,10 +1784,7 @@ function showSuccess(
             "-";
 
 
-        document
-            .getElementById(
-                "remainingMessage"
-            )
+        remainingMessage
             .textContent =
             "Remaining PT Credit unavailable.";
 
@@ -1795,7 +1815,6 @@ function showError(
     message,
     response
 ) {
-
 
     /*
      * Keep trainer selection visible
@@ -1881,14 +1900,6 @@ function showError(
 
 function scanAnotherMember() {
 
-
-    /*
-     * Keep the same PT trainer.
-     *
-     * Trainer selection remains hidden
-     * after the first successful transaction.
-     */
-
     processingScan = false;
 
 
@@ -1930,6 +1941,28 @@ function scanAnotherMember() {
 
     document
         .getElementById(
+            "scanAnotherBtn"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+
+    /*
+     * Same trainer remains active.
+     */
+
+    document
+        .getElementById(
+            "trainerSection"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+
+    document
+        .getElementById(
             "scannerCard"
         )
         .classList.remove(
@@ -1942,20 +1975,6 @@ function scanAnotherMember() {
             "startScanBtn"
         )
         .classList.remove(
-            "hidden"
-        );
-
-
-    /*
-     * Trainer section intentionally
-     * stays hidden.
-     */
-
-    document
-        .getElementById(
-            "trainerSection"
-        )
-        .classList.add(
             "hidden"
         );
 
@@ -1973,7 +1992,6 @@ function scanAnotherMember() {
 ========================================================= */
 
 function resetToScanner() {
-
 
     document
         .getElementById(
@@ -2037,6 +2055,23 @@ function resetToScanner() {
             "hidden"
         );
 
+
+    document
+        .getElementById(
+            "reader"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "scannerNote"
+        )
+        .classList.add(
+            "hidden"
+        );
+
 }
 
 
@@ -2047,7 +2082,6 @@ function resetToScanner() {
 function formatDateTime(
     value
 ) {
-
 
     if (!value) {
 
@@ -2109,12 +2143,20 @@ window.addEventListener(
 
         selectedPT = null;
 
+        processingScan = false;
+
+        scannerRunning = false;
+
+        html5QrCode = null;
+
+
         document
             .getElementById(
                 "activeTrainer"
             )
             .textContent =
             "NONE";
+
 
         resetToScanner();
 
