@@ -16,10 +16,6 @@
 
 <style>
 
-/* ==================================================
-   GENERAL
-================================================== */
-
 * {
   box-sizing: border-box;
 }
@@ -30,639 +26,282 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-
-  background: #000;
-
-  color: #fff;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  min-height: 100vh;
   display: flex;
-
   justify-content: center;
-
-  min-height: 100vh;
-
 }
 
-
-/* ==================================================
-   MAIN CONTAINER
-================================================== */
-
-.container {
-
+.app {
   width: 100%;
-
   max-width: 520px;
-
   min-height: 100vh;
-
-  padding:
-    22px
-    18px
-    30px;
-
-  background: #0b0b0b;
-
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 
-/* ==================================================
+/* =========================================================
    HEADER
-================================================== */
+========================================================= */
 
 .header {
-
   text-align: center;
-
-  margin-bottom: 22px;
-
+  padding: 15px 0 25px;
 }
 
 .logo {
-
-  font-size: 28px;
-
+  font-size: 29px;
   font-weight: 900;
-
   letter-spacing: 1px;
-
-  color: #fff;
-
 }
 
 .logo span {
-
-  color: #ffd400;
-
+  color: #f5c400;
 }
 
 .subtitle {
-
-  margin-top: 6px;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
-  letter-spacing: 1.5px;
-
+  margin-top: 7px;
   color: #999;
-
-  text-transform: uppercase;
-
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 
 
-/* ==================================================
-   TRAINER SELECTION
-================================================== */
+/* =========================================================
+   SCREENS
+========================================================= */
 
-.trainer-section {
-
-  margin-bottom: 20px;
-
+.screen {
+  display: none;
 }
+
+.screen.active {
+  display: block;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+  background: #0d0d0d;
+  border: 1px solid #292929;
+  border-radius: 16px;
+  padding: 22px;
+}
+
+
+/* =========================================================
+   PT SELECTION
+========================================================= */
 
 .section-title {
-
-  text-align: center;
-
-  font-size: 14px;
-
-  font-weight: 800;
-
-  letter-spacing: 1px;
-
-  color: #999;
-
   margin-bottom: 12px;
-
-  text-transform: uppercase;
-
+  color: #999;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
 }
 
-.trainer-grid {
-
+.pt-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(5, 1fr);
-
+  grid-template-columns: repeat(5, 1fr);
   gap: 7px;
-
+  margin-bottom: 22px;
 }
 
-.trainer-btn {
-
-  border: 1px solid #333;
-
-  background: #161616;
-
-  color: #fff;
-
-  border-radius: 8px;
-
-  padding: 14px 4px;
-
-  font-size: 14px;
-
-  font-weight: 900;
-
-  cursor: pointer;
-
-  transition:
-    background .2s ease,
-    color .2s ease,
-    border-color .2s ease;
-
-}
-
-.trainer-btn:hover {
-
-  border-color: #ffd400;
-
-}
-
-.trainer-btn.active {
-
-  background: #ffd400;
-
-  color: #000;
-
-  border-color: #ffd400;
-
-}
-
-
-/* ==================================================
-   ACTIVE TRAINER
-================================================== */
-
-.active-trainer {
-
-  text-align: center;
-
-  margin:
-    12px
-    0
-    18px;
-
-  font-size: 13px;
-
-  color: #888;
-
-}
-
-.active-trainer strong {
-
-  color: #ffd400;
-
-  font-size: 16px;
-
-}
-
-
-/* ==================================================
-   START BUTTON
-================================================== */
-
-.start-btn {
-
-  width: 100%;
-
-  border: none;
-
-  border-radius: 10px;
-
-  padding: 17px;
-
-  background: #ffd400;
-
-  color: #000;
-
-  font-size: 16px;
-
-  font-weight: 900;
-
-  letter-spacing: .5px;
-
-  cursor: pointer;
-
-  margin-bottom: 14px;
-
-}
-
-.start-btn:disabled {
-
-  opacity: .35;
-
-  cursor: not-allowed;
-
-}
-
-
-/* ==================================================
-   SCANNER
-================================================== */
-
-.scanner-wrapper {
-
-  width: 100%;
-
+.pt-button {
+  border: 2px solid #333;
+  border-radius: 9px;
+  padding: 15px 4px;
   background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
 
-  border:
-    1px solid
-    #292929;
+.pt-button.selected {
+  background: #f5c400;
+  border-color: #f5c400;
+  color: #000;
+}
 
-  border-radius: 14px;
 
-  overflow: hidden;
+/* =========================================================
+   BUTTONS
+========================================================= */
 
+.main-button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 17px;
+  border: 0;
+  border-radius: 10px;
+  background: #f5c400;
+  color: #000;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.main-button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 15px;
+  border: 2px solid #333;
+  border-radius: 10px;
+  background: #111;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   CAMERA
+========================================================= */
+
+.camera-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.selected-training {
+  text-align: center;
   margin-bottom: 18px;
-
+  color: #f5c400;
+  font-size: 14px;
+  font-weight: 900;
 }
 
 #reader {
-
   width: 100%;
-
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 #reader video {
-
   width: 100% !important;
-
-  height: auto !important;
-
-  display: block;
-
-}
-
-#reader__scan_region {
-
-  background: #000 !important;
-
-}
-
-#reader__dashboard {
-
-  padding: 10px !important;
-
-  background: #111 !important;
-
-}
-
-#reader__dashboard_section {
-
-  color: #fff !important;
-
-}
-
-#reader__dashboard button {
-
-  background: #ffd400 !important;
-
-  color: #000 !important;
-
-  border: none !important;
-
-  border-radius: 7px !important;
-
-  font-weight: 800 !important;
-
-  padding: 10px 15px !important;
-
+  border-radius: 12px;
 }
 
 
-/* ==================================================
-   STATUS
-================================================== */
+/* =========================================================
+   SUCCESS
+========================================================= */
 
-.status {
-
-  text-align: center;
-
-  min-height: 22px;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
-  color: #999;
-
-  margin-bottom: 14px;
-
-}
-
-
-/* ==================================================
-   RESULT CARD
-================================================== */
-
-.result {
-
-  display: none;
-
-  background: #111;
-
-  border:
-    1px solid
-    #292929;
-
-  border-radius: 14px;
-
-  padding:
-    22px
-    18px;
-
-  margin-top: 12px;
-
-}
-
-.result.success {
-
-  border-color: #ffd400;
-
-}
-
-.result-title {
-
-  text-align: center;
-
-  color: #ffd400;
-
-  font-size: 21px;
-
+.success-icon {
+  width: 70px;
+  height: 70px;
+  margin: 5px auto 20px;
+  border-radius: 50%;
+  background: #f5c400;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
   font-weight: 900;
-
-  margin-bottom: 18px;
-
-  letter-spacing: .5px;
-
 }
 
-.member-name {
-
+.status-title {
   text-align: center;
-
-  font-size: 23px;
-
-  font-weight: 900;
-
-  margin-bottom: 5px;
-
-}
-
-.member-id {
-
-  text-align: center;
-
-  color: #999;
-
-  font-size: 13px;
-
   margin-bottom: 20px;
-
+  font-size: 24px;
+  font-weight: 900;
 }
-
-
-/* ==================================================
-   INFORMATION ROW
-================================================== */
 
 .info-row {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  gap: 15px;
-
-  padding:
-    13px
-    0;
-
-  border-bottom:
-    1px solid
-    #262626;
-
-}
-
-.info-row:last-child {
-
-  border-bottom: none;
-
+  margin-top: 8px;
+  padding: 13px;
+  border-radius: 9px;
+  background: #151515;
 }
 
 .info-label {
-
-  color: #999;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
+  color: #777;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .info-value {
-
-  color: #fff;
-
-  font-size: 15px;
-
+  margin-top: 5px;
+  font-size: 17px;
   font-weight: 900;
-
-  text-align: right;
-
-}
-
-.trainer-value {
-
-  color: #ffd400;
-
+  word-break: break-word;
 }
 
 
-/* ==================================================
-   ZERO CREDIT
-================================================== */
-
-.zero-credit {
-
-  color: #ff3030 !important;
-
-  animation:
-    blinkCredit
-    .8s
-    infinite;
-
-}
-
-@keyframes blinkCredit {
-
-  0%,
-  49% {
-
-    opacity: 1;
-
-  }
-
-  50%,
-  100% {
-
-    opacity: .15;
-
-  }
-
-}
-
-
-/* ==================================================
+/* =========================================================
    ERROR
-================================================== */
-
-.error-box {
-
-  display: none;
-
-  background: #160909;
-
-  border:
-    1px solid
-    #5a2020;
-
-  border-radius: 12px;
-
-  padding: 16px;
-
-  margin-top: 15px;
-
-  text-align: center;
-
-}
+========================================================= */
 
 .error-title {
-
-  color: #ff3030;
-
-  font-size: 17px;
-
+  margin-bottom: 15px;
+  color: #ff3333;
+  text-align: center;
+  font-size: 23px;
   font-weight: 900;
-
-  margin-bottom: 7px;
-
 }
 
 .error-message {
-
-  color: #ccc;
-
-  font-size: 13px;
-
-  line-height: 1.5;
-
-}
-
-
-/* ==================================================
-   SCAN ANOTHER MEMBER
-================================================== */
-
-.scan-another {
-
-  display: none;
-
-  width: 100%;
-
-  margin-top: 18px;
-
-  padding: 16px;
-
-  border: none;
-
-  border-radius: 10px;
-
-  background: #ffd400;
-
-  color: #000;
-
+  color: #ddd;
+  text-align: center;
   font-size: 15px;
-
-  font-weight: 900;
-
-  cursor: pointer;
-
+  line-height: 1.5;
 }
 
 
-/* ==================================================
+/* =========================================================
+   PROCESSING
+========================================================= */
+
+.processing-title {
+  padding: 25px 0 10px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.processing-text {
+  padding-bottom: 20px;
+  color: #999;
+  text-align: center;
+  font-size: 14px;
+}
+
+
+/* =========================================================
    FOOTER
-================================================== */
+========================================================= */
 
 .footer {
-
-  text-align: center;
-
-  margin-top: 25px;
-
+  margin-top: auto;
+  padding-top: 25px;
   color: #555;
-
-  font-size: 11px;
-
-  letter-spacing: .5px;
-
-}
-
-
-/* ==================================================
-   MOBILE
-================================================== */
-
-@media (max-width: 420px) {
-
-  .container {
-
-    padding:
-      18px
-      13px
-      25px;
-
-  }
-
-  .logo {
-
-    font-size: 25px;
-
-  }
-
-  .trainer-btn {
-
-    font-size: 12px;
-
-    padding:
-      12px
-      2px;
-
-  }
-
-  .member-name {
-
-    font-size: 20px;
-
-  }
-
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 </style>
@@ -672,12 +311,12 @@ body {
 
 <body>
 
-<div class="container">
+<div class="app">
 
 
-  <!-- ============================================
+  <!-- =====================================================
        HEADER
-  ============================================= -->
+  ====================================================== -->
 
   <div class="header">
 
@@ -686,70 +325,87 @@ body {
     </div>
 
     <div class="subtitle">
-      Professional Training
+      PROFESSIONAL TRAINING
     </div>
 
   </div>
 
 
-  <!-- ============================================
-       TRAINER SELECTION
-  ============================================= -->
+  <!-- =====================================================
+       SELECTION SCREEN
+  ====================================================== -->
 
   <div
-    class="trainer-section"
-    id="trainerSection"
+    id="selectionScreen"
+    class="screen active"
   >
 
-    <div class="section-title">
-      Select PT Trainer
-    </div>
+    <div class="card">
 
-    <div class="trainer-grid">
+      <div class="section-title">
+        SELECT PROFESSIONAL TRAINING
+      </div>
+
+
+      <div class="pt-grid">
+
+        <button
+          class="pt-button"
+          onclick="selectPT('PT01', this)"
+        >
+          PT01
+        </button>
+
+        <button
+          class="pt-button"
+          onclick="selectPT('PT02', this)"
+        >
+          PT02
+        </button>
+
+        <button
+          class="pt-button"
+          onclick="selectPT('PT03', this)"
+        >
+          PT03
+        </button>
+
+        <button
+          class="pt-button"
+          onclick="selectPT('PT04', this)"
+        >
+          PT04
+        </button>
+
+        <button
+          class="pt-button"
+          onclick="selectPT('PT05', this)"
+        >
+          PT05
+        </button>
+
+      </div>
+
+
+      <div
+        id="selectedText"
+        style="
+          text-align:center;
+          color:#777;
+          font-size:13px;
+        "
+      >
+        Select a training session
+      </div>
+
 
       <button
-        type="button"
-        class="trainer-btn"
-        data-code="PT01"
-        onclick="selectTrainer('PT01')"
+        id="startButton"
+        class="main-button"
+        disabled
+        onclick="startScanner()"
       >
-        PT01
-      </button>
-
-      <button
-        type="button"
-        class="trainer-btn"
-        data-code="PT02"
-        onclick="selectTrainer('PT02')"
-      >
-        PT02
-      </button>
-
-      <button
-        type="button"
-        class="trainer-btn"
-        data-code="PT03"
-        onclick="selectTrainer('PT03')"
-      >
-        PT03
-      </button>
-
-      <button
-        type="button"
-        class="trainer-btn"
-        data-code="PT04"
-        onclick="selectTrainer('PT04')"
-      >
-        PT04
-      </button>
-
-      <button
-        type="button"
-        class="trainer-btn"
-        data-code="PT05"
-        onclick="selectTrainer('PT05')"
-      >
-        PT05
+        SCAN CLIENT QR CODE
       </button>
 
     </div>
@@ -757,469 +413,359 @@ body {
   </div>
 
 
-  <!-- ============================================
-       ACTIVE TRAINER
-  ============================================= -->
+  <!-- =====================================================
+       SCANNER SCREEN
+  ====================================================== -->
 
   <div
-    class="active-trainer"
-    id="activeTrainer"
-  >
-    Select a trainer
-  </div>
-
-
-  <!-- ============================================
-       START SCANNER
-  ============================================= -->
-
-  <button
-    type="button"
-    class="start-btn"
-    id="startButton"
-    onclick="startScanner()"
-    disabled
-  >
-    SCAN MEMBER QR CODE
-  </button>
-
-
-  <!-- ============================================
-       SCANNER
-  ============================================= -->
-
-  <div
-    class="scanner-wrapper"
-    id="scannerWrapper"
-    style="display:none;"
+    id="scannerScreen"
+    class="screen"
   >
 
-    <div id="reader"></div>
+    <div class="card">
 
-  </div>
-
-
-  <!-- ============================================
-       STATUS
-  ============================================= -->
-
-  <div
-    class="status"
-    id="status"
-  >
-    Select PT trainer to begin.
-  </div>
-
-
-  <!-- ============================================
-       RESULT
-  ============================================= -->
-
-  <div
-    class="result"
-    id="result"
-  >
-
-    <div class="result-title">
-      LOG-IN SUCCESSFUL
-    </div>
-
-
-    <div
-      class="member-name"
-      id="resultName"
-    >
-      —
-    </div>
-
-
-    <div
-      class="member-id"
-      id="resultMemberId"
-    >
-      —
-    </div>
-
-
-    <div class="info-row">
-
-      <div class="info-label">
-        PT Trainer
+      <div class="camera-title">
+        SCAN CLIENT QR CODE
       </div>
 
       <div
-        class="info-value trainer-value"
-        id="resultTrainer"
+        id="scannerPT"
+        class="selected-training"
+      ></div>
+
+      <div id="reader"></div>
+
+
+      <button
+        class="secondary-button"
+        onclick="cancelScanner()"
       >
-        —
-      </div>
+        CANCEL
+      </button>
 
     </div>
-
-
-    <div class="info-row">
-
-      <div class="info-label">
-        PT Session
-      </div>
-
-      <div
-        class="info-value"
-        id="resultUsed"
-      >
-        1
-      </div>
-
-    </div>
-
-
-    <div class="info-row">
-
-      <div class="info-label">
-        Remaining PT Credit
-      </div>
-
-      <div
-        class="info-value"
-        id="resultRemaining"
-      >
-        0
-      </div>
-
-    </div>
-
-
-    <div class="info-row">
-
-      <div class="info-label">
-        Transaction Time
-      </div>
-
-      <div
-        class="info-value"
-        id="resultTime"
-      >
-        —
-      </div>
-
-    </div>
-
-
-    <button
-      type="button"
-      class="scan-another"
-      id="scanAnotherButton"
-      onclick="scanAnotherMember()"
-    >
-      SCAN ANOTHER MEMBER
-    </button>
 
   </div>
 
 
-  <!-- ============================================
-       ERROR
-  ============================================= -->
+  <!-- =====================================================
+       PROCESSING SCREEN
+  ====================================================== -->
 
   <div
-    class="error-box"
-    id="errorBox"
+    id="processingScreen"
+    class="screen"
   >
 
-    <div class="error-title">
-      SCAN NOT COMPLETED
-    </div>
+    <div class="card">
 
-    <div
-      class="error-message"
-      id="errorMessage"
-    >
-      —
+      <div class="processing-title">
+        PROCESSING...
+      </div>
+
+      <div class="processing-text">
+        Recording Professional Training session.
+      </div>
+
     </div>
 
   </div>
 
 
-  <!-- ============================================
-       FOOTER
-  ============================================= -->
+  <!-- =====================================================
+       SUCCESS SCREEN
+  ====================================================== -->
+
+  <div
+    id="successScreen"
+    class="screen"
+  >
+
+    <div class="card">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <div class="status-title">
+        PT SESSION RECORDED
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          MEMBER
+        </div>
+
+        <div
+          id="successMember"
+          class="info-value"
+        ></div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          TRAINING
+        </div>
+
+        <div
+          id="successPT"
+          class="info-value"
+        ></div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          TIME
+        </div>
+
+        <div
+          id="successTime"
+          class="info-value"
+        ></div>
+
+      </div>
+
+
+      <button
+        class="main-button"
+        onclick="scanAnother()"
+      >
+        SCAN ANOTHER CLIENT
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ERROR SCREEN
+  ====================================================== -->
+
+  <div
+    id="errorScreen"
+    class="screen"
+  >
+
+    <div class="card">
+
+      <div class="error-title">
+        PT SESSION NOT PROCESSED
+      </div>
+
+      <div
+        id="errorMessage"
+        class="error-message"
+      ></div>
+
+
+      <button
+        class="main-button"
+        onclick="scanAnother()"
+      >
+        TRY AGAIN
+      </button>
+
+    </div>
+
+  </div>
+
 
   <div class="footer">
-    Always Stay Active • Tara, Gym Na!
+    ALWAYS STAY ACTIVE
   </div>
-
 
 </div>
 
 
 <script>
 
-/* ==================================================
-   GOOGLE APPS SCRIPT API
-================================================== */
+/* =========================================================
+   APPS SCRIPT URL
+========================================================= */
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbxq67fyAWDen-vCnW9Qsc8qTM27EN4ZkQof7VzSHVh9g19tzUqH5pdDehQZAxFGJ052jw/exec";
-
-
-/* ==================================================
-   VALID PT TRAINERS
-================================================== */
-
-const VALID_PT_CODES = [
-  "PT01",
-  "PT02",
-  "PT03",
-  "PT04",
-  "PT05"
-];
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbztbXY2-5lG_g8WVRiwxUGDjdTZhJnigiSEVpuHAc_xrhumXlVA2paFuQHwJo0bl0P7/exec";
 
 
-/* ==================================================
+/* =========================================================
    VARIABLES
-================================================== */
+========================================================= */
 
 let selectedPT = "";
 
-let html5QrCode = null;
+let scanner = null;
 
 let scannerRunning = false;
 
-let processingScan = false;
+let processing = false;
 
 
-/* ==================================================
-   ELEMENTS
-================================================== */
+/* =========================================================
+   SELECT PT
+========================================================= */
 
-const trainerSection =
-  document.getElementById(
-    "trainerSection"
-  );
+function selectPT(ptCode, button) {
 
-const activeTrainer =
-  document.getElementById(
-    "activeTrainer"
-  );
-
-const startButton =
-  document.getElementById(
-    "startButton"
-  );
-
-const scannerWrapper =
-  document.getElementById(
-    "scannerWrapper"
-  );
-
-const status =
-  document.getElementById(
-    "status"
-  );
-
-const result =
-  document.getElementById(
-    "result"
-  );
-
-const resultName =
-  document.getElementById(
-    "resultName"
-  );
-
-const resultMemberId =
-  document.getElementById(
-    "resultMemberId"
-  );
-
-const resultTrainer =
-  document.getElementById(
-    "resultTrainer"
-  );
-
-const resultUsed =
-  document.getElementById(
-    "resultUsed"
-  );
-
-const resultRemaining =
-  document.getElementById(
-    "resultRemaining"
-  );
-
-const resultTime =
-  document.getElementById(
-    "resultTime"
-  );
-
-const scanAnotherButton =
-  document.getElementById(
-    "scanAnotherButton"
-  );
-
-const errorBox =
-  document.getElementById(
-    "errorBox"
-  );
-
-const errorMessage =
-  document.getElementById(
-    "errorMessage"
-  );
-
-
-/* ==================================================
-   SELECT TRAINER
-================================================== */
-
-function selectTrainer(code) {
-
-  code =
-    String(code || "")
-      .trim()
-      .toUpperCase();
-
-
-  if (
-    VALID_PT_CODES.indexOf(code) === -1
-  ) {
-
-    return;
-
-  }
-
-
-  selectedPT = code;
+  selectedPT = ptCode;
 
 
   document
-    .querySelectorAll(".trainer-btn")
-    .forEach(function(button) {
+    .querySelectorAll(".pt-button")
+    .forEach(function(btn) {
 
-      button.classList.remove("active");
-
-      if (
-        button.dataset.code === selectedPT
-      ) {
-
-        button.classList.add("active");
-
-      }
+      btn.classList.remove(
+        "selected"
+      );
 
     });
 
 
-  activeTrainer.innerHTML =
-    "Selected Trainer: <strong>" +
-    selectedPT +
-    "</strong>";
+  button.classList.add(
+    "selected"
+  );
 
 
-  startButton.disabled = false;
+  document.getElementById(
+    "selectedText"
+  ).textContent =
+    "Selected: " + ptCode;
 
 
-  hideError();
-
-
-  status.textContent =
-    "Ready to scan member QR code.";
+  document.getElementById(
+    "startButton"
+  ).disabled = false;
 
 }
 
 
-/* ==================================================
+/* =========================================================
+   SHOW SCREEN
+========================================================= */
+
+function showScreen(screenId) {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(function(screen) {
+
+      screen.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  document
+    .getElementById(screenId)
+    .classList.add("active");
+
+}
+
+
+/* =========================================================
    START SCANNER
-================================================== */
+========================================================= */
 
 async function startScanner() {
 
-  if (
-    VALID_PT_CODES.indexOf(selectedPT) === -1
-  ) {
-
-    status.textContent =
-      "Please select a PT trainer first.";
+  if (!selectedPT) {
 
     return;
 
   }
 
 
-  if (scannerRunning) {
-
-    return;
-
-  }
+  processing = false;
 
 
-  hideError();
+  document.getElementById(
+    "scannerPT"
+  ).textContent =
+    "Selected Training: " +
+    selectedPT;
 
 
-  result.style.display = "none";
+  showScreen(
+    "scannerScreen"
+  );
 
-  scanAnotherButton.style.display = "none";
 
-  scannerWrapper.style.display = "block";
-
-  startButton.disabled = true;
-
-  status.textContent = "Starting camera...";
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
 
 
   try {
 
-    html5QrCode =
-      new Html5Qrcode("reader");
-
-
-    await html5QrCode.start(
+    await scanner.start(
 
       {
-        facingMode: "environment"
+        facingMode: {
+          exact: "environment"
+        }
       },
 
       {
         fps: 10,
 
-        qrbox: {
-          width: 260,
-          height: 260
-        },
+        qrbox: function(
+          width,
+          height
+        ) {
 
-        aspectRatio: 1.0
+          const size =
+            Math.floor(
+              Math.min(
+                width,
+                height
+              ) * 0.70
+            );
+
+          return {
+            width: size,
+            height: size
+          };
+
+        }
 
       },
 
-      onScanSuccess,
+      function(decodedText) {
 
-      onScanFailure
+        handleScan(
+          decodedText
+        );
+
+      },
+
+      function(errorMessage) {
+
+        // Normal scanning failure.
+        // No action required.
+
+      }
 
     );
 
 
     scannerRunning = true;
 
-
-    status.textContent =
-      "Scan member QR code.";
-
   } catch (error) {
 
-    scannerRunning = false;
-
-    html5QrCode = null;
-
-    scannerWrapper.style.display = "none";
-
-    startButton.disabled = false;
-
-    status.textContent =
-      "Unable to start camera.";
+    console.error(error);
 
     showError(
-      error && error.message
-        ? error.message
-        : "Camera could not be started."
+      "Unable to access the camera. Please allow camera permission and try again."
     );
 
   }
@@ -1227,166 +773,202 @@ async function startScanner() {
 }
 
 
-/* ==================================================
-   QR SCAN SUCCESS
-================================================== */
+/* =========================================================
+   HANDLE QR SCAN
+========================================================= */
 
-async function onScanSuccess(decodedText) {
+async function handleScan(decodedText) {
 
-  if (processingScan) {
-
-    return;
-
-  }
-
-
-  processingScan = true;
-
-
-  const trainerForThisScan =
-    selectedPT;
-
-
-  if (
-    VALID_PT_CODES.indexOf(
-      trainerForThisScan
-    ) === -1
-  ) {
-
-    processingScan = false;
-
-    showError(
-      "Please select a valid PT trainer."
-    );
+  if (processing) {
 
     return;
 
   }
+
+
+  processing = true;
 
 
   await stopScanner();
 
 
-  const memberId =
-    extractMemberId(decodedText);
-
-
-  if (!memberId) {
-
-    processingScan = false;
-
-    showError(
-      "Invalid QR code. Member ID was not found."
-    );
-
-    startButton.disabled = false;
-
-    return;
-
-  }
-
-
-  status.textContent =
-    "Processing PT session...";
-
-
-  await processPT(
-    memberId,
-    trainerForThisScan
-  );
-
-
-  processingScan = false;
-
-}
-
-
-/* ==================================================
-   QR SCAN FAILURE
-================================================== */
-
-function onScanFailure(error) {
-
   /*
-     Intentionally blank.
-     The scanner continuously calls this
-     while searching for a QR code.
+     The QR value is expected to be
+     something like:
+
+     SALFG0078
   */
 
-}
-
-
-/* ==================================================
-   STOP SCANNER
-================================================== */
-
-async function stopScanner() {
-
-  if (
-    !html5QrCode
-  ) {
-
-    scannerWrapper.style.display = "none";
-
-    scannerRunning = false;
-
-    return;
-
-  }
-
-
-  try {
-
-    if (scannerRunning) {
-
-      await html5QrCode.stop();
-
-    }
-
-  } catch (error) {
-
-    console.log(
-      "Scanner stop:",
-      error
-    );
-
-  }
-
-
-  try {
-
-    await html5QrCode.clear();
-
-  } catch (error) {
-
-    console.log(
-      "Scanner clear:",
-      error
-    );
-
-  }
-
-
-  scannerRunning = false;
-
-  html5QrCode = null;
-
-  scannerWrapper.style.display = "none";
-
-}
-
-
-/* ==================================================
-   EXTRACT MEMBER ID
-================================================== */
-
-function extractMemberId(decodedText) {
-
-  let value =
+  const memberId =
     String(
       decodedText || ""
     ).trim();
 
+
+  if (!memberId) {
+
+    showError(
+      "The QR code does not contain a valid Member ID."
+    );
+
+    return;
+
+  }
+
+
+  processPTSession(
+    memberId
+  );
+
+}
+
+
+/* =========================================================
+   SEND TO APPS SCRIPT
+========================================================= */
+
+function processPTSession(memberId) {
+
+  showScreen(
+    "processingScreen"
+  );
+
+
+  const callbackName =
+    "ptCallback_" +
+    Date.now();
+
+
+  window[callbackName] =
+    function(response) {
+
+      try {
+
+        handleServerResponse(
+          response
+        );
+
+      } finally {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+    };
+
+
+  const url =
+    SCRIPT_URL +
+    "?action=pt" +
+    "&memberId=" +
+    encodeURIComponent(
+      memberId
+    ) +
+    "&ptCode=" +
+    encodeURIComponent(
+      selectedPT
+    ) +
+    "&callback=" +
+    callbackName +
+    "&_=" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.src = url;
+
+
+  script.onerror =
+    function() {
+
+      delete window[
+        callbackName
+      ];
+
+      showError(
+        "Unable to connect to the PT server."
+      );
+
+    };
+
+
+  document
+    .body
+    .appendChild(
+      script
+    );
+
+}
+
+
+/* =========================================================
+   SERVER RESPONSE
+========================================================= */
+
+function handleServerResponse(
+  response
+) {
+
+  if (
+    !response ||
+    response.success !== true
+  ) {
+
+    const message =
+      response &&
+      response.message
+        ? response.message
+        : "Unable to record the PT session.";
+
+
+    showError(
+      message
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "successMember"
+  ).textContent =
+    response.memberName || "";
+
+
+  document.getElementById(
+    "successPT"
+  ).textContent =
+    response.ptCode || selectedPT;
+
+
+  document.getElementById(
+    "successTime"
+  ).textContent =
+    formatTime(
+      response.timestamp
+    );
+
+
+  showScreen(
+    "successScreen"
+  );
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatTime(value) {
 
   if (!value) {
 
@@ -1395,650 +977,136 @@ function extractMemberId(decodedText) {
   }
 
 
-  /*
-     QR may contain:
+  const date =
+    new Date(value);
 
-     SALFG0001
-
-     OR
-
-     memberId=SALFG0001
-
-     OR
-
-     https://...?...memberId=SALFG0001
-  */
-
-
-  try {
-
-    const lowerValue =
-      value.toLowerCase();
-
-
-    const marker =
-      "memberid=";
-
-
-    const markerPosition =
-      lowerValue.indexOf(marker);
-
-
-    if (
-      markerPosition !== -1
-    ) {
-
-      value =
-        value.substring(
-          markerPosition + marker.length
-        );
-
-
-      value =
-        value
-          .split("&")[0]
-          .split("#")[0]
-          .split("?")[0]
-          .trim();
-
-    }
-
-  } catch (error) {
-
-    console.log(
-      "Member ID extraction:",
-      error
-    );
-
-  }
-
-
-  return value.trim();
-
-}
-
-
-/* ==================================================
-   PROCESS PT
-================================================== */
-
-function processPT(
-  memberId,
-  trainerCode
-) {
-
-  return new Promise(function(resolve) {
-
-    memberId =
-      String(
-        memberId || ""
-      ).trim();
-
-
-    trainerCode =
-      String(
-        trainerCode || ""
-      )
-      .trim()
-      .toUpperCase();
-
-
-    /* ----------------------------------------------
-       VALIDATE MEMBER
-    ---------------------------------------------- */
-
-    if (!memberId) {
-
-      showError(
-        "Member ID is empty."
-      );
-
-      resolve();
-
-      return;
-
-    }
-
-
-    /* ----------------------------------------------
-       VALIDATE TRAINER
-    ---------------------------------------------- */
-
-    if (
-      VALID_PT_CODES.indexOf(
-        trainerCode
-      ) === -1
-    ) {
-
-      showError(
-        "Invalid PT trainer."
-      );
-
-      resolve();
-
-      return;
-
-    }
-
-
-    /* ----------------------------------------------
-       UNIQUE JSONP CALLBACK
-    ---------------------------------------------- */
-
-    const callbackName =
-      "stayActivePTCallback_" +
-      Date.now() +
-      "_" +
-      Math.floor(
-        Math.random() * 100000
-      );
-
-
-    let finished = false;
-
-    let timeoutId = null;
-
-
-    /* ----------------------------------------------
-       CLEANUP
-    ---------------------------------------------- */
-
-    function cleanup() {
-
-      if (timeoutId) {
-
-        clearTimeout(timeoutId);
-
-        timeoutId = null;
-
-      }
-
-
-      try {
-
-        delete window[
-          callbackName
-        ];
-
-      } catch (error) {}
-
-
-      try {
-
-        if (script) {
-
-          script.remove();
-
-        }
-
-      } catch (error) {}
-
-    }
-
-
-    /* ----------------------------------------------
-       FINISH REQUEST
-    ---------------------------------------------- */
-
-    function finish() {
-
-      if (finished) {
-
-        return;
-
-      }
-
-      finished = true;
-
-      cleanup();
-
-      resolve();
-
-    }
-
-
-    /* ----------------------------------------------
-       JSONP CALLBACK
-    ---------------------------------------------- */
-
-    window[callbackName] =
-      function(response) {
-
-        try {
-
-          if (
-            response &&
-            response.success === true
-          ) {
-
-            showSuccess(
-              response
-            );
-
-          } else {
-
-            showError(
-
-              response &&
-              response.message
-
-                ? response.message
-
-                : "PT transaction failed."
-
-            );
-
-          }
-
-        } catch (error) {
-
-          showError(
-            error &&
-            error.message
-              ? error.message
-              : "Unable to process PT response."
-          );
-
-        }
-
-
-        finish();
-
-      };
-
-
-    /* ----------------------------------------------
-       CREATE SCRIPT REQUEST
-    ---------------------------------------------- */
-
-    const script =
-      document.createElement(
-        "script"
-      );
-
-
-    const separator =
-      API_URL.indexOf("?") === -1
-        ? "?"
-        : "&";
-
-
-    const requestUrl =
-      API_URL +
-      separator +
-      "action=pt" +
-      "&memberId=" +
-      encodeURIComponent(
-        memberId
-      ) +
-      "&ptCode=" +
-      encodeURIComponent(
-        trainerCode
-      ) +
-      "&callback=" +
-      encodeURIComponent(
-        callbackName
-      ) +
-      "&_=" +
-      Date.now();
-
-
-    console.log(
-      "PT Request:",
-      requestUrl
-    );
-
-
-    script.src =
-      requestUrl;
-
-
-    script.async = true;
-
-
-    /* ----------------------------------------------
-       CONNECTION ERROR
-    ---------------------------------------------- */
-
-    script.onerror =
-      function() {
-
-        showError(
-          "Unable to connect to PT server. Please check the internet connection and try again."
-        );
-
-
-        finish();
-
-      };
-
-
-    /* ----------------------------------------------
-       TIMEOUT
-    ---------------------------------------------- */
-
-    timeoutId =
-      setTimeout(
-        function() {
-
-          if (finished) {
-
-            return;
-
-          }
-
-
-          showError(
-            "PT server did not respond. Please try again."
-          );
-
-
-          finish();
-
-        },
-        15000
-      );
-
-
-    /* ----------------------------------------------
-       SEND REQUEST
-    ---------------------------------------------- */
-
-    document.head.appendChild(
-      script
-    );
-
-  });
-
-}
-
-
-/* ==================================================
-   SHOW SUCCESS
-================================================== */
-
-function showSuccess(response) {
-
-  /* ----------------------------------------------
-     HIDE TRAINER SELECTION
-  ---------------------------------------------- */
-
-  trainerSection.style.display =
-    "none";
-
-
-  /* ----------------------------------------------
-     SHOW RESULT
-  ---------------------------------------------- */
-
-  result.style.display =
-    "block";
-
-
-  result.classList.add(
-    "success"
-  );
-
-
-  /* ----------------------------------------------
-     MEMBER NAME
-  ---------------------------------------------- */
-
-  resultName.textContent =
-    response.memberName ||
-    "—";
-
-
-  /* ----------------------------------------------
-     MEMBER ID
-  ---------------------------------------------- */
-
-  resultMemberId.textContent =
-    response.memberId ||
-    "—";
-
-
-  /* ----------------------------------------------
-     PT TRAINER
-  ---------------------------------------------- */
-
-  resultTrainer.textContent =
-    response.ptCode ||
-    selectedPT ||
-    "—";
-
-
-  /* ----------------------------------------------
-     CREDIT USED
-  ---------------------------------------------- */
-
-  resultUsed.textContent =
-    response.creditUsed !== undefined
-      ? response.creditUsed
-      : 1;
-
-
-  /* ----------------------------------------------
-     REMAINING CREDIT
-  ---------------------------------------------- */
-
-  const remaining =
-    Number(
-      response.remainingCredit || 0
-    );
-
-
-  resultRemaining.textContent =
-    remaining;
-
-
-  /* ----------------------------------------------
-     ZERO CREDIT
-  ---------------------------------------------- */
 
   if (
-    remaining <= 0
+    isNaN(
+      date.getTime()
+    )
   ) {
 
-    resultRemaining.classList.add(
-      "zero-credit"
-    );
-
-  } else {
-
-    resultRemaining.classList.remove(
-      "zero-credit"
-    );
+    return value;
 
   }
 
 
-  /* ----------------------------------------------
-     TRANSACTION TIME
-  ---------------------------------------------- */
-
-  resultTime.textContent =
-    formatDateTime(
-      response.timestamp
-    );
-
-
-  /* ----------------------------------------------
-     SUCCESS STATUS
-  ---------------------------------------------- */
-
-  status.textContent =
-    "1 PT Session is credited today. You still have " +
-    remaining +
-    " remaining PT Credit.";
-
-
-  /* ----------------------------------------------
-     SCAN ANOTHER
-  ---------------------------------------------- */
-
-  scanAnotherButton.style.display =
-    "block";
-
-
-  startButton.style.display =
-    "none";
-
-
-  hideError();
+  return date.toLocaleString(
+    "en-PH",
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit"
+    }
+  );
 
 }
 
 
-/* ==================================================
-   SCAN ANOTHER MEMBER
-================================================== */
+/* =========================================================
+   STOP SCANNER
+========================================================= */
 
-function scanAnotherMember() {
+async function stopScanner() {
 
-  /*
-     Keep the same selected trainer.
+  if (
+    scanner &&
+    scannerRunning
+  ) {
 
-     Trainer selection remains hidden.
+    try {
 
-     Refresh the page to select another trainer.
-  */
+      await scanner.stop();
 
+    } catch (error) {
 
-  result.style.display =
-    "none";
+      console.log(
+        "Scanner stop:",
+        error
+      );
 
-
-  hideError();
-
-
-  scanAnotherButton.style.display =
-    "none";
-
-
-  scannerWrapper.style.display =
-    "none";
+    }
 
 
-  startButton.style.display =
-    "block";
+    try {
+
+      scanner.clear();
+
+    } catch (error) {
+
+      console.log(
+        "Scanner clear:",
+        error
+      );
+
+    }
+
+  }
 
 
-  startButton.disabled =
-    false;
+  scanner = null;
 
-
-  activeTrainer.innerHTML =
-    "Selected Trainer: <strong>" +
-    selectedPT +
-    "</strong>";
-
-
-  status.textContent =
-    "Ready to scan another member.";
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  scannerRunning = false;
 
 }
 
 
-/* ==================================================
+/* =========================================================
+   CANCEL SCANNER
+========================================================= */
+
+async function cancelScanner() {
+
+  processing = false;
+
+  await stopScanner();
+
+  showScreen(
+    "selectionScreen"
+  );
+
+}
+
+
+/* =========================================================
+   SCAN ANOTHER CLIENT
+========================================================= */
+
+function scanAnother() {
+
+  processing = false;
+
+  document.getElementById(
+    "reader"
+  ).innerHTML = "";
+
+
+  showScreen(
+    "selectionScreen"
+  );
+
+}
+
+
+/* =========================================================
    SHOW ERROR
-================================================== */
+========================================================= */
 
 function showError(message) {
 
-  errorBox.style.display =
-    "block";
+  document.getElementById(
+    "errorMessage"
+  ).textContent =
+    message;
 
 
-  errorMessage.textContent =
-    message ||
-    "Something went wrong.";
-
-
-  status.textContent =
-    "Please try again.";
-
-
-  startButton.style.display =
-    "block";
-
-
-  startButton.disabled =
-    false;
-
-}
-
-
-/* ==================================================
-   HIDE ERROR
-================================================== */
-
-function hideError() {
-
-  errorBox.style.display =
-    "none";
-
-}
-
-
-/* ==================================================
-   FORMAT DATE / TIME
-================================================== */
-
-function formatDateTime(value) {
-
-  if (!value) {
-
-    return "—";
-
-  }
-
-
-  try {
-
-    const date =
-      new Date(value);
-
-
-    if (
-      isNaN(
-        date.getTime()
-      )
-    ) {
-
-      return String(
-        value
-      );
-
-    }
-
-
-    return date.toLocaleString(
-      "en-PH",
-      {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-      }
-    );
-
-  } catch (error) {
-
-    return String(
-      value
-    );
-
-  }
+  showScreen(
+    "errorScreen"
+  );
 
 }
 
