@@ -403,6 +403,9 @@ body {
 
     <!-- =================================================
          TRAINER SELECTION
+         
+         This entire section disappears after a
+         successful PT transaction.
     ================================================== -->
 
     <div id="trainerSection">
@@ -667,6 +670,8 @@ body {
 
         <!-- =================================================
              SCAN ANOTHER MEMBER
+             
+             Same trainer remains active.
         ================================================== -->
 
         <button
@@ -769,7 +774,7 @@ function selectTrainer(code) {
 
 
     /*
-     * Update buttons.
+     * Update trainer buttons.
      */
 
     document
@@ -1021,7 +1026,7 @@ async function onScanSuccess(
 
 
     /*
-     * Verify trainer.
+     * Verify trainer again.
      */
 
     if (
@@ -1044,10 +1049,6 @@ async function onScanSuccess(
 
     /*
      * Capture trainer for this scan.
-     *
-     * Even if something changes later,
-     * this scan uses the trainer that was
-     * selected when the QR was scanned.
      */
 
     const trainerForThisScan =
@@ -1085,7 +1086,7 @@ async function onScanSuccess(
 
 
     /*
-     * Send transaction.
+     * Process PT session.
      */
 
     await processPT(
@@ -1207,7 +1208,7 @@ function extractMemberId(
 
 
     /*
-     * URL QR
+     * URL QR.
      */
 
     try {
@@ -1250,7 +1251,7 @@ function extractMemberId(
 
 
     /*
-     * JSON QR
+     * JSON QR.
      */
 
     try {
@@ -1301,10 +1302,6 @@ function processPT(
         function(resolve) {
 
 
-            /*
-             * Final trainer validation.
-             */
-
             trainerCode =
                 String(
                     trainerCode
@@ -1312,6 +1309,10 @@ function processPT(
                 .trim()
                 .toUpperCase();
 
+
+            /*
+             * Final trainer validation.
+             */
 
             if (
                 !VALID_PT_CODES.includes(
@@ -1343,7 +1344,7 @@ function processPT(
 
 
             /*
-             * JSONP callback.
+             * Create JSONP callback.
              */
 
             const callbackName =
@@ -1487,7 +1488,7 @@ function processPT(
 
 
             /*
-             * Build request.
+             * Build API request.
              */
 
             const url =
@@ -1518,7 +1519,7 @@ function processPT(
 
 
             /*
-             * Script error.
+             * Connection error.
              */
 
             script.onerror =
@@ -1568,6 +1569,25 @@ function showSuccess(
 ) {
 
 
+    /*
+     * IMPORTANT:
+     * Hide trainer selection after
+     * successful transaction.
+     */
+
+    document
+        .getElementById(
+            "trainerSection"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+
+    /*
+     * Hide scanner.
+     */
+
     document
         .getElementById(
             "scannerCard"
@@ -1576,6 +1596,10 @@ function showSuccess(
             "hidden"
         );
 
+
+    /*
+     * Show result.
+     */
 
     document
         .getElementById(
@@ -1705,12 +1729,6 @@ function showSuccess(
             remaining;
 
 
-        /*
-         * Message:
-         *
-         * You still have X remaining PT Credit.
-         */
-
         document
             .getElementById(
                 "remainingMessage"
@@ -1722,7 +1740,7 @@ function showSuccess(
 
 
         /*
-         * Zero credit warning.
+         * Blink red when zero.
          */
 
         if (
@@ -1777,6 +1795,20 @@ function showError(
     message,
     response
 ) {
+
+
+    /*
+     * Keep trainer selection visible
+     * when transaction fails.
+     */
+
+    document
+        .getElementById(
+            "trainerSection"
+        )
+        .classList.remove(
+            "hidden"
+        );
 
 
     document
@@ -1851,7 +1883,10 @@ function scanAnotherMember() {
 
 
     /*
-     * Keep selected PT trainer.
+     * Keep the same PT trainer.
+     *
+     * Trainer selection remains hidden
+     * after the first successful transaction.
      */
 
     processingScan = false;
@@ -1907,6 +1942,20 @@ function scanAnotherMember() {
             "startScanBtn"
         )
         .classList.remove(
+            "hidden"
+        );
+
+
+    /*
+     * Trainer section intentionally
+     * stays hidden.
+     */
+
+    document
+        .getElementById(
+            "trainerSection"
+        )
+        .classList.add(
             "hidden"
         );
 
