@@ -196,11 +196,31 @@ body {
   width: 100%;
   overflow: hidden;
   border-radius: 12px;
+  background: #050505;
 }
 
 #reader video {
   width: 100% !important;
+  height: auto !important;
   border-radius: 12px;
+  display: block;
+}
+
+#reader img {
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   CAMERA STATUS
+========================================================= */
+
+.camera-status {
+  margin-top: 12px;
+  color: #777;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 
@@ -435,6 +455,13 @@ body {
 
       <div id="reader"></div>
 
+      <div
+        id="cameraStatus"
+        class="camera-status"
+      >
+        Starting camera...
+      </div>
+
 
       <button
         class="secondary-button"
@@ -622,16 +649,12 @@ function selectPT(ptCode, button) {
     .querySelectorAll(".pt-button")
     .forEach(function(btn) {
 
-      btn.classList.remove(
-        "selected"
-      );
+      btn.classList.remove("selected");
 
     });
 
 
-  button.classList.add(
-    "selected"
-  );
+  button.classList.add("selected");
 
 
   document.getElementById(
@@ -657,9 +680,7 @@ function showScreen(screenId) {
     .querySelectorAll(".screen")
     .forEach(function(screen) {
 
-      screen.classList.remove(
-        "active"
-      );
+      screen.classList.remove("active");
 
     });
 
@@ -678,20 +699,36 @@ function showScreen(screenId) {
 async function startScanner() {
 
   if (!selectedPT) {
-
     return;
-
   }
 
 
   processing = false;
 
 
+  /*
+   Make sure any previous scanner is stopped
+   before creating a new one.
+  */
+
+  await stopScanner();
+
+
   document.getElementById(
     "scannerPT"
   ).textContent =
-    "Selected Training: " +
-    selectedPT;
+    "Selected Training: " + selectedPT;
+
+
+  document.getElementById(
+    "cameraStatus"
+  ).textContent =
+    "Starting camera...";
+
+
+  document.getElementById(
+    "reader"
+  ).innerHTML = "";
 
 
   showScreen(
@@ -705,14 +742,21 @@ async function startScanner() {
     );
 
 
+  /*
+   =========================================================
+   FIRST ATTEMPT
+   Try the environment camera normally.
+   IMPORTANT:
+   Do NOT use "exact".
+   =========================================================
+  */
+
   try {
 
     await scanner.start(
 
       {
-        facingMode: {
-          exact: "environment"
-        }
+        facingMode: "environment"
       },
 
       {
@@ -736,7 +780,9 @@ async function startScanner() {
             height: size
           };
 
-        }
+        },
+
+        aspectRatio: 1.0
 
       },
 
@@ -750,8 +796,10 @@ async function startScanner() {
 
       function(errorMessage) {
 
-        // Normal scanning failure.
-        // No action required.
+        /*
+         Normal QR scanning errors are ignored.
+        The scanner keeps looking for a QR code.
+        */
 
       }
 
@@ -760,12 +808,233 @@ async function startScanner() {
 
     scannerRunning = true;
 
+
+    document.getElementById(
+      "cameraStatus"
+    ).textContent =
+      "Camera ready. Scan client QR code.";
+
+
+    return;
+
+  } catch (environmentError) {
+
+    console.error(
+      "Environment camera failed:",
+      environmentError
+    );
+
+  }
+
+
+  /*
+   =========================================================
+   FALLBACK
+   Get the list of available cameras.
+   =========================================================
+  */
+
+  try {
+
+    await stopScanner();
+
+
+    document.getElementById(
+      "reader"
+    ).innerHTML = "";
+
+
+    scanner =
+      new Html5Qrcode(
+        "reader"
+      );
+
+
+    document.getElementById(
+      "cameraStatus"
+    ).textContent =
+      "Selecting available camera...";
+
+
+    const cameras =
+      await Html5Qrcode.getCameras();
+
+
+    if (
+      !cameras ||
+      cameras.length === 0
+    ) {
+
+      throw new Error(
+        "No camera was detected on this device."
+      );
+
+    }
+
+
+    /*
+     Prefer a camera whose label contains
+     back / rear / environment.
+    */
+
+    let selectedCamera =
+      cameras.find(function(camera) {
+
+        const label =
+          String(
+            camera.label || ""
+          ).toLowerCase();
+
+        return (
+          label.includes("back") ||
+          label.includes("rear") ||
+          label.includes("environment")
+        );
+
+      });
+
+
+    /*
+     If no rear camera was identified,
+     use the first available camera.
+    */
+
+    if (!selectedCamera) {
+
+      selectedCamera =
+        cameras[0];
+
+    }
+
+
+    await scanner.start(
+
+      selectedCamera.id,
+
+      {
+        fps: 10,
+
+        qrbox: function(
+          width,
+          height
+        ) {
+
+          const size =
+            Math.floor(
+              Math.min(
+                width,
+                height
+              ) * 0.70
+            );
+
+          return {
+            width: size,
+            height: size
+          };
+
+        },
+
+        aspectRatio: 1.0
+
+      },
+
+      function(decodedText) {
+
+        handleScan(
+          decodedText
+        );
+
+      },
+
+      function(errorMessage) {
+
+        /*
+         Normal QR scanning errors are ignored.
+        */
+
+      }
+
+    );
+
+
+    scannerRunning = true;
+
+
+    document.getElementById(
+      "cameraStatus"
+    ).textContent =
+      "Camera ready. Scan client QR code.";
+
+
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Camera startup failed:",
+      error
+    );
+
+
+    let message =
+      "Unable to access the camera.";
+
+
+    /*
+     Give a more useful error when possible.
+    */
+
+    if (
+      error &&
+      error.name === "NotAllowedError"
+    ) {
+
+      message =
+        "Camera permission was denied. Please allow camera access for this website and try again.";
+
+    }
+
+    else if (
+      error &&
+      error.name === "NotFoundError"
+    ) {
+
+      message =
+        "No camera was found on this device.";
+
+    }
+
+    else if (
+      error &&
+      error.name === "NotReadableError"
+    ) {
+
+      message =
+        "The camera is currently being used by another application.";
+
+    }
+
+    else if (
+      error &&
+      error.name === "SecurityError"
+    ) {
+
+      message =
+        "The browser blocked camera access. Please make sure this page is using HTTPS.";
+
+    }
+
+    else if (
+      error &&
+      error.message
+    ) {
+
+      message =
+        error.message;
+
+    }
+
 
     showError(
-      "Unable to access the camera. Please allow camera permission and try again."
+      message
     );
 
   }
@@ -777,7 +1046,9 @@ async function startScanner() {
    HANDLE QR SCAN
 ========================================================= */
 
-async function handleScan(decodedText) {
+async function handleScan(
+  decodedText
+) {
 
   if (processing) {
 
@@ -789,14 +1060,19 @@ async function handleScan(decodedText) {
   processing = true;
 
 
+  /*
+   Stop camera immediately after
+   successful QR detection.
+  */
+
   await stopScanner();
 
 
   /*
-     The QR value is expected to be
-     something like:
+   The QR value is expected to be
+   something like:
 
-     SALFG0078
+   SALFG0078
   */
 
   const memberId =
@@ -827,7 +1103,9 @@ async function handleScan(decodedText) {
    SEND TO APPS SCRIPT
 ========================================================= */
 
-function processPTSession(memberId) {
+function processPTSession(
+  memberId
+) {
 
   showScreen(
     "processingScreen"
@@ -848,7 +1126,9 @@ function processPTSession(memberId) {
           response
         );
 
-      } finally {
+      }
+
+      finally {
 
         delete window[
           callbackName
@@ -882,7 +1162,12 @@ function processPTSession(memberId) {
     );
 
 
-  script.src = url;
+  script.src =
+    url;
+
+
+  script.async =
+    true;
 
 
   script.onerror =
@@ -891,6 +1176,7 @@ function processPTSession(memberId) {
       delete window[
         callbackName
       ];
+
 
       showError(
         "Unable to connect to the PT server."
@@ -932,6 +1218,7 @@ function handleServerResponse(
       message
     );
 
+
     return;
 
   }
@@ -946,7 +1233,8 @@ function handleServerResponse(
   document.getElementById(
     "successPT"
   ).textContent =
-    response.ptCode || selectedPT;
+    response.ptCode ||
+    selectedPT;
 
 
   document.getElementById(
@@ -968,7 +1256,9 @@ function handleServerResponse(
    FORMAT TIME
 ========================================================= */
 
-function formatTime(value) {
+function formatTime(
+  value
+) {
 
   if (!value) {
 
@@ -1013,16 +1303,24 @@ function formatTime(value) {
 
 async function stopScanner() {
 
-  if (
-    scanner &&
-    scannerRunning
-  ) {
+  if (!scanner) {
+
+    scannerRunning = false;
+
+    return;
+
+  }
+
+
+  if (scannerRunning) {
 
     try {
 
       await scanner.stop();
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.log(
         "Scanner stop:",
@@ -1031,19 +1329,21 @@ async function stopScanner() {
 
     }
 
+  }
 
-    try {
 
-      scanner.clear();
+  try {
 
-    } catch (error) {
+    scanner.clear();
 
-      console.log(
-        "Scanner clear:",
-        error
-      );
+  }
 
-    }
+  catch (error) {
+
+    console.log(
+      "Scanner clear:",
+      error
+    );
 
   }
 
@@ -1065,6 +1365,12 @@ async function cancelScanner() {
 
   await stopScanner();
 
+
+  document.getElementById(
+    "reader"
+  ).innerHTML = "";
+
+
   showScreen(
     "selectionScreen"
   );
@@ -1076,9 +1382,41 @@ async function cancelScanner() {
    SCAN ANOTHER CLIENT
 ========================================================= */
 
-function scanAnother() {
+async function scanAnother() {
 
   processing = false;
+
+
+  await stopScanner();
+
+
+  selectedPT = "";
+
+
+  document
+    .querySelectorAll(
+      ".pt-button"
+    )
+    .forEach(function(btn) {
+
+      btn.classList.remove(
+        "selected"
+      );
+
+    });
+
+
+  document.getElementById(
+    "selectedText"
+  ).textContent =
+    "Select a training session";
+
+
+  document.getElementById(
+    "startButton"
+  ).disabled =
+    true;
+
 
   document.getElementById(
     "reader"
@@ -1096,7 +1434,9 @@ function scanAnother() {
    SHOW ERROR
 ========================================================= */
 
-function showError(message) {
+function showError(
+  message
+) {
 
   document.getElementById(
     "errorMessage"
