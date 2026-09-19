@@ -6,10 +6,7 @@
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Stay Active PT Trainer</title>
 
@@ -106,7 +103,7 @@ body {
 ========================================================= */
 
 .section-title {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   color: #999;
   font-size: 12px;
   font-weight: bold;
@@ -116,25 +113,64 @@ body {
 .pt-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 7px;
+  gap: 8px;
   margin-bottom: 22px;
 }
 
 .pt-button {
+  appearance: none;
+  -webkit-appearance: none;
+
   border: 2px solid #333;
   border-radius: 9px;
+
   padding: 15px 4px;
+
   background: #111;
   color: #fff;
+
   font-size: 14px;
   font-weight: 900;
+
   cursor: pointer;
+
+  min-height: 52px;
+
+  position: relative;
+  z-index: 10;
+
+  pointer-events: auto;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  touch-action: manipulation;
+}
+
+.pt-button:hover {
+  border-color: #f5c400;
+}
+
+.pt-button:active {
+  transform: scale(.97);
 }
 
 .pt-button.selected {
   background: #f5c400;
   border-color: #f5c400;
   color: #000;
+}
+
+
+/* =========================================================
+   SELECTED TEXT
+========================================================= */
+
+#selectedText {
+  text-align: center;
+  color: #777;
+  font-size: 13px;
+  min-height: 18px;
 }
 
 
@@ -146,13 +182,19 @@ body {
   width: 100%;
   margin-top: 18px;
   padding: 17px;
+
   border: 0;
   border-radius: 10px;
+
   background: #f5c400;
   color: #000;
+
   font-size: 16px;
   font-weight: 900;
+
   cursor: pointer;
+
+  touch-action: manipulation;
 }
 
 .main-button:disabled {
@@ -164,13 +206,19 @@ body {
   width: 100%;
   margin-top: 12px;
   padding: 15px;
+
   border: 2px solid #333;
   border-radius: 10px;
+
   background: #111;
   color: #fff;
+
   font-size: 15px;
   font-weight: 900;
+
   cursor: pointer;
+
+  touch-action: manipulation;
 }
 
 
@@ -211,11 +259,6 @@ body {
   max-width: 100%;
 }
 
-
-/* =========================================================
-   CAMERA STATUS
-========================================================= */
-
 .camera-status {
   margin-top: 12px;
   color: #777;
@@ -232,13 +275,18 @@ body {
 .success-icon {
   width: 70px;
   height: 70px;
+
   margin: 5px auto 20px;
+
   border-radius: 50%;
+
   background: #f5c400;
   color: #000;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-size: 38px;
   font-weight: 900;
 }
@@ -273,15 +321,18 @@ body {
 
 
 /* =========================================================
-   PROFESSIONAL TRAINING REMAINING CREDIT
+   CREDIT
 ========================================================= */
 
 .credit-row {
   margin-top: 10px;
   padding: 16px 13px;
+
   border-radius: 9px;
+
   background: #151515;
   border: 1px solid #333;
+
   text-align: center;
 }
 
@@ -385,6 +436,32 @@ body {
   letter-spacing: 1px;
 }
 
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .app {
+    padding: 15px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .pt-grid {
+    gap: 6px;
+  }
+
+  .pt-button {
+    font-size: 13px;
+    padding: 14px 2px;
+  }
+
+}
+
 </style>
 
 </head>
@@ -413,13 +490,10 @@ body {
 
 
   <!-- =====================================================
-       PT TRAINER SELECTION SCREEN
+       SELECTION SCREEN
   ====================================================== -->
 
-  <div
-    id="selectionScreen"
-    class="screen active"
-  >
+  <div id="selectionScreen" class="screen active">
 
     <div class="card">
 
@@ -431,36 +505,41 @@ body {
       <div class="pt-grid">
 
         <button
+          type="button"
           class="pt-button"
-          onclick="selectPT('PT01', this)"
+          data-pt="PT01"
         >
           PT01
         </button>
 
         <button
+          type="button"
           class="pt-button"
-          onclick="selectPT('PT02', this)"
+          data-pt="PT02"
         >
           PT02
         </button>
 
         <button
+          type="button"
           class="pt-button"
-          onclick="selectPT('PT03', this)"
+          data-pt="PT03"
         >
           PT03
         </button>
 
         <button
+          type="button"
           class="pt-button"
-          onclick="selectPT('PT04', this)"
+          data-pt="PT04"
         >
           PT04
         </button>
 
         <button
+          type="button"
           class="pt-button"
-          onclick="selectPT('PT05', this)"
+          data-pt="PT05"
         >
           PT05
         </button>
@@ -468,23 +547,16 @@ body {
       </div>
 
 
-      <div
-        id="selectedText"
-        style="
-          text-align:center;
-          color:#777;
-          font-size:13px;
-        "
-      >
+      <div id="selectedText">
         Select a PT trainer
       </div>
 
 
       <button
         id="startButton"
+        type="button"
         class="main-button"
         disabled
-        onclick="startScanner()"
       >
         SCAN CLIENT QR CODE
       </button>
@@ -498,10 +570,7 @@ body {
        SCANNER SCREEN
   ====================================================== -->
 
-  <div
-    id="scannerScreen"
-    class="screen"
-  >
+  <div id="scannerScreen" class="screen">
 
     <div class="card">
 
@@ -523,10 +592,10 @@ body {
         Starting camera...
       </div>
 
-
       <button
+        id="cancelButton"
+        type="button"
         class="secondary-button"
-        onclick="cancelScanner()"
       >
         CANCEL
       </button>
@@ -540,10 +609,7 @@ body {
        PROCESSING SCREEN
   ====================================================== -->
 
-  <div
-    id="processingScreen"
-    class="screen"
-  >
+  <div id="processingScreen" class="screen">
 
     <div class="card">
 
@@ -564,10 +630,7 @@ body {
        SUCCESS SCREEN
   ====================================================== -->
 
-  <div
-    id="successScreen"
-    class="screen"
-  >
+  <div id="successScreen" class="screen">
 
     <div class="card">
 
@@ -608,11 +671,6 @@ body {
       </div>
 
 
-      <!-- =================================================
-           PROFESSIONAL TRAINING REMAINING CREDIT
-           SOURCE: DATA COLUMN BF
-      ================================================== -->
-
       <div class="credit-row">
 
         <div class="credit-label">
@@ -626,4 +684,1046 @@ body {
           0
           <span class="credit-unit">
             SESSION
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          TIME
+        </div>
+
+        <div
+          id="successTime"
+          class="info-value"
+        ></div>
+
+      </div>
+
+
+      <button
+        id="scanAnotherButton"
+        type="button"
+        class="main-button"
+      >
+        SCAN ANOTHER CLIENT
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ERROR SCREEN
+  ====================================================== -->
+
+  <div id="errorScreen" class="screen">
+
+    <div class="card">
+
+      <div class="error-title">
+        PT SESSION NOT PROCESSED
+      </div>
+
+      <div
+        id="errorMessage"
+        class="error-message"
+      ></div>
+
+
+      <button
+        id="tryAgainButton"
+        type="button"
+        class="main-button"
+      >
+        TRY AGAIN
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer">
+    ALWAYS STAY ACTIVE
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   APPS SCRIPT URL
+========================================================= */
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbztbXY2-5lG_g8WVRiwxUGDjdTZhJnigiSEVpuHAc_xrhumXlVA2paFuQHwJo0bl0P7/exec";
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let selectedPT = "";
+
+let scanner = null;
+
+let scannerRunning = false;
+
+let processing = false;
+
+
+/* =========================================================
+   PT TRAINER BUTTONS
+========================================================= */
+
+document
+  .querySelectorAll(".pt-button")
+  .forEach(function(button) {
+
+    button.addEventListener(
+      "click",
+      function() {
+
+        const ptCode =
+          button.getAttribute("data-pt");
+
+        selectPT(
+          ptCode,
+          button
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   SELECT PT TRAINER
+========================================================= */
+
+function selectPT(
+  ptCode,
+  button
+) {
+
+  selectedPT = ptCode;
+
+
+  document
+    .querySelectorAll(".pt-button")
+    .forEach(function(btn) {
+
+      btn.classList.remove(
+        "selected"
+      );
+
+    });
+
+
+  button.classList.add(
+    "selected"
+  );
+
+
+  document.getElementById(
+    "selectedText"
+  ).textContent =
+    "Selected PT Trainer: " +
+    ptCode;
+
+
+  document.getElementById(
+    "startButton"
+  ).disabled = false;
+
+}
+
+
+/* =========================================================
+   START BUTTON
+========================================================= */
+
+document
+  .getElementById("startButton")
+  .addEventListener(
+    "click",
+    function() {
+
+      startScanner();
+
+    }
+  );
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+document
+  .getElementById("cancelButton")
+  .addEventListener(
+    "click",
+    function() {
+
+      cancelScanner();
+
+    }
+  );
+
+
+/* =========================================================
+   SCAN ANOTHER
+========================================================= */
+
+document
+  .getElementById("scanAnotherButton")
+  .addEventListener(
+    "click",
+    function() {
+
+      scanAnother();
+
+    }
+  );
+
+
+/* =========================================================
+   TRY AGAIN
+========================================================= */
+
+document
+  .getElementById("tryAgainButton")
+  .addEventListener(
+    "click",
+    function() {
+
+      scanAnother();
+
+    }
+  );
+
+
+/* =========================================================
+   SHOW SCREEN
+========================================================= */
+
+function showScreen(
+  screenId
+) {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(function(screen) {
+
+      screen.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  document
+    .getElementById(screenId)
+    .classList.add(
+      "active"
+    );
+
+}
+
+
+/* =========================================================
+   START SCANNER
+========================================================= */
+
+async function startScanner() {
+
+  if (!selectedPT) {
+    return;
+  }
+
+
+  processing = false;
+
+
+  await stopScanner();
+
+
+  document.getElementById(
+    "scannerPT"
+  ).textContent =
+    "Selected PT Trainer: " +
+    selectedPT;
+
+
+  document.getElementById(
+    "cameraStatus"
+  ).textContent =
+    "Starting camera...";
+
+
+  document.getElementById(
+    "reader"
+  ).innerHTML = "";
+
+
+  showScreen(
+    "scannerScreen"
+  );
+
+
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+  try {
+
+    await scanner.start(
+
+      {
+        facingMode: "environment"
+      },
+
+      {
+        fps: 10,
+
+        qrbox: function(
+          width,
+          height
+        ) {
+
+          const size =
+            Math.floor(
+              Math.min(
+                width,
+                height
+              ) * 0.70
+            );
+
+          return {
+            width: size,
+            height: size
+          };
+
+        },
+
+        aspectRatio: 1.0
+
+      },
+
+      function(decodedText) {
+
+        handleScan(
+          decodedText
+        );
+
+      },
+
+      function(errorMessage) {
+
+        // Ignore normal QR scanning errors.
+
+      }
+
+    );
+
+
+    scannerRunning = true;
+
+
+    document.getElementById(
+      "cameraStatus"
+    ).textContent =
+      "Camera ready. Scan client QR code.";
+
+
+    return;
+
+  }
+
+  catch (environmentError) {
+
+    console.error(
+      "Environment camera failed:",
+      environmentError
+    );
+
+  }
+
+
+  try {
+
+    await stopScanner();
+
+
+    document.getElementById(
+      "reader"
+    ).innerHTML = "";
+
+
+    scanner =
+      new Html5Qrcode(
+        "reader"
+      );
+
+
+    document.getElementById(
+      "cameraStatus"
+    ).textContent =
+      "Selecting available camera...";
+
+
+    const cameras =
+      await Html5Qrcode.getCameras();
+
+
+    if (
+      !cameras ||
+      cameras.length === 0
+    ) {
+
+      throw new Error(
+        "No camera was detected on this device."
+      );
+
+    }
+
+
+    let selectedCamera =
+      cameras.find(
+        function(camera) {
+
+          const label =
+            String(
+              camera.label || ""
+            ).toLowerCase();
+
+          return (
+            label.includes("back") ||
+            label.includes("rear") ||
+            label.includes("environment")
+          );
+
+        }
+      );
+
+
+    if (!selectedCamera) {
+
+      selectedCamera =
+        cameras[0];
+
+    }
+
+
+    await scanner.start(
+
+      selectedCamera.id,
+
+      {
+        fps: 10,
+
+        qrbox: function(
+          width,
+          height
+        ) {
+
+          const size =
+            Math.floor(
+              Math.min(
+                width,
+                height
+              ) * 0.70
+            );
+
+          return {
+            width: size,
+            height: size
+          };
+
+        },
+
+        aspectRatio: 1.0
+
+      },
+
+      function(decodedText) {
+
+        handleScan(
+          decodedText
+        );
+
+      },
+
+      function(errorMessage) {
+
+        // Ignore normal QR scanning errors.
+
+      }
+
+    );
+
+
+    scannerRunning = true;
+
+
+    document.getElementById(
+      "cameraStatus"
+    ).textContent =
+      "Camera ready. Scan client QR code.";
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Camera startup failed:",
+      error
+    );
+
+
+    let message =
+      "Unable to access the camera.";
+
+
+    if (
+      error &&
+      error.name === "NotAllowedError"
+    ) {
+
+      message =
+        "Camera permission was denied. Please allow camera access for this website and try again.";
+
+    }
+
+    else if (
+      error &&
+      error.name === "NotFoundError"
+    ) {
+
+      message =
+        "No camera was found on this device.";
+
+    }
+
+    else if (
+      error &&
+      error.name === "NotReadableError"
+    ) {
+
+      message =
+        "The camera is currently being used by another application.";
+
+    }
+
+    else if (
+      error &&
+      error.name === "SecurityError"
+    ) {
+
+      message =
+        "The browser blocked camera access. Please make sure this page is using HTTPS.";
+
+    }
+
+    else if (
+      error &&
+      error.message
+    ) {
+
+      message =
+        error.message;
+
+    }
+
+
+    showError(
+      message
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   HANDLE QR SCAN
+========================================================= */
+
+async function handleScan(
+  decodedText
+) {
+
+  if (processing) {
+    return;
+  }
+
+
+  processing = true;
+
+
+  await stopScanner();
+
+
+  const memberId =
+    String(
+      decodedText || ""
+    ).trim();
+
+
+  if (!memberId) {
+
+    showError(
+      "The QR code does not contain a valid Member ID."
+    );
+
+    return;
+
+  }
+
+
+  processPTSession(
+    memberId
+  );
+
+}
+
+
+/* =========================================================
+   SEND PT SESSION TO APPS SCRIPT
+========================================================= */
+
+function processPTSession(
+  memberId
+) {
+
+  showScreen(
+    "processingScreen"
+  );
+
+
+  const callbackName =
+    "ptCallback_" +
+    Date.now();
+
+
+  window[callbackName] =
+    function(response) {
+
+      try {
+
+        handleServerResponse(
+          response
+        );
+
+      }
+
+      finally {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+    };
+
+
+  const url =
+    SCRIPT_URL +
+    "?action=pt" +
+    "&memberId=" +
+    encodeURIComponent(
+      memberId
+    ) +
+    "&ptCode=" +
+    encodeURIComponent(
+      selectedPT
+    ) +
+    "&callback=" +
+    callbackName +
+    "&_=" +
+    Date.now();
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.src =
+    url;
+
+  script.async =
+    true;
+
+
+  script.onerror =
+    function() {
+
+      delete window[
+        callbackName
+      ];
+
+
+      showError(
+        "Unable to connect to the PT server."
+      );
+
+    };
+
+
+  document
+    .body
+    .appendChild(
+      script
+    );
+
+}
+
+
+/* =========================================================
+   SERVER RESPONSE
+========================================================= */
+
+function handleServerResponse(
+  response
+) {
+
+  if (
+    !response ||
+    response.success !== true
+  ) {
+
+    const message =
+      response &&
+      response.message
+        ? response.message
+        : "Unable to record the PT session.";
+
+
+    showError(
+      message
+    );
+
+
+    return;
+
+  }
+
+
+  /* ================================================
+     MEMBER
+  ================================================ */
+
+  document.getElementById(
+    "successMember"
+  ).textContent =
+    response.memberName || "";
+
+
+  /* ================================================
+     PT TRAINER
+  ================================================ */
+
+  document.getElementById(
+    "successPT"
+  ).textContent =
+    response.ptCode ||
+    selectedPT;
+
+
+  /* ================================================
+     PROFESSIONAL TRAINING REMAINING CREDIT
+
+     SOURCE:
+     DATA COLUMN BF
+
+     Apps Script must return:
+     professionalTrainingCredit
+  ================================================ */
+
+  const creditElement =
+    document.getElementById(
+      "successCredit"
+    );
+
+
+  let credit =
+    Number(
+      response.professionalTrainingCredit
+    );
+
+
+  if (
+    !Number.isFinite(credit)
+  ) {
+
+    credit = 0;
+
+  }
+
+
+  creditElement.innerHTML =
+    credit +
+    ' <span class="credit-unit">SESSION' +
+    (
+      credit === 1
+        ? ''
+        : 'S'
+    ) +
+    '</span>';
+
+
+  if (credit <= 0) {
+
+    creditElement.classList.add(
+      "zero"
+    );
+
+  }
+
+  else {
+
+    creditElement.classList.remove(
+      "zero"
+    );
+
+  }
+
+
+  /* ================================================
+     TIME
+  ================================================ */
+
+  document.getElementById(
+    "successTime"
+  ).textContent =
+    formatTime(
+      response.timestamp
+    );
+
+
+  showScreen(
+    "successScreen"
+  );
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatTime(
+  value
+) {
+
+  if (!value) {
+    return "";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (
+    isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return value;
+
+  }
+
+
+  return date.toLocaleString(
+    "en-PH",
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit"
+    }
+  );
+
+}
+
+
+/* =========================================================
+   STOP SCANNER
+========================================================= */
+
+async function stopScanner() {
+
+  if (!scanner) {
+
+    scannerRunning = false;
+
+    return;
+
+  }
+
+
+  if (scannerRunning) {
+
+    try {
+
+      await scanner.stop();
+
+    }
+
+    catch (error) {
+
+      console.log(
+        "Scanner stop:",
+        error
+      );
+
+    }
+
+  }
+
+
+  try {
+
+    scanner.clear();
+
+  }
+
+  catch (error) {
+
+    console.log(
+      "Scanner clear:",
+      error
+    );
+
+  }
+
+
+  scanner = null;
+
+  scannerRunning = false;
+
+}
+
+
+/* =========================================================
+   CANCEL SCANNER
+========================================================= */
+
+async function cancelScanner() {
+
+  processing = false;
+
+
+  await stopScanner();
+
+
+  document.getElementById(
+    "reader"
+  ).innerHTML = "";
+
+
+  showScreen(
+    "selectionScreen"
+  );
+
+}
+
+
+/* =========================================================
+   SCAN ANOTHER CLIENT
+========================================================= */
+
+async function scanAnother() {
+
+  processing = false;
+
+
+  await stopScanner();
+
+
+  selectedPT = "";
+
+
+  document
+    .querySelectorAll(
+      ".pt-button"
+    )
+    .forEach(function(button) {
+
+      button.classList.remove(
+        "selected"
+      );
+
+    });
+
+
+  document.getElementById(
+    "selectedText"
+  ).textContent =
+    "Select a PT trainer";
+
+
+  document.getElementById(
+    "startButton"
+  ).disabled =
+    true;
+
+
+  document.getElementById(
+    "reader"
+  ).innerHTML = "";
+
+
+  showScreen(
+    "selectionScreen"
+  );
+
+}
+
+
+/* =========================================================
+   SHOW ERROR
+========================================================= */
+
+function showError(
+  message
+) {
+
+  processing = false;
+
+
+  document.getElementById(
+    "errorMessage"
+  ).textContent =
+    message;
+
+
+  showScreen(
+    "errorScreen"
+  );
+
+}
+
+</script>
+
+</body>
+
+</html>
 ```
