@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -268,6 +269,66 @@ body {
   font-size: 17px;
   font-weight: 900;
   word-break: break-word;
+}
+
+
+/* =========================================================
+   PROFESSIONAL TRAINING CREDIT
+========================================================= */
+
+.credit-row {
+  margin-top: 10px;
+  padding: 16px 13px;
+  border-radius: 9px;
+  background: #151515;
+  border: 1px solid #333;
+  text-align: center;
+}
+
+.credit-label {
+  color: #999;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.credit-value {
+  margin-top: 6px;
+  color: #f5c400;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.credit-unit {
+  margin-left: 4px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+
+/* =========================================================
+   ZERO CREDIT
+========================================================= */
+
+.credit-value.zero {
+  color: #ff3333;
+  animation: blinkCredit 1s infinite;
+}
+
+@keyframes blinkCredit {
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0.2;
+  }
+
 }
 
 
@@ -547,6 +608,29 @@ body {
       </div>
 
 
+      <!-- =================================================
+           PROFESSIONAL TRAINING REMAINING CREDIT
+      ================================================== -->
+
+      <div class="credit-row">
+
+        <div class="credit-label">
+          PROFESSIONAL TRAINING REMAINING CREDIT
+        </div>
+
+        <div
+          id="successCredit"
+          class="credit-value"
+        >
+          0
+          <span class="credit-unit">
+            SESSION
+          </span>
+        </div>
+
+      </div>
+
+
       <div class="info-row">
 
         <div class="info-label">
@@ -706,11 +790,6 @@ async function startScanner() {
   processing = false;
 
 
-  /*
-   Make sure any previous scanner is stopped
-   before creating a new one.
-  */
-
   await stopScanner();
 
 
@@ -741,15 +820,6 @@ async function startScanner() {
       "reader"
     );
 
-
-  /*
-   =========================================================
-   FIRST ATTEMPT
-   Try the environment camera normally.
-   IMPORTANT:
-   Do NOT use "exact".
-   =========================================================
-  */
 
   try {
 
@@ -796,10 +866,7 @@ async function startScanner() {
 
       function(errorMessage) {
 
-        /*
-         Normal QR scanning errors are ignored.
-        The scanner keeps looking for a QR code.
-        */
+        // Normal QR scanning errors are ignored.
 
       }
 
@@ -826,13 +893,6 @@ async function startScanner() {
 
   }
 
-
-  /*
-   =========================================================
-   FALLBACK
-   Get the list of available cameras.
-   =========================================================
-  */
 
   try {
 
@@ -872,11 +932,6 @@ async function startScanner() {
     }
 
 
-    /*
-     Prefer a camera whose label contains
-     back / rear / environment.
-    */
-
     let selectedCamera =
       cameras.find(function(camera) {
 
@@ -893,11 +948,6 @@ async function startScanner() {
 
       });
 
-
-    /*
-     If no rear camera was identified,
-     use the first available camera.
-    */
 
     if (!selectedCamera) {
 
@@ -948,9 +998,7 @@ async function startScanner() {
 
       function(errorMessage) {
 
-        /*
-         Normal QR scanning errors are ignored.
-        */
+        // Normal QR scanning errors are ignored.
 
       }
 
@@ -977,10 +1025,6 @@ async function startScanner() {
     let message =
       "Unable to access the camera.";
 
-
-    /*
-     Give a more useful error when possible.
-    */
 
     if (
       error &&
@@ -1060,20 +1104,8 @@ async function handleScan(
   processing = true;
 
 
-  /*
-   Stop camera immediately after
-   successful QR detection.
-  */
-
   await stopScanner();
 
-
-  /*
-   The QR value is expected to be
-   something like:
-
-   SALFG0078
-  */
 
   const memberId =
     String(
@@ -1224,11 +1256,19 @@ function handleServerResponse(
   }
 
 
+  /* ================================================
+     MEMBER
+  ================================================ */
+
   document.getElementById(
     "successMember"
   ).textContent =
     response.memberName || "";
 
+
+  /* ================================================
+     TRAINING
+  ================================================ */
 
   document.getElementById(
     "successPT"
@@ -1236,6 +1276,69 @@ function handleServerResponse(
     response.ptCode ||
     selectedPT;
 
+
+  /* ================================================
+     PROFESSIONAL TRAINING CREDIT
+     DATA COLUMN BF
+  ================================================ */
+
+  const creditElement =
+    document.getElementById(
+      "successCredit"
+    );
+
+
+  let credit =
+    Number(
+      response.professionalTrainingCredit
+    );
+
+
+  if (
+    !Number.isFinite(credit)
+  ) {
+
+    credit = 0;
+
+  }
+
+
+  creditElement.innerHTML =
+    credit +
+    ' <span class="credit-unit">SESSION' +
+    (
+      credit === 1
+        ? ''
+        : 'S'
+    ) +
+    '</span>';
+
+
+  /*
+   If remaining credit is zero,
+   make it red and blinking.
+  */
+
+  if (credit <= 0) {
+
+    creditElement.classList.add(
+      "zero"
+    );
+
+  }
+
+  else {
+
+    creditElement.classList.remove(
+      "zero"
+    );
+
+  }
+
+
+  /* ================================================
+     TIME
+  ================================================ */
 
   document.getElementById(
     "successTime"
@@ -1455,3 +1558,4 @@ function showError(
 </body>
 
 </html>
+```
