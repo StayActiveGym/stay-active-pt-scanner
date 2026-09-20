@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,13 +5,20 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Stay Active PT Trainer</title>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
+
+/* =========================================================
+   GENERAL
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -33,6 +39,11 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  overscroll-behavior: none;
+}
+
+button {
+  font-family: inherit;
 }
 
 .app {
@@ -79,6 +90,7 @@ body {
 
 .screen {
   display: none;
+  width: 100%;
 }
 
 .screen.active {
@@ -99,7 +111,7 @@ body {
 
 
 /* =========================================================
-   PT TRAINER SELECTION
+   SECTION TITLE
 ========================================================= */
 
 .section-title {
@@ -109,6 +121,11 @@ body {
   font-weight: bold;
   letter-spacing: 1.5px;
 }
+
+
+/* =========================================================
+   PT TRAINER SELECTION
+========================================================= */
 
 .pt-grid {
   display: grid;
@@ -120,6 +137,11 @@ body {
 .pt-button {
   appearance: none;
   -webkit-appearance: none;
+
+  display: block;
+
+  width: 100%;
+  min-height: 56px;
 
   border: 2px solid #333;
   border-radius: 9px;
@@ -134,10 +156,8 @@ body {
 
   cursor: pointer;
 
-  min-height: 52px;
-
   position: relative;
-  z-index: 10;
+  z-index: 20;
 
   pointer-events: auto;
 
@@ -145,6 +165,12 @@ body {
   -webkit-user-select: none;
 
   touch-action: manipulation;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.08s ease;
 }
 
 .pt-button:hover {
@@ -152,7 +178,15 @@ body {
 }
 
 .pt-button:active {
-  transform: scale(.97);
+  transform: scale(0.96);
+}
+
+.pt-button:focus {
+  outline: none;
+}
+
+.pt-button:focus-visible {
+  border-color: #f5c400;
 }
 
 .pt-button.selected {
@@ -175,12 +209,13 @@ body {
 
 
 /* =========================================================
-   BUTTONS
+   MAIN BUTTON
 ========================================================= */
 
 .main-button {
   width: 100%;
   margin-top: 18px;
+
   padding: 17px;
 
   border: 0;
@@ -195,16 +230,34 @@ body {
   cursor: pointer;
 
   touch-action: manipulation;
+
+  transition:
+    opacity 0.15s ease,
+    transform 0.08s ease;
+}
+
+.main-button:hover:not(:disabled) {
+  background: #ffd21a;
+}
+
+.main-button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .main-button:disabled {
-  opacity: .35;
+  opacity: 0.35;
   cursor: not-allowed;
 }
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
 
 .secondary-button {
   width: 100%;
   margin-top: 12px;
+
   padding: 15px;
 
   border: 2px solid #333;
@@ -219,6 +272,15 @@ body {
   cursor: pointer;
 
   touch-action: manipulation;
+}
+
+.secondary-button:hover {
+  border-color: #f5c400;
+  color: #f5c400;
+}
+
+.secondary-button:active {
+  transform: scale(0.98);
 }
 
 
@@ -236,7 +298,9 @@ body {
 .selected-training {
   text-align: center;
   margin-bottom: 18px;
+
   color: #f5c400;
+
   font-size: 14px;
   font-weight: 900;
 }
@@ -259,10 +323,17 @@ body {
   max-width: 100%;
 }
 
+#reader__dashboard {
+  display: none !important;
+}
+
 .camera-status {
   margin-top: 12px;
+
   color: #777;
+
   text-align: center;
+
   font-size: 12px;
   line-height: 1.5;
 }
@@ -294,28 +365,36 @@ body {
 .status-title {
   text-align: center;
   margin-bottom: 20px;
+
   font-size: 24px;
   font-weight: 900;
 }
 
 .info-row {
   margin-top: 8px;
+
   padding: 13px;
+
   border-radius: 9px;
+
   background: #151515;
 }
 
 .info-label {
   color: #777;
+
   font-size: 10px;
   font-weight: bold;
+
   text-transform: uppercase;
 }
 
 .info-value {
   margin-top: 5px;
+
   font-size: 17px;
   font-weight: 900;
+
   word-break: break-word;
 }
 
@@ -326,11 +405,13 @@ body {
 
 .credit-row {
   margin-top: 10px;
+
   padding: 16px 13px;
 
   border-radius: 9px;
 
   background: #151515;
+
   border: 1px solid #333;
 
   text-align: center;
@@ -338,22 +419,29 @@ body {
 
 .credit-label {
   color: #999;
+
   font-size: 10px;
   font-weight: bold;
+
   text-transform: uppercase;
+
   letter-spacing: 1px;
 }
 
 .credit-value {
   margin-top: 6px;
+
   color: #f5c400;
+
   font-size: 28px;
   font-weight: 900;
 }
 
 .credit-unit {
   margin-left: 4px;
+
   color: #fff;
+
   font-size: 13px;
   font-weight: bold;
 }
@@ -365,6 +453,7 @@ body {
 
 .credit-value.zero {
   color: #ff3333;
+
   animation: blinkCredit 1s infinite;
 }
 
@@ -389,16 +478,22 @@ body {
 
 .error-title {
   margin-bottom: 15px;
+
   color: #ff3333;
+
   text-align: center;
+
   font-size: 23px;
   font-weight: 900;
 }
 
 .error-message {
   color: #ddd;
+
   text-align: center;
+
   font-size: 15px;
+
   line-height: 1.5;
 }
 
@@ -409,15 +504,20 @@ body {
 
 .processing-title {
   padding: 25px 0 10px;
+
   text-align: center;
+
   font-size: 24px;
   font-weight: 900;
 }
 
 .processing-text {
   padding-bottom: 20px;
+
   color: #999;
+
   text-align: center;
+
   font-size: 14px;
 }
 
@@ -428,11 +528,16 @@ body {
 
 .footer {
   margin-top: auto;
+
   padding-top: 25px;
+
   color: #555;
+
   text-align: center;
+
   font-size: 10px;
   font-weight: bold;
+
   letter-spacing: 1px;
 }
 
@@ -456,6 +561,7 @@ body {
   }
 
   .pt-button {
+    min-height: 54px;
     font-size: 13px;
     padding: 14px 2px;
   }
@@ -493,7 +599,10 @@ body {
        SELECTION SCREEN
   ====================================================== -->
 
-  <div id="selectionScreen" class="screen active">
+  <div
+    id="selectionScreen"
+    class="screen active"
+  >
 
     <div class="card">
 
@@ -570,7 +679,10 @@ body {
        SCANNER SCREEN
   ====================================================== -->
 
-  <div id="scannerScreen" class="screen">
+  <div
+    id="scannerScreen"
+    class="screen"
+  >
 
     <div class="card">
 
@@ -609,7 +721,10 @@ body {
        PROCESSING SCREEN
   ====================================================== -->
 
-  <div id="processingScreen" class="screen">
+  <div
+    id="processingScreen"
+    class="screen"
+  >
 
     <div class="card">
 
@@ -630,7 +745,10 @@ body {
        SUCCESS SCREEN
   ====================================================== -->
 
-  <div id="successScreen" class="screen">
+  <div
+    id="successScreen"
+    class="screen"
+  >
 
     <div class="card">
 
@@ -683,7 +801,7 @@ body {
         >
           0
           <span class="credit-unit">
-            SESSION
+            SESSIONS
           </span>
         </div>
 
@@ -721,7 +839,10 @@ body {
        ERROR SCREEN
   ====================================================== -->
 
-  <div id="errorScreen" class="screen">
+  <div
+    id="errorScreen"
+    class="screen"
+  >
 
     <div class="card">
 
@@ -779,29 +900,143 @@ let processing = false;
 
 
 /* =========================================================
-   PT TRAINER BUTTONS
+   DOM READY
 ========================================================= */
 
-document
-  .querySelectorAll(".pt-button")
-  .forEach(function(button) {
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
 
-    button.addEventListener(
+    initializeApp();
+
+  }
+);
+
+
+/* =========================================================
+   INITIALIZE APP
+========================================================= */
+
+function initializeApp() {
+
+  /*
+   * PT BUTTONS
+   */
+
+  const ptButtons =
+    document.querySelectorAll(
+      ".pt-button"
+    );
+
+
+  ptButtons.forEach(
+    function(button) {
+
+      button.addEventListener(
+        "click",
+        function(event) {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          const ptCode =
+            button.getAttribute(
+              "data-pt"
+            );
+
+          if (!ptCode) {
+            return;
+          }
+
+          selectPT(
+            ptCode,
+            button
+          );
+
+        },
+        false
+      );
+
+    }
+  );
+
+
+  /*
+   * START
+   */
+
+  document
+    .getElementById("startButton")
+    .addEventListener(
       "click",
-      function() {
+      function(event) {
 
-        const ptCode =
-          button.getAttribute("data-pt");
+        event.preventDefault();
 
-        selectPT(
-          ptCode,
-          button
-        );
+        if (!selectedPT) {
+          return;
+        }
+
+        startScanner();
 
       }
     );
 
-  });
+
+  /*
+   * CANCEL
+   */
+
+  document
+    .getElementById("cancelButton")
+    .addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+        cancelScanner();
+
+      }
+    );
+
+
+  /*
+   * SCAN ANOTHER
+   */
+
+  document
+    .getElementById("scanAnotherButton")
+    .addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+        scanAnother();
+
+      }
+    );
+
+
+  /*
+   * TRY AGAIN
+   */
+
+  document
+    .getElementById("tryAgainButton")
+    .addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+        scanAnother();
+
+      }
+    );
+
+}
 
 
 /* =========================================================
@@ -813,101 +1048,59 @@ function selectPT(
   button
 ) {
 
-  selectedPT = ptCode;
+  selectedPT = String(
+    ptCode
+  ).trim();
 
+
+  /*
+   * Remove previous selection
+   */
 
   document
-    .querySelectorAll(".pt-button")
-    .forEach(function(btn) {
+    .querySelectorAll(
+      ".pt-button"
+    )
+    .forEach(
+      function(btn) {
 
-      btn.classList.remove(
-        "selected"
-      );
+        btn.classList.remove(
+          "selected"
+        );
 
-    });
+      }
+    );
 
+
+  /*
+   * Highlight selected button
+   */
 
   button.classList.add(
     "selected"
   );
 
 
+  /*
+   * Update selected text
+   */
+
   document.getElementById(
     "selectedText"
   ).textContent =
     "Selected PT Trainer: " +
-    ptCode;
+    selectedPT;
 
+
+  /*
+   * Enable scanner button
+   */
 
   document.getElementById(
     "startButton"
   ).disabled = false;
 
 }
-
-
-/* =========================================================
-   START BUTTON
-========================================================= */
-
-document
-  .getElementById("startButton")
-  .addEventListener(
-    "click",
-    function() {
-
-      startScanner();
-
-    }
-  );
-
-
-/* =========================================================
-   CANCEL BUTTON
-========================================================= */
-
-document
-  .getElementById("cancelButton")
-  .addEventListener(
-    "click",
-    function() {
-
-      cancelScanner();
-
-    }
-  );
-
-
-/* =========================================================
-   SCAN ANOTHER
-========================================================= */
-
-document
-  .getElementById("scanAnotherButton")
-  .addEventListener(
-    "click",
-    function() {
-
-      scanAnother();
-
-    }
-  );
-
-
-/* =========================================================
-   TRY AGAIN
-========================================================= */
-
-document
-  .getElementById("tryAgainButton")
-  .addEventListener(
-    "click",
-    function() {
-
-      scanAnother();
-
-    }
-  );
 
 
 /* =========================================================
@@ -919,21 +1112,33 @@ function showScreen(
 ) {
 
   document
-    .querySelectorAll(".screen")
-    .forEach(function(screen) {
+    .querySelectorAll(
+      ".screen"
+    )
+    .forEach(
+      function(screen) {
 
-      screen.classList.remove(
-        "active"
-      );
+        screen.classList.remove(
+          "active"
+        );
 
-    });
+      }
+    );
 
 
-  document
-    .getElementById(screenId)
-    .classList.add(
+  const target =
+    document.getElementById(
+      screenId
+    );
+
+
+  if (target) {
+
+    target.classList.add(
       "active"
     );
+
+  }
 
 }
 
@@ -945,7 +1150,13 @@ function showScreen(
 async function startScanner() {
 
   if (!selectedPT) {
+
+    showError(
+      "Please select a PT Trainer first."
+    );
+
     return;
+
   }
 
 
@@ -978,11 +1189,20 @@ async function startScanner() {
   );
 
 
+  /*
+   * Create scanner
+   */
+
   scanner =
     new Html5Qrcode(
       "reader"
     );
 
+
+  /*
+   * First attempt:
+   * Environment / rear camera
+   */
 
   try {
 
@@ -1029,7 +1249,10 @@ async function startScanner() {
 
       function(errorMessage) {
 
-        // Ignore normal QR scanning errors.
+        /*
+         * Normal QR scanning failures
+         * are ignored.
+         */
 
       }
 
@@ -1058,6 +1281,11 @@ async function startScanner() {
 
   }
 
+
+  /*
+   * Second attempt:
+   * Detect available cameras
+   */
 
   try {
 
@@ -1097,6 +1325,10 @@ async function startScanner() {
     }
 
 
+    /*
+     * Try to find rear camera
+     */
+
     let selectedCamera =
       cameras.find(
         function(camera) {
@@ -1115,6 +1347,11 @@ async function startScanner() {
         }
       );
 
+
+    /*
+     * If no rear camera,
+     * use first available camera.
+     */
 
     if (!selectedCamera) {
 
@@ -1165,7 +1402,10 @@ async function startScanner() {
 
       function(errorMessage) {
 
-        // Ignore normal QR scanning errors.
+        /*
+         * Normal QR scanning errors
+         * are ignored.
+         */
 
       }
 
@@ -1179,7 +1419,6 @@ async function startScanner() {
       "cameraStatus"
     ).textContent =
       "Camera ready. Scan client QR code.";
-
 
   }
 
@@ -1263,6 +1502,10 @@ async function handleScan(
   decodedText
 ) {
 
+  /*
+   * Prevent duplicate scans.
+   */
+
   if (processing) {
     return;
   }
@@ -1271,8 +1514,16 @@ async function handleScan(
   processing = true;
 
 
+  /*
+   * Stop camera immediately.
+   */
+
   await stopScanner();
 
+
+  /*
+   * Read QR value.
+   */
 
   const memberId =
     String(
@@ -1290,6 +1541,10 @@ async function handleScan(
 
   }
 
+
+  /*
+   * Send to Apps Script.
+   */
 
   processPTSession(
     memberId
@@ -1311,10 +1566,22 @@ function processPTSession(
   );
 
 
+  /*
+   * JSONP callback name
+   */
+
   const callbackName =
     "ptCallback_" +
-    Date.now();
+    Date.now() +
+    "_" +
+    Math.floor(
+      Math.random() * 100000
+    );
 
+
+  /*
+   * Create global callback.
+   */
 
   window[callbackName] =
     function(response) {
@@ -1327,16 +1594,46 @@ function processPTSession(
 
       }
 
+      catch (error) {
+
+        console.error(
+          "Response handling error:",
+          error
+        );
+
+        showError(
+          "The PT server returned an invalid response."
+        );
+
+      }
+
       finally {
 
-        delete window[
-          callbackName
-        ];
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        }
+
+        catch (error) {
+
+          console.log(
+            "Callback cleanup:",
+            error
+          );
+
+        }
 
       }
 
     };
 
+
+  /*
+   * Build request URL.
+   */
 
   const url =
     SCRIPT_URL +
@@ -1350,10 +1647,16 @@ function processPTSession(
       selectedPT
     ) +
     "&callback=" +
-    callbackName +
+    encodeURIComponent(
+      callbackName
+    ) +
     "&_=" +
     Date.now();
 
+
+  /*
+   * JSONP script
+   */
 
   const script =
     document.createElement(
@@ -1368,12 +1671,29 @@ function processPTSession(
     true;
 
 
+  /*
+   * Connection failure
+   */
+
   script.onerror =
     function() {
 
-      delete window[
-        callbackName
-      ];
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      }
+
+      catch (error) {
+
+        console.log(
+          "Callback cleanup:",
+          error
+        );
+
+      }
 
 
       showError(
@@ -1383,11 +1703,72 @@ function processPTSession(
     };
 
 
-  document
-    .body
-    .appendChild(
-      script
+  /*
+   * Timeout protection
+   */
+
+  const timeout =
+    setTimeout(
+      function() {
+
+        if (
+          window[callbackName]
+        ) {
+
+          try {
+
+            delete window[
+              callbackName
+            ];
+
+          }
+
+          catch (error) {
+
+            console.log(
+              "Callback cleanup:",
+              error
+            );
+
+          }
+
+
+          showError(
+            "The PT server did not respond. Please try again."
+          );
+
+        }
+
+      },
+      15000
     );
+
+
+  /*
+   * Clear timeout when callback runs.
+   */
+
+  const originalCallback =
+    window[callbackName];
+
+
+  window[callbackName] =
+    function(response) {
+
+      clearTimeout(
+        timeout
+      );
+
+      originalCallback(
+        response
+      );
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
 
 }
 
@@ -1399,6 +1780,16 @@ function processPTSession(
 function handleServerResponse(
   response
 ) {
+
+  console.log(
+    "PT Server Response:",
+    response
+  );
+
+
+  /*
+   * Server returned an error.
+   */
 
   if (
     !response ||
@@ -1422,9 +1813,9 @@ function handleServerResponse(
   }
 
 
-  /* ================================================
-     MEMBER
-  ================================================ */
+  /*
+   * MEMBER
+   */
 
   document.getElementById(
     "successMember"
@@ -1432,9 +1823,9 @@ function handleServerResponse(
     response.memberName || "";
 
 
-  /* ================================================
-     PT TRAINER
-  ================================================ */
+  /*
+   * PT TRAINER
+   */
 
   document.getElementById(
     "successPT"
@@ -1443,15 +1834,16 @@ function handleServerResponse(
     selectedPT;
 
 
-  /* ================================================
-     PROFESSIONAL TRAINING REMAINING CREDIT
-
-     SOURCE:
-     DATA COLUMN BF
-
-     Apps Script must return:
-     professionalTrainingCredit
-  ================================================ */
+  /*
+   * PROFESSIONAL TRAINING CREDIT
+   *
+   * Expected Apps Script response:
+   *
+   * professionalTrainingCredit
+   *
+   * This should represent DATA column BF
+   * after the PT session has been recorded.
+   */
 
   const creditElement =
     document.getElementById(
@@ -1465,8 +1857,14 @@ function handleServerResponse(
     );
 
 
+  /*
+   * Handle numeric strings.
+   */
+
   if (
-    !Number.isFinite(credit)
+    !Number.isFinite(
+      credit
+    )
   ) {
 
     credit = 0;
@@ -1474,16 +1872,33 @@ function handleServerResponse(
   }
 
 
-  creditElement.innerHTML =
-    credit +
-    ' <span class="credit-unit">SESSION' +
-    (
-      credit === 1
-        ? ''
-        : 'S'
-    ) +
-    '</span>';
+  /*
+   * Do not allow negative display.
+   */
 
+  if (credit < 0) {
+
+    credit = 0;
+
+  }
+
+
+  const sessionText =
+    credit === 1
+      ? "SESSION"
+      : "SESSIONS";
+
+
+  creditElement.innerHTML =
+    String(credit) +
+    ' <span class="credit-unit">' +
+    sessionText +
+    "</span>";
+
+
+  /*
+   * Zero credit warning.
+   */
 
   if (credit <= 0) {
 
@@ -1502,9 +1917,9 @@ function handleServerResponse(
   }
 
 
-  /* ================================================
-     TIME
-  ================================================ */
+  /*
+   * TIME
+   */
 
   document.getElementById(
     "successTime"
@@ -1513,6 +1928,10 @@ function handleServerResponse(
       response.timestamp
     );
 
+
+  /*
+   * Show success.
+   */
 
   showScreen(
     "successScreen"
@@ -1544,7 +1963,9 @@ function formatTime(
     )
   ) {
 
-    return value;
+    return String(
+      value
+    );
 
   }
 
@@ -1579,6 +2000,10 @@ async function stopScanner() {
   }
 
 
+  /*
+   * Stop camera.
+   */
+
   if (scannerRunning) {
 
     try {
@@ -1599,9 +2024,13 @@ async function stopScanner() {
   }
 
 
+  /*
+   * Clear scanner.
+   */
+
   try {
 
-    scanner.clear();
+    await scanner.clear();
 
   }
 
@@ -1658,37 +2087,75 @@ async function scanAnother() {
   await stopScanner();
 
 
-  selectedPT = "";
+  /*
+   * Keep the selected PT trainer.
+   *
+   * This makes it faster for a PT trainer
+   * to scan multiple clients.
+   */
 
-
-  document
-    .querySelectorAll(
-      ".pt-button"
-    )
-    .forEach(function(button) {
-
-      button.classList.remove(
-        "selected"
-      );
-
-    });
+  document.getElementById(
+    "reader"
+  ).innerHTML = "";
 
 
   document.getElementById(
     "selectedText"
   ).textContent =
-    "Select a PT trainer";
+    selectedPT
+      ? "Selected PT Trainer: " +
+        selectedPT
+      : "Select a PT trainer";
 
+
+  /*
+   * Keep selected button highlighted.
+   */
+
+  document
+    .querySelectorAll(
+      ".pt-button"
+    )
+    .forEach(
+      function(button) {
+
+        const buttonPT =
+          button.getAttribute(
+            "data-pt"
+          );
+
+
+        if (
+          buttonPT === selectedPT
+        ) {
+
+          button.classList.add(
+            "selected"
+          );
+
+        }
+
+        else {
+
+          button.classList.remove(
+            "selected"
+          );
+
+        }
+
+      }
+    );
+
+
+  /*
+   * Keep Start button enabled
+   * if PT is selected.
+   */
 
   document.getElementById(
     "startButton"
   ).disabled =
-    true;
-
-
-  document.getElementById(
-    "reader"
-  ).innerHTML = "";
+    !selectedPT;
 
 
   showScreen(
@@ -1712,7 +2179,8 @@ function showError(
   document.getElementById(
     "errorMessage"
   ).textContent =
-    message;
+    message ||
+    "Unable to process the PT session.";
 
 
   showScreen(
@@ -1726,4 +2194,3 @@ function showError(
 </body>
 
 </html>
-```
