@@ -1,1371 +1,1379 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Stay Active Professional Training</title>
-
-  <!-- QR SCANNER LIBRARY -->
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-
-  <style>
-    /* =====================================================
-       RESET
-    ===================================================== */
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      width: 100%;
-      min-height: 100%;
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-      background: #111;
-      color: #fff;
-    }
-
-    body {
-      min-height: 100vh;
-    }
-
-
-    /* =====================================================
-       MAIN APP
-    ===================================================== */
-
-    .app {
-      width: 100%;
-      max-width: 650px;
-      min-height: 100vh;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
-
-      display: flex;
-      flex-direction: column;
-    }
-
-
-    /* =====================================================
-       HEADER
-    ===================================================== */
-
-    .header {
-      text-align: center;
-      margin-bottom: 22px;
-    }
-
-    .brand {
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: -1px;
-      text-transform: uppercase;
-    }
-
-    .brand span {
-      color: #ffd400;
-    }
-
-    .subtitle {
-      margin-top: 6px;
-      color: #aaa;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-
-    /* =====================================================
-       CONNECTION STATUS
-    ===================================================== */
-
-    .server-status {
-      width: 100%;
-      padding: 10px 14px;
-      margin-bottom: 18px;
-
-      border-radius: 10px;
-      background: #1b1b1b;
-      border: 1px solid #292929;
-
-      text-align: center;
-      font-size: 13px;
-      font-weight: 700;
-    }
 
-    .status-online {
-      color: #7dff8b;
-    }
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Stay Active PT Trainer</title>
+
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+<style>
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0b0b0b;
+  color: #ffffff;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+  text-align: center;
+  padding: 10px 0 20px;
+}
+
+.logo-title {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.logo-title span {
+  color: #ffd400;
+}
+
+.subtitle {
+  margin-top: 6px;
+  color: #aaaaaa;
+  font-size: 14px;
+}
+
+/* =========================================================
+   SERVER STATUS
+========================================================= */
+
+.status-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin-bottom: 18px;
+  padding: 10px;
+
+  border-radius: 10px;
+  background: #151515;
+
+  font-size: 13px;
+  color: #bbbbbb;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #777777;
+}
+
+.status-dot.online {
+  background: #32d74b;
+}
+
+.status-dot.offline {
+  background: #ff453a;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+  background: #151515;
+  border: 1px solid #292929;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
 
-    .status-offline {
-      color: #ff6868;
-    }
+/* =========================================================
+   TRAINER BUTTONS
+========================================================= */
+
+.trainer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.trainer-btn {
+  border: 1px solid #383838;
+  background: #202020;
+  color: #ffffff;
+
+  padding: 14px 5px;
+
+  border-radius: 10px;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border 0.2s,
+    transform 0.1s;
+}
+
+.trainer-btn:hover {
+  border-color: #ffd400;
+}
+
+.trainer-btn:active {
+  transform: scale(0.97);
+}
+
+.trainer-btn.active {
+  background: #ffd400;
+  color: #000000;
+  border-color: #ffd400;
+}
+
+/* =========================================================
+   SELECTED TRAINER
+========================================================= */
+
+.selected-trainer {
+  text-align: center;
+  margin-top: 14px;
+
+  font-size: 15px;
+  color: #bbbbbb;
+}
+
+.selected-trainer strong {
+  color: #ffd400;
+  font-size: 18px;
+}
+
+/* =========================================================
+   SCAN BUTTON
+========================================================= */
+
+.scan-button {
+  width: 100%;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #ffd400;
+  color: #000000;
+
+  padding: 18px;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  text-transform: uppercase;
+
+  margin-top: 5px;
+
+  transition:
+    transform 0.1s,
+    background 0.2s;
+}
+
+.scan-button:hover {
+  background: #ffe45c;
+}
+
+.scan-button:active {
+  transform: scale(0.98);
+}
+
+.scan-button:disabled {
+  background: #555555;
+  color: #999999;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   SCANNER
+========================================================= */
 
-    .status-checking {
-      color: #ffd400;
-    }
+.scanner-container {
+  display: none;
+}
 
+.scanner-container.active {
+  display: block;
+}
 
-    /* =====================================================
-       CARD
-    ===================================================== */
+#reader {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #000000;
+}
+
+.scanner-note {
+  text-align: center;
+  margin-top: 12px;
+  color: #999999;
+  font-size: 13px;
+  line-height: 1.5;
+}
 
-    .card {
-      width: 100%;
-      background: #1a1a1a;
-      border: 1px solid #292929;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
+/* Hide some Html5QrCode UI elements */
+
+#reader__dashboard_section_swaplink {
+  color: #ffd400 !important;
+}
+
+#reader button {
+  background: #ffd400 !important;
+  color: #000000 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-weight: 700 !important;
+}
 
-    .card-title {
-      font-size: 15px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .8px;
-      color: #ffd400;
-      margin-bottom: 14px;
-    }
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading {
+  display: none;
+  text-align: center;
+  padding: 25px 10px;
+}
+
+.loading.active {
+  display: block;
+}
 
+.spinner {
+  width: 38px;
+  height: 38px;
 
-    /* =====================================================
-       TRAINER BUTTONS
-    ===================================================== */
+  margin: 0 auto 12px;
 
-    .trainer-grid {
-      display: grid;
-      grid-template-columns:
-        repeat(5, 1fr);
-      gap: 8px;
-    }
+  border: 4px solid #333333;
+  border-top: 4px solid #ffd400;
+
+  border-radius: 50%;
 
-    .trainer-btn {
-      border: 0;
-      border-radius: 10px;
-      padding: 14px 5px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.result {
+  display: none;
+}
+
+.result.active {
+  display: block;
+}
 
-      background: #292929;
-      color: #fff;
+.result-icon {
+  width: 65px;
+  height: 65px;
 
-      font-size: 15px;
-      font-weight: 900;
+  margin: 0 auto 15px;
 
-      cursor: pointer;
+  border-radius: 50%;
 
-      transition:
-        .15s ease;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .trainer-btn:hover {
-      background: #333;
-    }
+  font-size: 32px;
+  font-weight: 900;
+}
 
-    .trainer-btn.selected {
-      background: #ffd400;
-      color: #111;
-    }
+.result.success .result-icon {
+  background: #183d20;
+  color: #32d74b;
+}
 
+.result.error .result-icon {
+  background: #401b19;
+  color: #ff453a;
+}
 
-    /* =====================================================
-       SELECTED TRAINER
-    ===================================================== */
+.result-title {
+  text-align: center;
 
-    .selected-trainer {
-      margin-top: 14px;
-      padding: 12px;
+  font-size: 24px;
+  font-weight: 900;
 
-      border-radius: 10px;
+  margin-bottom: 18px;
+}
 
-      background: #111;
-      border: 1px solid #333;
+.result.success .result-title {
+  color: #32d74b;
+}
 
-      text-align: center;
+.result.error .result-title {
+  color: #ff453a;
+}
 
-      font-size: 14px;
-      font-weight: 800;
-    }
+/* =========================================================
+   MEMBER INFORMATION
+========================================================= */
 
-    .selected-trainer strong {
-      color: #ffd400;
-    }
+.member-info {
+  background: #0e0e0e;
+  border-radius: 12px;
+  padding: 15px;
+}
 
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
 
-    /* =====================================================
-       MAIN SCANNER BUTTON
-    ===================================================== */
+  padding: 11px 0;
 
-    .scan-button {
-      width: 100%;
-      min-height: 72px;
+  border-bottom: 1px solid #252525;
+}
 
-      border: 0;
-      border-radius: 14px;
+.info-row:last-child {
+  border-bottom: none;
+}
 
-      background: #ffd400;
-      color: #111;
+.info-label {
+  color: #888888;
+  font-size: 13px;
+}
 
-      font-size: 20px;
-      font-weight: 900;
-      letter-spacing: .5px;
+.info-value {
+  text-align: right;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+}
 
-      cursor: pointer;
+.credit-value {
+  color: #ffd400;
+  font-size: 20px;
+  font-weight: 900;
+}
 
-      transition:
-        transform .12s ease,
-        opacity .12s ease;
-    }
+/* =========================================================
+   RESULT MESSAGE
+========================================================= */
 
-    .scan-button:hover {
-      transform: translateY(-1px);
-    }
+.result-message {
+  margin-top: 15px;
 
-    .scan-button:active {
-      transform: translateY(1px);
-    }
+  padding: 13px;
 
-    .scan-button:disabled {
-      opacity: .4;
-      cursor: not-allowed;
-      transform: none;
-    }
+  background: #202020;
+  border-radius: 10px;
 
+  color: #cccccc;
 
-    /* =====================================================
-       SCANNER
-    ===================================================== */
+  font-size: 14px;
+  line-height: 1.5;
 
-    #scanner-container {
-      display: none;
-      margin-top: 16px;
-    }
+  text-align: center;
+}
 
-    #reader {
-      width: 100%;
-      overflow: hidden;
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
 
-      border-radius: 14px;
-      background: #000;
-      border: 2px solid #333;
-    }
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 
-    .scanner-help {
-      margin-top: 10px;
+  margin-top: 18px;
+}
 
-      text-align: center;
-      color: #aaa;
+.action-button {
+  border: none;
+  border-radius: 10px;
 
-      font-size: 13px;
-      line-height: 1.5;
-    }
+  padding: 14px;
 
+  font-size: 14px;
+  font-weight: 800;
 
-    /* =====================================================
-       STOP SCANNER
-    ===================================================== */
+  cursor: pointer;
+}
 
-    .stop-button {
-      width: 100%;
-      margin-top: 12px;
+.action-primary {
+  background: #ffd400;
+  color: #000000;
+}
 
-      min-height: 50px;
+.action-secondary {
+  background: #292929;
+  color: #ffffff;
+}
 
-      border: 1px solid #444;
-      border-radius: 10px;
+/* =========================================================
+   FOOTER
+========================================================= */
 
-      background: #242424;
-      color: #fff;
+.footer {
+  text-align: center;
 
-      font-size: 15px;
-      font-weight: 800;
+  color: #666666;
 
-      cursor: pointer;
-    }
+  font-size: 11px;
 
-    .stop-button:hover {
-      background: #303030;
-    }
+  padding: 20px 0 10px;
+}
 
+.footer strong {
+  color: #888888;
+}
 
-    /* =====================================================
-       RESULT
-    ===================================================== */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-    #result-card {
-      display: none;
-    }
+@media (max-width: 420px) {
 
-    .result-status {
-      text-align: center;
-      padding: 14px;
+  .app {
+    padding: 14px;
+  }
 
-      border-radius: 12px;
+  .trainer-grid {
+    gap: 5px;
+  }
 
-      font-size: 18px;
-      font-weight: 900;
+  .trainer-btn {
+    font-size: 13px;
+    padding: 13px 3px;
+  }
 
-      margin-bottom: 16px;
-    }
+  .logo-title {
+    font-size: 24px;
+  }
 
-    .result-success {
-      background: #163c1c;
-      color: #7dff8b;
-      border: 1px solid #276a31;
-    }
+}
 
-    .result-error {
-      background: #3c1717;
-      color: #ff7373;
-      border: 1px solid #6d2929;
-    }
+</style>
 
-
-    /* =====================================================
-       MEMBER DETAILS
-    ===================================================== */
-
-    .member-details {
-      display: grid;
-      gap: 10px;
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      padding: 12px;
-
-      background: #111;
-      border-radius: 10px;
-
-      gap: 12px;
-    }
-
-    .detail-label {
-      color: #999;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .detail-value {
-      text-align: right;
-
-      font-size: 15px;
-      font-weight: 900;
-
-      word-break: break-word;
-    }
-
-    .credit-value {
-      color: #ffd400;
-      font-size: 22px;
-    }
-
-
-    /* =====================================================
-       ACTION BUTTONS
-    ===================================================== */
-
-    .action-grid {
-      display: grid;
-      grid-template-columns:
-        1fr 1fr;
-
-      gap: 10px;
-
-      margin-top: 16px;
-    }
-
-    .action-button {
-      min-height: 52px;
-
-      border-radius: 10px;
-
-      font-size: 14px;
-      font-weight: 900;
-
-      cursor: pointer;
-    }
-
-    .next-button {
-      border: 0;
-      background: #ffd400;
-      color: #111;
-    }
-
-    .change-button {
-      border: 1px solid #444;
-      background: #242424;
-      color: #fff;
-    }
-
-
-    /* =====================================================
-       LOADING
-    ===================================================== */
-
-    .loading {
-      display: none;
-
-      text-align: center;
-
-      padding: 20px 10px;
-
-      color: #ffd400;
-
-      font-size: 15px;
-      font-weight: 800;
-    }
-
-    .spinner {
-      width: 28px;
-      height: 28px;
-
-      margin: 0 auto 10px;
-
-      border: 3px solid #444;
-      border-top-color: #ffd400;
-
-      border-radius: 50%;
-
-      animation:
-        spin .8s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-
-    /* =====================================================
-       FOOTER
-    ===================================================== */
-
-    .footer {
-      margin-top: auto;
-      padding-top: 20px;
-
-      text-align: center;
-
-      color: #666;
-
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-
-    /* =====================================================
-       MOBILE
-    ===================================================== */
-
-    @media (max-width: 500px) {
-
-      .app {
-        padding:
-          16px
-          12px
-          30px;
-      }
-
-      .brand {
-        font-size: 25px;
-      }
-
-      .trainer-grid {
-        gap: 6px;
-      }
-
-      .trainer-btn {
-        padding:
-          13px
-          3px;
-
-        font-size: 14px;
-      }
-
-      .card {
-        padding: 16px;
-      }
-
-      .action-grid {
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-  </style>
 </head>
 
 
 <body>
 
-  <main class="app">
+<div class="app">
 
-    <!-- =================================================
-         HEADER
-    ================================================== -->
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
 
-    <header class="header">
+  <div class="header">
 
-      <div class="brand">
-        STAY <span>ACTIVE</span>
-      </div>
+    <div class="logo-title">
+      STAY <span>ACTIVE</span>
+    </div>
 
-      <div class="subtitle">
-        Professional Training
-      </div>
+    <div class="subtitle">
+      Professional Training Session Scanner
+    </div>
 
-    </header>
+  </div>
 
 
-    <!-- =================================================
-         SERVER STATUS
-    ================================================== -->
+  <!-- =====================================================
+       SERVER STATUS
+  ====================================================== -->
+
+  <div class="status-box">
 
     <div
-      id="server-status"
-      class="server-status status-checking"
-    >
-      Checking connection...
+      id="statusDot"
+      class="status-dot"
+    ></div>
+
+    <span id="statusText">
+      Checking server...
+    </span>
+
+  </div>
+
+
+  <!-- =====================================================
+       TRAINER SELECTION
+  ====================================================== -->
+
+  <div class="card">
+
+    <div class="card-title">
+      Select PT Trainer
+    </div>
+
+    <div class="trainer-grid">
+
+      <button
+        class="trainer-btn"
+        data-trainer="PT01"
+        onclick="selectTrainer('PT01')"
+      >
+        PT01
+      </button>
+
+      <button
+        class="trainer-btn"
+        data-trainer="PT02"
+        onclick="selectTrainer('PT02')"
+      >
+        PT02
+      </button>
+
+      <button
+        class="trainer-btn"
+        data-trainer="PT03"
+        onclick="selectTrainer('PT03')"
+      >
+        PT03
+      </button>
+
+      <button
+        class="trainer-btn"
+        data-trainer="PT04"
+        onclick="selectTrainer('PT04')"
+      >
+        PT04
+      </button>
+
+      <button
+        class="trainer-btn"
+        data-trainer="PT05"
+        onclick="selectTrainer('PT05')"
+      >
+        PT05
+      </button>
+
     </div>
 
 
-    <!-- =================================================
-         TRAINER CARD
-    ================================================== -->
+    <div class="selected-trainer">
 
-    <section
-      id="trainer-card"
-      class="card"
+      Selected Trainer:
+
+      <strong id="selectedTrainerDisplay">
+        None
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SCAN BUTTON
+  ====================================================== -->
+
+  <div class="card">
+
+    <button
+      id="scanButton"
+      class="scan-button"
+      onclick="startScanner()"
+      disabled
+    >
+      Select Trainer First
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       SCANNER
+  ====================================================== -->
+
+  <div
+    id="scannerCard"
+    class="card scanner-container"
+  >
+
+    <div class="card-title">
+      Scan Member QR Code
+    </div>
+
+    <div id="reader"></div>
+
+    <div class="scanner-note">
+
+      Point the camera at the member's QR code.<br>
+
+      The PT session will be recorded automatically.
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <div
+    id="loadingCard"
+    class="card loading"
+  >
+
+    <div class="spinner"></div>
+
+    <div>
+      Recording PT session...
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       RESULT
+  ====================================================== -->
+
+  <div
+    id="resultCard"
+    class="card result"
+  >
+
+    <div
+      id="resultIcon"
+      class="result-icon"
+    >
+      ✓
+    </div>
+
+    <div
+      id="resultTitle"
+      class="result-title"
+    >
+      PT Session Recorded
+    </div>
+
+
+    <div
+      id="memberInfo"
+      class="member-info"
     >
 
-      <div class="card-title">
-        Select PT Trainer
-      </div>
+      <div class="info-row">
 
-      <div class="trainer-grid">
+        <div class="info-label">
+          Member Name
+        </div>
 
-        <button
-          class="trainer-btn"
-          data-trainer="PT01"
-          onclick="selectTrainer('PT01')"
+        <div
+          id="memberName"
+          class="info-value"
         >
-          PT01
-        </button>
-
-        <button
-          class="trainer-btn"
-          data-trainer="PT02"
-          onclick="selectTrainer('PT02')"
-        >
-          PT02
-        </button>
-
-        <button
-          class="trainer-btn"
-          data-trainer="PT03"
-          onclick="selectTrainer('PT03')"
-        >
-          PT03
-        </button>
-
-        <button
-          class="trainer-btn"
-          data-trainer="PT04"
-          onclick="selectTrainer('PT04')"
-        >
-          PT04
-        </button>
-
-        <button
-          class="trainer-btn"
-          data-trainer="PT05"
-          onclick="selectTrainer('PT05')"
-        >
-          PT05
-        </button>
+          -
+        </div>
 
       </div>
 
 
-      <div class="selected-trainer">
+      <div class="info-row">
 
-        Selected Trainer:
-        <strong id="selected-trainer">
-          None
-        </strong>
+        <div class="info-label">
+          Member ID
+        </div>
+
+        <div
+          id="memberId"
+          class="info-value"
+        >
+          -
+        </div>
 
       </div>
 
-    </section>
+
+      <div class="info-row">
+
+        <div class="info-label">
+          PT Trainer
+        </div>
+
+        <div
+          id="trainerResult"
+          class="info-value"
+        >
+          -
+        </div>
+
+      </div>
 
 
-    <!-- =================================================
-         SCANNER CARD
-    ================================================== -->
+      <div class="info-row">
 
-    <section
-      id="scanner-card"
-      class="card"
+        <div class="info-label">
+          Previous Credit
+        </div>
+
+        <div
+          id="previousCredit"
+          class="info-value"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Remaining Professional Training Credit
+        </div>
+
+        <div
+          id="remainingCredit"
+          class="info-value credit-value"
+        >
+          -
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="resultMessage"
+      class="result-message"
     >
+      PT session successfully recorded.
+    </div>
 
-      <div class="card-title">
-        Scan Client QR Code
-      </div>
 
+    <div class="action-buttons">
 
       <button
-        id="open-scanner-button"
-        class="scan-button"
-        onclick="openScanner()"
-        disabled
+        class="action-button action-primary"
+        onclick="scanNext()"
       >
-        OPEN QR SCANNER
+        Scan Next Client
       </button>
 
-
-      <div
-        id="scanner-container"
+      <button
+        class="action-button action-secondary"
+        onclick="changeTrainer()"
       >
+        Change Trainer
+      </button>
 
-        <div id="reader"></div>
+    </div>
 
-        <div class="scanner-help">
-          Position the client's QR code inside the frame.
-        </div>
+  </div>
 
-        <button
-          class="stop-button"
-          onclick="stopScanner()"
-        >
-          STOP SCANNER
-        </button>
 
-      </div>
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
 
+  <div class="footer">
 
-      <div
-        id="loading"
-        class="loading"
-      >
+    <strong>Stay Active | Lifestyle Fitness Gym</strong><br>
 
-        <div class="spinner"></div>
+    Professional Training System
 
-        Recording PT session...
+  </div>
 
-      </div>
+</div>
 
-    </section>
 
+<script>
 
-    <!-- =================================================
-         RESULT CARD
-    ================================================== -->
+/* =========================================================
+   API CONFIGURATION
+========================================================= */
 
-    <section
-      id="result-card"
-      class="card"
-    >
+const API_URL =
+  "https://script.google.com/macros/s/AKfycby1TqJt_tBkiu-9s0P_ndNygdH5DjBnOsE25faSV41UDPxWdw7bm5WIxQFlDOi7X1Wt/exec";
 
-      <div
-        id="result-status"
-        class="result-status"
-      >
-        Result
-      </div>
 
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
 
-      <div
-        id="member-details"
-        class="member-details"
-      >
+let selectedTrainer = "";
 
-        <div class="detail-row">
+let html5QrCode = null;
 
-          <div class="detail-label">
-            MEMBER NAME
-          </div>
+let scannerRunning = false;
 
-          <div
-            id="member-name"
-            class="detail-value"
-          >
-            —
-          </div>
+let processingScan = false;
 
-        </div>
+let callbackCounter = 0;
 
 
-        <div class="detail-row">
+/* =========================================================
+   PAGE LOAD
+========================================================= */
 
-          <div class="detail-label">
-            MEMBER ID
-          </div>
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
 
-          <div
-            id="member-id"
-            class="detail-value"
-          >
-            —
-          </div>
+    checkServer();
 
-        </div>
+  }
+);
 
 
-        <div class="detail-row">
+/* =========================================================
+   CHECK SERVER
+========================================================= */
 
-          <div class="detail-label">
-            PT TRAINER
-          </div>
+function checkServer() {
 
-          <div
-            id="trainer-result"
-            class="detail-value"
-          >
-            —
-          </div>
+  setServerStatus(
+    "Checking server...",
+    ""
+  );
 
-        </div>
 
+  jsonpRequest(
 
-        <div class="detail-row">
+    {
+      action: "ping"
+    },
 
-          <div class="detail-label">
-            PREVIOUS CREDIT
-          </div>
+    function(result) {
 
-          <div
-            id="previous-credit"
-            class="detail-value"
-          >
-            —
-          </div>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            REMAINING PT CREDIT
-          </div>
-
-          <div
-            id="remaining-credit"
-            class="detail-value credit-value"
-          >
-            —
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="action-grid">
-
-        <button
-          class="action-button next-button"
-          onclick="scanNextClient()"
-        >
-          SCAN NEXT CLIENT
-        </button>
-
-        <button
-          class="action-button change-button"
-          onclick="changeTrainer()"
-        >
-          CHANGE TRAINER
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         FOOTER
-    ================================================== -->
-
-    <footer class="footer">
-
-      Stay Active Lifestyle Fitness Gym<br>
-
-      Professional Training Scanner
-
-    </footer>
-
-  </main>
-
-
-  <script>
-
-    /* =====================================================
-       CONFIGURATION
-    ===================================================== */
-
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycby1TqJt_tBkiu-9s0P_ndNygdH5DjBnOsE25faSV41UDPxWdw7bm5WIxQFlDOi7X1Wt/exec";
-
-
-    /* =====================================================
-       VARIABLES
-    ===================================================== */
-
-    let selectedTrainer = "";
-
-    let html5QrCode = null;
-
-    let scannerRunning = false;
-
-    let processingScan = false;
-
-    let callbackCounter = 0;
-
-
-    /* =====================================================
-       INITIALIZE
-    ===================================================== */
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
-
-        checkServer();
-
-      }
-    );
-
-
-    /* =====================================================
-       SELECT TRAINER
-    ===================================================== */
-
-    function selectTrainer(trainer) {
-
-      selectedTrainer =
-        String(trainer || "")
-          .trim()
-          .toUpperCase();
-
-
-      document
-        .querySelectorAll(".trainer-btn")
-        .forEach(
-          function (button) {
-
-            button.classList.toggle(
-              "selected",
-              button.dataset.trainer ===
-                selectedTrainer
-            );
-
-          }
-        );
-
-
-      document
-        .getElementById(
-          "selected-trainer"
-        )
-        .textContent =
-        selectedTrainer;
-
-
-      document
-        .getElementById(
-          "open-scanner-button"
-        )
-        .disabled = false;
-
-    }
-
-
-    /* =====================================================
-       CHECK SERVER
-    ===================================================== */
-
-    function checkServer() {
-
-      setServerStatus(
-        "checking",
-        "Checking connection..."
-      );
-
-
-      jsonpRequest(
-        {
-          action: "ping"
-        },
-
-        function (result) {
-
-          if (
-            result &&
-            result.success &&
-            result.code === "API_ONLINE"
-          ) {
-
-            setServerStatus(
-              "online",
-              "● Server Online"
-            );
-
-            if (selectedTrainer) {
-
-              document
-                .getElementById(
-                  "open-scanner-button"
-                )
-                .disabled = false;
-
-            }
-
-          } else {
-
-            setServerStatus(
-              "offline",
-              "● Server Error"
-            );
-
-          }
-
-        },
-
-        function () {
-
-          setServerStatus(
-            "offline",
-            "● Server Offline"
-          );
-
-        }
-      );
-
-    }
-
-
-    /* =====================================================
-       SERVER STATUS
-    ===================================================== */
-
-    function setServerStatus(
-      type,
-      text
-    ) {
-
-      const element =
-        document.getElementById(
-          "server-status"
-        );
-
-
-      element.className =
-        "server-status";
-
-
-      if (type === "online") {
-
-        element.classList.add(
-          "status-online"
-        );
-
-      } else if (
-        type === "offline"
+      if (
+        result &&
+        result.success
       ) {
 
-        element.classList.add(
-          "status-offline"
+        setServerStatus(
+          "Server Online",
+          "online"
         );
 
       } else {
 
-        element.classList.add(
-          "status-checking"
+        setServerStatus(
+          "Server Error",
+          "offline"
         );
 
       }
 
+    },
 
-      element.textContent = text;
+    function() {
 
-    }
-
-
-    /* =====================================================
-       OPEN SCANNER
-    ===================================================== */
-
-    function openScanner() {
-
-      if (!selectedTrainer) {
-
-        alert(
-          "Please select a PT Trainer first."
-        );
-
-        return;
-
-      }
-
-
-      if (scannerRunning) {
-        return;
-      }
-
-
-      hideResult();
-
-
-      document
-        .getElementById(
-          "scanner-container"
-        )
-        .style.display = "block";
-
-
-      document
-        .getElementById(
-          "open-scanner-button"
-        )
-        .disabled = true;
-
-
-      startScanner();
+      setServerStatus(
+        "Server Offline",
+        "offline"
+      );
 
     }
 
+  );
 
-    /* =====================================================
-       START SCANNER
-    ===================================================== */
+}
 
-    function startScanner() {
+
+/* =========================================================
+   SERVER STATUS UI
+========================================================= */
+
+function setServerStatus(
+  text,
+  status
+) {
+
+  const statusText =
+    document.getElementById(
+      "statusText"
+    );
+
+  const statusDot =
+    document.getElementById(
+      "statusDot"
+    );
+
+
+  statusText.textContent = text;
+
+  statusDot.className =
+    "status-dot " +
+    status;
+
+}
+
+
+/* =========================================================
+   SELECT TRAINER
+========================================================= */
+
+function selectTrainer(
+  trainer
+) {
+
+  selectedTrainer = trainer;
+
+
+  const buttons =
+    document.querySelectorAll(
+      ".trainer-btn"
+    );
+
+
+  buttons.forEach(
+    function(button) {
 
       if (
-        typeof Html5Qrcode ===
-        "undefined"
+        button.dataset.trainer ===
+        trainer
       ) {
 
-        showError(
-          "QR scanner library could not be loaded."
+        button.classList.add(
+          "active"
         );
 
-        return;
+      } else {
+
+        button.classList.remove(
+          "active"
+        );
 
       }
 
-
-      html5QrCode =
-        new Html5Qrcode(
-          "reader"
-        );
+    }
+  );
 
 
-      const config = {
+  document.getElementById(
+    "selectedTrainerDisplay"
+  ).textContent = trainer;
 
-        fps: 10,
 
-        qrbox: function (
+  const scanButton =
+    document.getElementById(
+      "scanButton"
+    );
+
+
+  scanButton.disabled = false;
+
+  scanButton.textContent =
+    "Open QR Scanner";
+
+
+  hideResult();
+
+}
+
+
+/* =========================================================
+   START SCANNER
+========================================================= */
+
+function startScanner() {
+
+  if (!selectedTrainer) {
+
+    alert(
+      "Please select a PT Trainer first."
+    );
+
+    return;
+
+  }
+
+
+  hideResult();
+
+  showLoading(false);
+
+
+  const scannerCard =
+    document.getElementById(
+      "scannerCard"
+    );
+
+
+  scannerCard.classList.add(
+    "active"
+  );
+
+
+  const scanButton =
+    document.getElementById(
+      "scanButton"
+    );
+
+
+  scanButton.disabled = true;
+
+
+  setTimeout(
+    function() {
+
+      initializeScanner();
+
+    },
+    150
+  );
+
+}
+
+
+/* =========================================================
+   INITIALIZE QR SCANNER
+========================================================= */
+
+function initializeScanner() {
+
+  if (scannerRunning) {
+
+    return;
+
+  }
+
+
+  if (
+    typeof Html5Qrcode ===
+    "undefined"
+  ) {
+
+    alert(
+      "QR scanner library could not be loaded. Please refresh the page."
+    );
+
+    enableScanButton();
+
+    return;
+
+  }
+
+
+  html5QrCode =
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+  const config = {
+
+    fps: 10,
+
+    qrbox: function(
+      viewfinderWidth,
+      viewfinderHeight
+    ) {
+
+      const minSize =
+        Math.min(
           viewfinderWidth,
           viewfinderHeight
-        ) {
+        );
 
-          const minEdge =
-            Math.min(
-              viewfinderWidth,
-              viewfinderHeight
-            );
+      const size =
+        Math.floor(
+          minSize * 0.70
+        );
 
-          const size =
-            Math.floor(
-              minEdge * 0.70
-            );
-
-          return {
-            width: size,
-            height: size
-          };
-
-        },
-
-        aspectRatio: 1.0
-
+      return {
+        width: size,
+        height: size
       };
 
+    },
 
-      html5QrCode
-        .start(
+    aspectRatio: 1.0
 
-          {
-            facingMode: "environment"
-          },
-
-          config,
-
-          onScanSuccess,
-
-          function () {
-            // Ignore continuous scan errors.
-          }
-
-        )
-        .then(
-          function () {
-
-            scannerRunning = true;
-
-          }
-        )
-        .catch(
-          function (error) {
-
-            scannerRunning = false;
+  };
 
 
-            document
-              .getElementById(
-                "scanner-container"
-              )
-              .style.display = "none";
+  html5QrCode
+    .start(
 
+      {
+        facingMode: "environment"
+      },
 
-            document
-              .getElementById(
-                "open-scanner-button"
-              )
-              .disabled = false;
+      config,
 
+      function(decodedText) {
 
-            showError(
-              "Unable to open the camera. Please allow camera access and try again."
-            );
-
-          }
+        handleQRCode(
+          decodedText
         );
 
-    }
+      },
 
+      function(errorMessage) {
 
-    /* =====================================================
-       QR SUCCESS
-    ===================================================== */
-
-    function onScanSuccess(
-      decodedText
-    ) {
-
-      if (processingScan) {
-        return;
-      }
-
-
-      processingScan = true;
-
-
-      stopScanner(
-        false
-      );
-
-
-      processScannedQR(
-        decodedText
-      );
-
-    }
-
-
-    /* =====================================================
-       PROCESS QR
-    ===================================================== */
-
-    function processScannedQR(
-      qrValue
-    ) {
-
-      showLoading(
-        true
-      );
-
-
-      hideResult();
-
-
-      jsonpRequest(
-
-        {
-          action: "scan",
-
-          trainer:
-            selectedTrainer,
-
-          qrValue:
-            qrValue
-
-        },
-
-        function (result) {
-
-          showLoading(
-            false
-          );
-
-
-          processingScan = false;
-
-
-          if (
-            result &&
-            result.success
-          ) {
-
-            showSuccess(
-              result
-            );
-
-          } else {
-
-            showErrorResult(
-              result
-            );
-
-          }
-
-        },
-
-        function () {
-
-          showLoading(
-            false
-          );
-
-
-          processingScan = false;
-
-
-          showError(
-            "Unable to connect to the PT server. Please check your internet connection and try again."
-          );
-
-        }
-
-      );
-
-    }
-
-
-    /* =====================================================
-       JSONP REQUEST
-    ===================================================== */
-
-    function jsonpRequest(
-      params,
-      onSuccess,
-      onError
-    ) {
-
-      callbackCounter++;
-
-
-      const callbackName =
-        "stayActiveCallback_" +
-        Date.now() +
-        "_" +
-        callbackCounter;
-
-
-      const script =
-        document.createElement(
-          "script"
-        );
-
-
-      let finished = false;
-
-
-      const timeout =
-        setTimeout(
-          function () {
-
-            if (finished) {
-              return;
-            }
-
-
-            finished = true;
-
-
-            cleanup();
-
-
-            if (onError) {
-              onError();
-            }
-
-          },
-
-          15000
-        );
-
-
-      function cleanup() {
-
-        clearTimeout(
-          timeout
-        );
-
-
-        try {
-
-          delete window[
-            callbackName
-          ];
-
-        } catch (error) {
-
-          window[
-            callbackName
-          ] = undefined;
-
-        }
-
-
-        if (
-          script.parentNode
-        ) {
-
-          script.parentNode.removeChild(
-            script
-          );
-
-        }
+        // Ignore normal scanner frame errors.
 
       }
 
+    )
+    .then(
+      function() {
 
-      window[
-        callbackName
-      ] = function (
+        scannerRunning = true;
+
+      }
+    )
+    .catch(
+      function(error) {
+
+        console.error(
+          "Camera start error:",
+          error
+        );
+
+
+        scannerRunning = false;
+
+
+        alert(
+          "Unable to open the camera.\n\nPlease allow camera access and try again."
+        );
+
+
+        stopScanner();
+
+        enableScanButton();
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   HANDLE QR CODE
+========================================================= */
+
+function handleQRCode(
+  qrValue
+) {
+
+  if (processingScan) {
+
+    return;
+
+  }
+
+
+  processingScan = true;
+
+
+  console.log(
+    "SCANNED QR:",
+    qrValue
+  );
+
+
+  stopScanner();
+
+
+  processScannedQR(
+    qrValue
+  );
+
+}
+
+
+/* =========================================================
+   PROCESS SCANNED QR
+========================================================= */
+
+function processScannedQR(
+  qrValue
+) {
+
+  showLoading(true);
+
+  hideResult();
+
+
+  console.log(
+    "SCANNED QR:",
+    qrValue
+  );
+
+
+  console.log(
+    "SELECTED TRAINER:",
+    selectedTrainer
+  );
+
+
+  jsonpRequest(
+
+    {
+
+      action: "scan",
+
+      trainer: selectedTrainer,
+
+      qrValue: qrValue
+
+    },
+
+    function(result) {
+
+      console.log(
+        "PT API RESPONSE:",
         result
+      );
+
+
+      showLoading(false);
+
+      processingScan = false;
+
+
+      if (
+        result &&
+        result.success
       ) {
 
+        showSuccess(
+          result
+        );
+
+      } else {
+
+        showErrorResult(
+          result
+        );
+
+      }
+
+    },
+
+    function() {
+
+      console.error(
+        "PT API REQUEST FAILED"
+      );
+
+
+      showLoading(false);
+
+      processingScan = false;
+
+
+      showError(
+        "Unable to connect to the PT server. Please check your internet connection and try again."
+      );
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   MANUAL JSONP REQUEST
+   IMPORTANT:
+   This avoids URLSearchParams issues with Apps Script.
+========================================================= */
+
+function jsonpRequest(
+  params,
+  onSuccess,
+  onError
+) {
+
+  callbackCounter++;
+
+
+  const callbackName =
+    "stayActiveCallback_" +
+    Date.now() +
+    "_" +
+    callbackCounter;
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  let finished = false;
+
+
+  const timeout =
+    setTimeout(
+      function() {
+
         if (finished) {
+
           return;
+
         }
 
 
@@ -1375,608 +1383,655 @@
         cleanup();
 
 
-        if (onSuccess) {
-          onSuccess(result);
-        }
+        if (onError) {
 
-      };
-
-
-      const query =
-        new URLSearchParams();
-
-
-      Object.keys(
-        params
-      ).forEach(
-        function (key) {
-
-          query.set(
-            key,
-            params[key]
-          );
+          onError();
 
         }
-      );
+
+      },
+      15000
+    );
 
 
-      query.set(
-        "callback",
+  function cleanup() {
+
+    clearTimeout(
+      timeout
+    );
+
+
+    try {
+
+      delete window[
         callbackName
-      );
+      ];
 
+    } catch (error) {
 
-      query.set(
-        "_",
-        Date.now()
-      );
-
-
-      script.src =
-        API_URL +
-        "?" +
-        query.toString();
-
-
-      script.async = true;
-
-
-      script.onerror =
-        function () {
-
-          if (finished) {
-            return;
-          }
-
-
-          finished = true;
-
-
-          cleanup();
-
-
-          if (onError) {
-            onError();
-          }
-
-        };
-
-
-      document
-        .head
-        .appendChild(
-          script
-        );
+      window[
+        callbackName
+      ] = undefined;
 
     }
 
 
-    /* =====================================================
-       STOP SCANNER
-    ===================================================== */
-
-    function stopScanner(
-      enableButton = true
+    if (
+      script.parentNode
     ) {
 
-      if (
-        !html5QrCode ||
-        !scannerRunning
-      ) {
+      script.parentNode.removeChild(
+        script
+      );
 
-        document
-          .getElementById(
-            "scanner-container"
-          )
-          .style.display = "none";
+    }
+
+  }
 
 
-        if (enableButton) {
+  window[
+    callbackName
+  ] =
+    function(result) {
 
-          document
-            .getElementById(
-              "open-scanner-button"
-            )
-            .disabled = false;
-
-        }
+      if (finished) {
 
         return;
 
       }
 
 
-      html5QrCode
-        .stop()
-        .then(
-          function () {
-
-            scannerRunning = false;
+      finished = true;
 
 
-            document
-              .getElementById(
-                "scanner-container"
-              )
-              .style.display = "none";
+      cleanup();
 
 
-            if (enableButton) {
+      if (onSuccess) {
 
-              document
-                .getElementById(
-                  "open-scanner-button"
-                )
-                .disabled = false;
-
-            }
-
-          }
-        )
-        .catch(
-          function () {
-
-            scannerRunning = false;
-
-
-            document
-              .getElementById(
-                "scanner-container"
-              )
-              .style.display = "none";
-
-
-            if (enableButton) {
-
-              document
-                .getElementById(
-                  "open-scanner-button"
-                )
-                .disabled = false;
-
-            }
-
-          }
+        onSuccess(
+          result
         );
 
-    }
+      }
+
+    };
 
 
-    /* =====================================================
-       LOADING
-    ===================================================== */
+  let query = [];
 
-    function showLoading(
-      show
-    ) {
 
-      document
-        .getElementById(
-          "loading"
+  Object.keys(
+    params
+  ).forEach(
+    function(key) {
+
+      query.push(
+
+        encodeURIComponent(
+          key
+        ) +
+
+        "=" +
+
+        encodeURIComponent(
+          String(
+            params[key]
+          )
         )
-        .style.display =
-        show
-          ? "block"
-          : "none";
 
-    }
-
-
-    /* =====================================================
-       SUCCESS
-    ===================================================== */
-
-    function showSuccess(
-      result
-    ) {
-
-      const card =
-        document.getElementById(
-          "result-card"
-        );
-
-
-      const status =
-        document.getElementById(
-          "result-status"
-        );
-
-
-      status.className =
-        "result-status result-success";
-
-
-      status.textContent =
-        "✓ PT SESSION RECORDED";
-
-
-      document
-        .getElementById(
-          "member-name"
-        )
-        .textContent =
-        result.memberName ||
-        "—";
-
-
-      document
-        .getElementById(
-          "member-id"
-        )
-        .textContent =
-        result.memberId ||
-        "—";
-
-
-      document
-        .getElementById(
-          "trainer-result"
-        )
-        .textContent =
-        result.trainer ||
-        selectedTrainer ||
-        "—";
-
-
-      document
-        .getElementById(
-          "previous-credit"
-        )
-        .textContent =
-        formatCredit(
-          result.previousCredit
-        );
-
-
-      document
-        .getElementById(
-          "remaining-credit"
-        )
-        .textContent =
-        formatCredit(
-          result.remainingCredit
-        );
-
-
-      card.style.display =
-        "block";
-
-
-      card.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    }
-
-
-    /* =====================================================
-       ERROR RESULT
-    ===================================================== */
-
-    function showErrorResult(
-      result
-    ) {
-
-      const card =
-        document.getElementById(
-          "result-card"
-        );
-
-
-      const status =
-        document.getElementById(
-          "result-status"
-        );
-
-
-      status.className =
-        "result-status result-error";
-
-
-      status.textContent =
-        "✕ " +
-        (
-          result &&
-          result.message
-            ? result.message
-            : "Unable to record PT session."
-        );
-
-
-      document
-        .getElementById(
-          "member-name"
-        )
-        .textContent =
-        result &&
-        result.memberName
-          ? result.memberName
-          : "—";
-
-
-      document
-        .getElementById(
-          "member-id"
-        )
-        .textContent =
-        result &&
-        result.memberId
-          ? result.memberId
-          : "—";
-
-
-      document
-        .getElementById(
-          "trainer-result"
-        )
-        .textContent =
-        selectedTrainer ||
-        "—";
-
-
-      document
-        .getElementById(
-          "previous-credit"
-        )
-        .textContent =
-        result &&
-        result.remainingCredit !==
-        undefined
-          ? formatCredit(
-              result.remainingCredit
-            )
-          : "—";
-
-
-      document
-        .getElementById(
-          "remaining-credit"
-        )
-        .textContent =
-        result &&
-        result.remainingCredit !==
-        undefined
-          ? formatCredit(
-              result.remainingCredit
-            )
-          : "—";
-
-
-      card.style.display =
-        "block";
-
-
-      card.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    }
-
-
-    /* =====================================================
-       SIMPLE ERROR
-    ===================================================== */
-
-    function showError(
-      message
-    ) {
-
-      showLoading(
-        false
       );
 
-
-      const card =
-        document.getElementById(
-          "result-card"
-        );
-
-
-      const status =
-        document.getElementById(
-          "result-status"
-        );
-
-
-      status.className =
-        "result-status result-error";
-
-
-      status.textContent =
-        "✕ " +
-        message;
-
-
-      document
-        .getElementById(
-          "member-name"
-        )
-        .textContent =
-        "—";
-
-
-      document
-        .getElementById(
-          "member-id"
-        )
-        .textContent =
-        "—";
-
-
-      document
-        .getElementById(
-          "trainer-result"
-        )
-        .textContent =
-        selectedTrainer ||
-        "—";
-
-
-      document
-        .getElementById(
-          "previous-credit"
-        )
-        .textContent =
-        "—";
-
-
-      document
-        .getElementById(
-          "remaining-credit"
-        )
-        .textContent =
-        "—";
-
-
-      card.style.display =
-        "block";
-
-
-      card.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
     }
+  );
 
 
-    /* =====================================================
-       FORMAT CREDIT
-    ===================================================== */
+  query.push(
 
-    function formatCredit(
-      value
+    "callback=" +
+
+    encodeURIComponent(
+      callbackName
+    )
+
+  );
+
+
+  query.push(
+
+    "_=" +
+
+    Date.now()
+
+  );
+
+
+  const requestUrl =
+    API_URL +
+    "?" +
+    query.join("&");
+
+
+  console.log(
+    "PT API REQUEST:",
+    requestUrl
+  );
+
+
+  script.src =
+    requestUrl;
+
+
+  script.async = true;
+
+
+  script.onerror =
+    function() {
+
+      if (finished) {
+
+        return;
+
+      }
+
+
+      finished = true;
+
+
+      cleanup();
+
+
+      if (onError) {
+
+        onError();
+
+      }
+
+    };
+
+
+  document.head.appendChild(
+    script
+  );
+
+}
+
+
+/* =========================================================
+   SHOW SUCCESS
+========================================================= */
+
+function showSuccess(
+  result
+) {
+
+  const resultCard =
+    document.getElementById(
+      "resultCard"
+    );
+
+
+  resultCard.classList.remove(
+    "error"
+  );
+
+
+  resultCard.classList.add(
+    "success",
+    "active"
+  );
+
+
+  document.getElementById(
+    "resultIcon"
+  ).textContent = "✓";
+
+
+  document.getElementById(
+    "resultTitle"
+  ).textContent =
+    "PT Session Recorded";
+
+
+  document.getElementById(
+    "memberName"
+  ).textContent =
+    result.memberName || "-";
+
+
+  document.getElementById(
+    "memberId"
+  ).textContent =
+    result.memberId || "-";
+
+
+  document.getElementById(
+    "trainerResult"
+  ).textContent =
+    result.trainer || selectedTrainer;
+
+
+  document.getElementById(
+    "previousCredit"
+  ).textContent =
+    formatCredit(
+      result.previousCredit
+    );
+
+
+  document.getElementById(
+    "remainingCredit"
+  ).textContent =
+    formatCredit(
+      result.remainingCredit
+    );
+
+
+  document.getElementById(
+    "resultMessage"
+  ).textContent =
+    result.message ||
+    "PT session successfully recorded.";
+
+
+  window.scrollTo({
+
+    top: document.body.scrollHeight,
+
+    behavior: "smooth"
+
+  });
+
+}
+
+
+/* =========================================================
+   SHOW ERROR RESULT
+========================================================= */
+
+function showErrorResult(
+  result
+) {
+
+  let message =
+    "Unable to record PT session.";
+
+
+  if (
+    result &&
+    result.message
+  ) {
+
+    message =
+      result.message;
+
+  }
+
+
+  showError(
+    message
+  );
+
+}
+
+
+/* =========================================================
+   SHOW ERROR
+========================================================= */
+
+function showError(
+  message
+) {
+
+  showLoading(false);
+
+
+  const resultCard =
+    document.getElementById(
+      "resultCard"
+    );
+
+
+  resultCard.classList.remove(
+    "success"
+  );
+
+
+  resultCard.classList.add(
+    "error",
+    "active"
+  );
+
+
+  document.getElementById(
+    "resultIcon"
+  ).textContent = "×";
+
+
+  document.getElementById(
+    "resultTitle"
+  ).textContent =
+    "PT Session Not Recorded";
+
+
+  document.getElementById(
+    "memberName"
+  ).textContent = "-";
+
+
+  document.getElementById(
+    "memberId"
+  ).textContent = "-";
+
+
+  document.getElementById(
+    "trainerResult"
+  ).textContent =
+    selectedTrainer || "-";
+
+
+  document.getElementById(
+    "previousCredit"
+  ).textContent = "-";
+
+
+  document.getElementById(
+    "remainingCredit"
+  ).textContent = "-";
+
+
+  document.getElementById(
+    "resultMessage"
+  ).textContent =
+    message ||
+    "Something went wrong.";
+
+
+  window.scrollTo({
+
+    top: document.body.scrollHeight,
+
+    behavior: "smooth"
+
+  });
+
+}
+
+
+/* =========================================================
+   FORMAT CREDIT
+========================================================= */
+
+function formatCredit(
+  value
+) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "-";
+
+  }
+
+
+  return String(
+    value
+  );
+
+}
+
+
+/* =========================================================
+   STOP SCANNER
+========================================================= */
+
+function stopScanner() {
+
+  if (
+    !html5QrCode ||
+    !scannerRunning
+  ) {
+
+    scannerRunning = false;
+
+    return Promise.resolve();
+
+  }
+
+
+  return html5QrCode
+    .stop()
+    .then(
+      function() {
+
+        scannerRunning = false;
+
+        html5QrCode.clear();
+
+      }
+    )
+    .catch(
+      function(error) {
+
+        console.warn(
+          "Scanner stop warning:",
+          error
+        );
+
+        scannerRunning = false;
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   SCAN NEXT CLIENT
+========================================================= */
+
+function scanNext() {
+
+  hideResult();
+
+  processingScan = false;
+
+
+  const scannerCard =
+    document.getElementById(
+      "scannerCard"
+    );
+
+
+  scannerCard.classList.add(
+    "active"
+  );
+
+
+  const scanButton =
+    document.getElementById(
+      "scanButton"
+    );
+
+
+  scanButton.disabled = true;
+
+
+  setTimeout(
+    function() {
+
+      initializeScanner();
+
+    },
+    150
+  );
+
+}
+
+
+/* =========================================================
+   CHANGE TRAINER
+========================================================= */
+
+function changeTrainer() {
+
+  stopScanner();
+
+
+  hideResult();
+
+
+  processingScan = false;
+
+
+  selectedTrainer = "";
+
+
+  document.getElementById(
+    "selectedTrainerDisplay"
+  ).textContent =
+    "None";
+
+
+  document
+    .querySelectorAll(
+      ".trainer-btn"
+    )
+    .forEach(
+      function(button) {
+
+        button.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+  const scanButton =
+    document.getElementById(
+      "scanButton"
+    );
+
+
+  scanButton.disabled = true;
+
+  scanButton.textContent =
+    "Select Trainer First";
+
+
+  window.scrollTo({
+
+    top: 0,
+
+    behavior: "smooth"
+
+  });
+
+}
+
+
+/* =========================================================
+   HIDE RESULT
+========================================================= */
+
+function hideResult() {
+
+  const resultCard =
+    document.getElementById(
+      "resultCard"
+    );
+
+
+  resultCard.classList.remove(
+    "active",
+    "success",
+    "error"
+  );
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showLoading(
+  show
+) {
+
+  const loadingCard =
+    document.getElementById(
+      "loadingCard"
+    );
+
+
+  if (show) {
+
+    loadingCard.classList.add(
+      "active"
+    );
+
+  } else {
+
+    loadingCard.classList.remove(
+      "active"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   ENABLE SCAN BUTTON
+========================================================= */
+
+function enableScanButton() {
+
+  const scanButton =
+    document.getElementById(
+      "scanButton"
+    );
+
+
+  if (selectedTrainer) {
+
+    scanButton.disabled = false;
+
+    scanButton.textContent =
+      "Open QR Scanner";
+
+  }
+
+}
+
+
+/* =========================================================
+   PAGE VISIBILITY
+========================================================= */
+
+document.addEventListener(
+  "visibilitychange",
+  function() {
+
+    if (
+      document.hidden &&
+      scannerRunning
     ) {
 
-      if (
-        value === null ||
-        value === undefined ||
-        value === ""
-      ) {
-
-        return "—";
-
-      }
-
-
-      return String(value);
+      stopScanner();
 
     }
 
+  }
+);
 
-    /* =====================================================
-       HIDE RESULT
-    ===================================================== */
-
-    function hideResult() {
-
-      document
-        .getElementById(
-          "result-card"
-        )
-        .style.display =
-        "none";
-
-    }
-
-
-    /* =====================================================
-       SCAN NEXT CLIENT
-    ===================================================== */
-
-    function scanNextClient() {
-
-      processingScan = false;
-
-
-      hideResult();
-
-
-      document
-        .getElementById(
-          "scanner-container"
-        )
-        .style.display =
-        "block";
-
-
-      document
-        .getElementById(
-          "open-scanner-button"
-        )
-        .disabled = true;
-
-
-      startScanner();
-
-    }
-
-
-    /* =====================================================
-       CHANGE TRAINER
-    ===================================================== */
-
-    function changeTrainer() {
-
-      if (scannerRunning) {
-
-        stopScanner(
-          false
-        );
-
-      }
-
-
-      selectedTrainer = "";
-
-
-      document
-        .querySelectorAll(
-          ".trainer-btn"
-        )
-        .forEach(
-          function (button) {
-
-            button.classList.remove(
-              "selected"
-            );
-
-          }
-        );
-
-
-      document
-        .getElementById(
-          "selected-trainer"
-        )
-        .textContent =
-        "None";
-
-
-      document
-        .getElementById(
-          "open-scanner-button"
-        )
-        .disabled = true;
-
-
-      hideResult();
-
-
-      document
-        .getElementById(
-          "trainer-card"
-        )
-        .scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-
-    }
-
-  </script>
+</script>
 
 </body>
+
 </html>
