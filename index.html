@@ -3,391 +3,1402 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
 
-<title>Stay Active PT Trainer</title>
+  <title>Stay Active PT Scanner</title>
 
-<script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-<style>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+    }
+
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+
+    .app {
+      width: 100%;
+      max-width: 520px;
+      min-height: 100vh;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .header {
+      background: #000;
+      padding: 24px 20px 20px;
+      text-align: center;
+      border-bottom: 2px solid #f5c400;
+    }
+
+
+    .logo-text {
+      color: #f5c400;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+    }
+
+
+    .subtitle {
+      margin-top: 5px;
+      color: #999;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+
+    /* =====================================================
+       CONTENT
+    ===================================================== */
+
+    .content {
+      flex: 1;
+      width: 100%;
+      padding: 24px 18px 30px;
+    }
+
+
+    .screen {
+      display: none;
+    }
+
+
+    .screen.active {
+      display: block;
+    }
+
+
+    .title {
+      margin: 8px 0 8px;
+      text-align: center;
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+
+    .description {
+      margin: 0 auto 25px;
+      max-width: 400px;
+      color: #999;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       TRAINER BUTTONS
+    ===================================================== */
+
+    .trainer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+
+    .trainer-btn {
+      min-height: 80px;
+      border: 2px solid #333;
+      border-radius: 12px;
+      background: #1b1b1b;
+      color: #fff;
+      font-size: 21px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+
+    .trainer-btn:active {
+      transform: scale(0.97);
+    }
+
+
+    .trainer-btn:hover {
+      background: #f5c400;
+      border-color: #f5c400;
+      color: #000;
+    }
+
+
+    .trainer-btn:last-child {
+      grid-column: 1 / -1;
+    }
+
+
+    /* =====================================================
+       SELECTED TRAINER
+    ===================================================== */
+
+    .selected-trainer {
+      margin: 0 auto 18px;
+      max-width: 440px;
+      padding: 13px;
+      border: 1px solid #333;
+      border-radius: 10px;
+      background: #1b1b1b;
+      color: #999;
+      text-align: center;
+      font-size: 14px;
+    }
+
+
+    .selected-trainer strong {
+      color: #f5c400;
+      font-size: 19px;
+    }
+
+
+    /* =====================================================
+       QR SCANNER
+    ===================================================== */
+
+    #reader {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #333;
+      border-radius: 14px;
+      background: #000;
+    }
+
+
+    #reader video {
+      width: 100% !important;
+      border-radius: 14px;
+    }
+
+
+    #reader img {
+      display: none !important;
+    }
+
+
+    #reader__scan_region {
+      min-height: 280px;
+    }
+
+
+    #reader__dashboard {
+      padding: 10px !important;
+      background: #111 !important;
+    }
+
+
+    #reader__dashboard_section_csr {
+      color: #fff !important;
+    }
+
+
+    #reader button {
+      border: 0 !important;
+      border-radius: 8px !important;
+      padding: 10px 15px !important;
+      background: #f5c400 !important;
+      color: #000 !important;
+      font-weight: 800 !important;
+    }
+
+
+    #reader select {
+      max-width: 100%;
+      padding: 8px;
+      border-radius: 7px;
+    }
+
+
+    .scanner-message {
+      min-height: 22px;
+      margin: 15px auto;
+      max-width: 440px;
+      color: #999;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    .button {
+      width: 100%;
+      max-width: 440px;
+      display: block;
+      margin: 10px auto 0;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+
+    .button-yellow {
+      border: none;
+      background: #f5c400;
+      color: #000;
+    }
+
+
+    .button-dark {
+      border: 1px solid #444;
+      background: #222;
+      color: #fff;
+    }
+
+
+    .button:active {
+      transform: scale(0.98);
+    }
+
+
+    /* =====================================================
+       LOADING
+    ===================================================== */
+
+    .loading {
+      padding: 70px 20px;
+      text-align: center;
+      color: #aaa;
+      font-size: 15px;
+    }
+
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      margin: 0 auto 18px;
+      border: 4px solid #333;
+      border-top-color: #f5c400;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+
+    @keyframes spin {
+
+      to {
+        transform: rotate(360deg);
+      }
+
+    }
+
+
+    /* =====================================================
+       RESULT
+    ===================================================== */
+
+    .result-card {
+      max-width: 440px;
+      margin: 10px auto 0;
+      padding: 22px;
+      border: 1px solid #333;
+      border-radius: 14px;
+      background: #1a1a1a;
+    }
+
+
+    .result-status {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+
+    .success {
+      color: #f5c400;
+    }
+
+
+    .error {
+      color: #ff5555;
+    }
+
+
+    .member-name {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 23px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 13px 0;
+      border-bottom: 1px solid #333;
+    }
+
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+
+    .info-label {
+      color: #888;
+    }
+
+
+    .info-value {
+      max-width: 60%;
+      color: #fff;
+      font-weight: 800;
+      text-align: right;
+      word-break: break-word;
+    }
+
+
+    .credit {
+      color: #f5c400;
+      font-size: 20px;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .footer {
+      padding: 14px 10px 18px;
+      color: #555;
+      text-align: center;
+      font-size: 11px;
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 400px) {
+
+      .title {
+        font-size: 24px;
+      }
+
+      .trainer-btn {
+        min-height: 70px;
+      }
+
+      .content {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="header">
+
+    <div class="logo-text">
+      STAY ACTIVE
+    </div>
+
+    <div class="subtitle">
+      Professional Training Scanner
+    </div>
+
+  </header>
+
+
+  <main class="content">
+
+
+    <!-- ===================================================
+         SCREEN 1 - TRAINER SELECTION
+    ==================================================== -->
+
+    <section
+      id="trainerScreen"
+      class="screen active"
+    >
+
+      <div class="title">
+        Select PT Trainer
+      </div>
+
+
+      <div class="description">
+        Select the PT Trainer before scanning the member QR code.
+      </div>
+
+
+      <div class="trainer-grid">
+
+        <button
+          class="trainer-btn"
+          type="button"
+          onclick="selectTrainer('PT01')"
+        >
+          PT01
+        </button>
+
+
+        <button
+          class="trainer-btn"
+          type="button"
+          onclick="selectTrainer('PT02')"
+        >
+          PT02
+        </button>
+
+
+        <button
+          class="trainer-btn"
+          type="button"
+          onclick="selectTrainer('PT03')"
+        >
+          PT03
+        </button>
+
+
+        <button
+          class="trainer-btn"
+          type="button"
+          onclick="selectTrainer('PT04')"
+        >
+          PT04
+        </button>
+
+
+        <button
+          class="trainer-btn"
+          type="button"
+          onclick="selectTrainer('PT05')"
+        >
+          PT05
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         SCREEN 2 - QR SCANNER
+    ==================================================== -->
+
+    <section
+      id="scannerScreen"
+      class="screen"
+    >
+
+      <div class="title">
+        Scan Member QR
+      </div>
+
+
+      <div class="selected-trainer">
+
+        Selected Trainer:
+
+        <strong id="selectedTrainer">
+          --
+        </strong>
+
+      </div>
+
+
+      <div id="reader"></div>
+
+
+      <div
+        id="scannerMessage"
+        class="scanner-message"
+      >
+        Starting camera...
+      </div>
+
+
+      <button
+        class="button button-dark"
+        type="button"
+        onclick="changeTrainer()"
+      >
+        CHANGE PT TRAINER
+      </button>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         SCREEN 3 - LOADING
+    ==================================================== -->
+
+    <section
+      id="loadingScreen"
+      class="screen"
+    >
+
+      <div class="loading">
+
+        <div class="spinner"></div>
+
+        <div>
+          Processing PT session...
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         SCREEN 4 - RESULT
+    ==================================================== -->
+
+    <section
+      id="resultScreen"
+      class="screen"
+    >
+
+      <div class="result-card">
+
+
+        <div
+          id="resultStatus"
+          class="result-status"
+        ></div>
+
+
+        <div
+          id="resultMemberName"
+          class="member-name"
+        ></div>
+
+
+        <div class="info-row">
+
+          <span class="info-label">
+            Member ID
+          </span>
+
+          <span
+            id="resultMemberId"
+            class="info-value"
+          >
+          </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span class="info-label">
+            PT Trainer
+          </span>
+
+          <span
+            id="resultTrainer"
+            class="info-value"
+          >
+          </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span class="info-label">
+            Remaining Credit
+          </span>
+
+          <span
+            id="resultCredit"
+            class="info-value credit"
+          >
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+      <button
+        class="button button-yellow"
+        type="button"
+        onclick="scanNext()"
+      >
+        SCAN NEXT MEMBER
+      </button>
+
+
+      <button
+        class="button button-dark"
+        type="button"
+        onclick="changeTrainer()"
+      >
+        CHANGE PT TRAINER
+      </button>
+
+    </section>
+
+
+  </main>
+
+
+  <footer class="footer">
+    Stay Active Lifestyle Fitness Gym
+  </footer>
+
+
+</div>
+
+
+
+<script>
+
 
 /* =========================================================
-   GENERAL
+   APPS SCRIPT API
 ========================================================= */
 
-* {
-  box-sizing: border-box;
-}
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbyvoWtWpzyA4QsfTXEOFI72nNSqhq3mv1uMxG9bHV4CNtYJTjz1n6fXdt61ZMDWHV7s/exec";
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-  background: #000;
-  color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
-}
 
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  overscroll-behavior: none;
-}
+/* =========================================================
+   TRAINERS
+========================================================= */
 
-button {
-  font-family: inherit;
-}
+const TRAINERS = [
+  "PT01",
+  "PT02",
+  "PT03",
+  "PT04",
+  "PT05"
+];
 
-.app {
-  width: 100%;
-  max-width: 520px;
-  min-height: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let selectedTrainer = "";
+
+let html5QrCode = null;
+
+let scannerRunning = false;
+
+let processingScan = false;
+
+
+/* =========================================================
+   SCREEN CONTROL
+========================================================= */
+
+function showScreen(screenId) {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(function(screen) {
+
+      screen.classList.remove("active");
+
+    });
+
+
+  document
+    .getElementById(screenId)
+    .classList.add("active");
+
 }
 
 
 /* =========================================================
-   HEADER
+   SELECT TRAINER
 ========================================================= */
 
-.header {
-  text-align: center;
-  padding: 15px 0 25px;
-}
+function selectTrainer(trainer) {
 
-.logo {
-  font-size: 29px;
-  font-weight: 900;
-  letter-spacing: 1px;
-}
+  if (!TRAINERS.includes(trainer)) {
+    return;
+  }
 
-.logo span {
-  color: #f5c400;
-}
 
-.subtitle {
-  margin-top: 7px;
-  color: #999;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 2px;
+  selectedTrainer = trainer;
+
+
+  document.getElementById(
+    "selectedTrainer"
+  ).textContent = trainer;
+
+
+  showScreen("scannerScreen");
+
+
+  startScanner();
+
 }
 
 
 /* =========================================================
-   SCREENS
+   START SCANNER
 ========================================================= */
 
-.screen {
-  display: none;
-  width: 100%;
-}
+async function startScanner() {
 
-.screen.active {
-  display: block;
+  processingScan = false;
+
+
+  document.getElementById(
+    "scannerMessage"
+  ).textContent =
+    "Starting camera...";
+
+
+  try {
+
+    await stopScanner();
+
+
+    /*
+     * Clear old scanner contents.
+     */
+
+    const reader =
+      document.getElementById("reader");
+
+    reader.innerHTML = "";
+
+
+    html5QrCode =
+      new Html5Qrcode("reader");
+
+
+    /*
+     * Get available cameras.
+     */
+
+    const cameras =
+      await Html5Qrcode.getCameras();
+
+
+    if (
+      !cameras ||
+      cameras.length === 0
+    ) {
+
+      throw new Error(
+        "No camera was detected."
+      );
+
+    }
+
+
+    /*
+     * Prefer rear camera.
+     */
+
+    let cameraId =
+      cameras[0].id;
+
+
+    const rearCamera =
+      cameras.find(function(camera) {
+
+        return /back|rear|environment/i.test(
+          camera.label || ""
+        );
+
+      });
+
+
+    if (rearCamera) {
+
+      cameraId =
+        rearCamera.id;
+
+    }
+
+
+    /*
+     * Start camera.
+     */
+
+    await html5QrCode.start(
+
+      cameraId,
+
+      {
+        fps: 10,
+
+        qrbox: {
+          width: 250,
+          height: 250
+        },
+
+        aspectRatio: 1.0
+      },
+
+      onQrSuccess,
+
+      onQrError
+
+    );
+
+
+    scannerRunning = true;
+
+
+    document.getElementById(
+      "scannerMessage"
+    ).textContent =
+      "Point the camera at the member QR code.";
+
+
+  } catch (error) {
+
+    console.error(
+      "Scanner error:",
+      error
+    );
+
+
+    scannerRunning = false;
+
+
+    document.getElementById(
+      "scannerMessage"
+    ).textContent =
+      "Unable to start camera. " +
+      error.message;
+
+  }
+
 }
 
 
 /* =========================================================
-   CARD
+   QR SUCCESS
 ========================================================= */
 
-.card {
-  background: #0d0d0d;
-  border: 1px solid #292929;
-  border-radius: 16px;
-  padding: 22px;
+async function onQrSuccess(decodedText) {
+
+  /*
+   * html5-qrcode can detect the same QR
+   * several times very quickly.
+   *
+   * This prevents duplicate recordings.
+   */
+
+  if (processingScan) {
+    return;
+  }
+
+
+  processingScan = true;
+
+
+  console.log(
+    "QR value:",
+    decodedText
+  );
+
+
+  await stopScanner();
+
+
+  submitPTScan(decodedText);
+
 }
 
 
 /* =========================================================
-   SECTION TITLE
+   QR ERROR
 ========================================================= */
 
-.section-title {
-  margin-bottom: 14px;
-  color: #999;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 1.5px;
+function onQrError(errorMessage) {
+
+  /*
+   * Ignore normal QR scanning errors.
+   *
+   * The scanner calls this repeatedly while
+   * searching for a QR code.
+   */
+
 }
 
 
 /* =========================================================
-   PT TRAINER SELECTION
+   STOP SCANNER
 ========================================================= */
 
-.pt-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  margin-bottom: 22px;
-}
+async function stopScanner() {
 
-.pt-button {
-  appearance: none;
-  -webkit-appearance: none;
+  if (
+    html5QrCode &&
+    scannerRunning
+  ) {
 
-  display: block;
+    try {
 
-  width: 100%;
-  min-height: 56px;
+      await html5QrCode.stop();
 
-  border: 2px solid #333;
-  border-radius: 9px;
+    } catch (error) {
 
-  padding: 15px 4px;
+      console.log(
+        "Scanner stop:",
+        error
+      );
 
-  background: #111;
-  color: #fff;
+    }
 
-  font-size: 14px;
-  font-weight: 900;
+  }
 
-  cursor: pointer;
 
-  position: relative;
-  z-index: 20;
+  scannerRunning = false;
 
-  pointer-events: auto;
-
-  user-select: none;
-  -webkit-user-select: none;
-
-  touch-action: manipulation;
-
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease,
-    transform 0.08s ease;
-}
-
-.pt-button:hover {
-  border-color: #f5c400;
-}
-
-.pt-button:active {
-  transform: scale(0.96);
-}
-
-.pt-button:focus {
-  outline: none;
-}
-
-.pt-button:focus-visible {
-  border-color: #f5c400;
-}
-
-.pt-button.selected {
-  background: #f5c400;
-  border-color: #f5c400;
-  color: #000;
 }
 
 
 /* =========================================================
-   SELECTED TEXT
+   SUBMIT SCAN TO APPS SCRIPT
 ========================================================= */
 
-#selectedText {
-  text-align: center;
-  color: #777;
-  font-size: 13px;
-  min-height: 18px;
+function submitPTScan(qrValue) {
+
+  showScreen("loadingScreen");
+
+
+  const callbackName =
+    "ptScannerCallback";
+
+
+  const requestId =
+    Date.now();
+
+
+  let finished = false;
+
+
+  /*
+   * Safety timeout.
+   */
+
+  const timeout =
+    setTimeout(function() {
+
+      if (finished) {
+        return;
+      }
+
+
+      finished = true;
+
+
+      showError(
+        "The server did not respond. Please try again."
+      );
+
+
+    }, 15000);
+
+
+  /*
+   * JSONP callback.
+   */
+
+  window[callbackName] =
+    function(result) {
+
+      if (finished) {
+        return;
+      }
+
+
+      finished = true;
+
+
+      clearTimeout(timeout);
+
+
+      console.log(
+        "API response:",
+        result
+      );
+
+
+      if (
+        result &&
+        result.success
+      ) {
+
+        showSuccess(result);
+
+      } else {
+
+        showError(
+          result &&
+          result.message
+            ? result.message
+            : "PT session was not recorded.",
+          result
+        );
+
+      }
+
+
+      /*
+       * Remove callback.
+       */
+
+      try {
+
+        delete window[callbackName];
+
+      } catch (error) {}
+
+
+      /*
+       * Remove script tag.
+       */
+
+      if (
+        script &&
+        script.parentNode
+      ) {
+
+        script.parentNode.removeChild(
+          script
+        );
+
+      }
+
+    };
+
+
+  /*
+   * Build API URL.
+   */
+
+  const url =
+    API_URL +
+    "?action=scan" +
+    "&trainer=" +
+    encodeURIComponent(
+      selectedTrainer
+    ) +
+    "&qrValue=" +
+    encodeURIComponent(
+      qrValue
+    ) +
+    "&callback=" +
+    callbackName +
+    "&_=" +
+    requestId;
+
+
+  /*
+   * Create JSONP script.
+   */
+
+  const script =
+    document.createElement("script");
+
+
+  script.src = url;
+
+
+  script.onerror =
+    function() {
+
+      if (finished) {
+        return;
+      }
+
+
+      finished = true;
+
+
+      clearTimeout(timeout);
+
+
+      showError(
+        "Unable to connect to the PT Scanner server."
+      );
+
+
+      try {
+
+        delete window[callbackName];
+
+      } catch (error) {}
+
+
+      if (
+        script.parentNode
+      ) {
+
+        script.parentNode.removeChild(
+          script
+        );
+
+      }
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
 }
 
 
 /* =========================================================
-   MAIN BUTTON
+   SUCCESS RESULT
 ========================================================= */
 
-.main-button {
-  width: 100%;
-  margin-top: 18px;
+function showSuccess(result) {
 
-  padding: 17px;
+  document.getElementById(
+    "resultStatus"
+  ).textContent =
+    "PT SESSION RECORDED";
 
-  border: 0;
-  border-radius: 10px;
 
-  background: #f5c400;
-  color: #000;
+  document.getElementById(
+    "resultStatus"
+  ).className =
+    "result-status success";
 
-  font-size: 16px;
-  font-weight: 900;
 
-  cursor: pointer;
+  document.getElementById(
+    "resultMemberName"
+  ).textContent =
+    result.memberName || "";
 
-  touch-action: manipulation;
 
-  transition:
-    opacity 0.15s ease,
-    transform 0.08s ease;
-}
+  document.getElementById(
+    "resultMemberId"
+  ).textContent =
+    result.memberId || "";
 
-.main-button:hover:not(:disabled) {
-  background: #ffd21a;
-}
 
-.main-button:active:not(:disabled) {
-  transform: scale(0.98);
-}
+  document.getElementById(
+    "resultTrainer"
+  ).textContent =
+    result.trainer ||
+    selectedTrainer;
 
-.main-button:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+
+  document.getElementById(
+    "resultCredit"
+  ).textContent =
+    formatCredit(
+      result.remainingCredit
+    );
+
+
+  showScreen(
+    "resultScreen"
+  );
+
 }
 
 
 /* =========================================================
-   SECONDARY BUTTON
+   ERROR RESULT
 ========================================================= */
 
-.secondary-button {
-  width: 100%;
-  margin-top: 12px;
+function showError(message, result) {
 
-  padding: 15px;
+  result =
+    result || {};
 
-  border: 2px solid #333;
-  border-radius: 10px;
 
-  background: #111;
-  color: #fff;
+  document.getElementById(
+    "resultStatus"
+  ).textContent =
+    "PT SESSION NOT RECORDED";
 
-  font-size: 15px;
-  font-weight: 900;
 
-  cursor: pointer;
+  document.getElementById(
+    "resultStatus"
+  ).className =
+    "result-status error";
 
-  touch-action: manipulation;
-}
 
-.secondary-button:hover {
-  border-color: #f5c400;
-  color: #f5c400;
-}
+  document.getElementById(
+    "resultMemberName"
+  ).textContent =
+    result.memberName ||
+    message ||
+    "";
 
-.secondary-button:active {
-  transform: scale(0.98);
+
+  document.getElementById(
+    "resultMemberId"
+  ).textContent =
+    result.memberId ||
+    "";
+
+
+  document.getElementById(
+    "resultTrainer"
+  ).textContent =
+    result.trainer ||
+    selectedTrainer ||
+    "";
+
+
+  document.getElementById(
+    "resultCredit"
+  ).textContent =
+    result.remainingCredit !== undefined
+      ? formatCredit(
+          result.remainingCredit
+        )
+      : "-";
+
+
+  showScreen(
+    "resultScreen"
+  );
+
 }
 
 
 /* =========================================================
-   CAMERA
+   FORMAT CREDIT
 ========================================================= */
 
-.camera-title {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 900;
-  margin-bottom: 8px;
-}
+function formatCredit(value) {
 
-.selected-training {
-  text-align: center;
-  margin-bottom: 18px;
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
 
-  color: #f5c400;
+    return "-";
 
-  font-size: 14px;
-  font-weight: 900;
-}
+  }
 
-#reader {
-  width: 100%;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #050505;
-}
 
-#reader video {
-  width: 100% !important;
-  height: auto !important;
-  border-radius: 12px;
-  display: block;
-}
+  return String(value);
 
-#reader img {
-  max-width: 100%;
-}
-
-#reader__dashboard {
-  display: none !important;
-}
-
-.camera-status {
-  margin-top: 12px;
-
-  color: #777;
-
-  text-align: center;
-
-  font-size: 12px;
-  line-height: 1.5;
 }
 
 
 /* =========================================================
-   SUCCESS
+   SCAN NEXT MEMBER
 ========================================================= */
 
-.success-icon {
-  width: 70px;
-  height: 70px;
+function scanNext() {
 
-  margin: 5px auto 20px;
+  processingScan = false;
 
-  border-radius: 50%;
 
-  background: #f5c400;
-  color: #000;
+  showScreen(
+    "scannerScreen"
+  );
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  font-size: 38px;
-  font-weight: 900;
+  startScanner();
+
 }
 
-.status-title {
-  text-align: center;
-  margin-bottom: 20px;
 
-  font-size: 24px;
-  font-weight: 900;
+/* =========================================================
+   CHANGE TRAINER
+========================================================= */
+
+async function changeTrainer() {
+
+  await stopScanner();
+
+
+  selectedTrainer = "";
+
+
+  processingScan = false;
+
+
+  /*
+   * Clear scanner.
+   */
+
+  document.getElementById(
+    "reader"
+  ).innerHTML = "";
+
+
+  showScreen(
+    "trainerScreen"
+  );
+
 }
 
-.info-row {
-  margin-top: 8px;
 
-  padding: 13px;
+</script>
 
-  border-radius: 9px;
 
-  background: #151515;
-}
-
-.info-label {
-  color: #777;
-
-  font-size: 10px;
-  font-weight: bold;
-
-  text-transform: uppercase;
-}
-
-.info-value {
-  margin-top: 5px;
+</body>
+</html>
